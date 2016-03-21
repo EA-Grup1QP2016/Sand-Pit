@@ -12,7 +12,12 @@ module.exports = function(app){
     app.get("/login.html", loadWebPage.login);
     app.get("", loadWebPage.login);
     app.get("/register.html", loadWebPage.register);
+    
+    //User request
     app.post("/createUser", user.createUser);
+    app.post("/loginUser", user.loginUser);
+    app.get("/listUsers", user.listUsers);
+    app.post("/removeUser", user.removeUser);
 
     module.export = router;
 }

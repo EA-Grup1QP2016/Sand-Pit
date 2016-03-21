@@ -4,29 +4,78 @@
 var LOG_TAG = "database.js -->    ";
 var User = require("../../schemas/user.js");
 
-function createUserDB(data) {
-    var newUser = User();
-    console.log(LOG_TAG, data);
-    User.findOne({ "email": data.email }, function(err, obj) {
+function createUserDB(data, callback) {
+    var newUser = User({
+        email: data.email,
+        fullName: data.fullName,
+        password: data.password,
+        admin: data.admin
+    });
+    User.findOne({ "email": data.email }, function(err, object) {
         if (err) {
             console.log(LOG_TAG, err);
-            return (false, err);
-        } else if (obj !== null) {
-            console.log(LOG_TAG, err);
-            return (false, "The user already exists");
+            callback (false, err);
+        } else if (object !== null) {
+            console.log(LOG_TAG, "The user already exists");
+            callback (false, "The user already exists");
         } else {
             console.log(LOG_TAG, "The user doesn't exists in the database");
-            newUser.save(data, function(error) {
+            newUser.save(newUser, function(error) {
                 if (error) {
                     console.log(LOG_TAG, error);
-                    return (false, error);
-                }else{
+                    callback (false, error);
+                } else {
                     console.log(LOG_TAG, "User saved in database");
-                    return (true)
+                    callback (true)
                 }
             });
         }
     });
 }
 
+function loginDB(email, pwd, callback) {
+    User.findOne({ $and: [{ email: email }, { password: pwd }] }, function(err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback (false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "The user doesn't exists");
+            callback (false, "The user doesn't exists");
+        } else {
+            console.log(LOG_TAG, "User Logged.");
+            callback (true, object);
+        }
+    });
+}
+
+function listUsersDB(callback){
+    User.find(function(err, object){
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback (false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "The database is empty");
+            callback (false, "The database is empty");
+        } else {
+            console.log(LOG_TAG, "UsersList");
+            callback (true, object);
+        }
+    });
+}
+
+function removeUserDB(email, callback){
+    User.remove({email:email}, function(err, object){
+        if (err){
+            console.log(LOG_TAG, err);
+            callback (false, err);
+        } else {
+            console.log(LOG_TAG, "User removed successfully");
+            callback (true);
+        }
+    });
+}
+
 module.exports.createUserDB = createUserDB;
+module.exports.loginDB = loginDB;
+module.exports.listUsersDB = listUsersDB;
+module.exports.removeUserDB = removeUserDB;
