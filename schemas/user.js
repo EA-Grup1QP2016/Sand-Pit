@@ -7,7 +7,7 @@ var userSchema = new Schema({
     email: { type: String, required: true, unique: true},
     fullName: { type: String, required: true},
     password: { type: String, required: true },
-    admin: Boolean,
+    admin: Boolean//,
     //idSandpit: { type: Schema.ObjectId, ref: "Sandpit"}
 });
 
