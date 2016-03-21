@@ -4,10 +4,10 @@ var mongoose = require('mongoose'),
 //var Sandpit = mongoose.model('Sandpit');
 
 var userSchema = new Schema({
-    email: String,
-    fullName: String,
-    password: String,
-    admin: Boolean
+    email: { type: String, required: true, unique: true},
+    fullName: { type: String, required: true},
+    password: { type: String, required: true },
+    admin: Boolean//,
     //idSandpit: { type: Schema.ObjectId, ref: "Sandpit"}
 });
 
