@@ -1,10 +1,10 @@
 function sendResponse(TAG, state, data, res){
     if (state){
         console.log(TAG, "Everithing goes OK");
-        res.json(data);
+        res.status(200).json(data);
     }else{
         console.log(TAG, "Something goes wrong");
-        res.json(data);
+        res.status(500).json(data);
     }
 }
 

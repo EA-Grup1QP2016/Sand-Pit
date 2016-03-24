@@ -9,10 +9,10 @@ var utils = require("../utils/utils.js");
 function createUser(req, res) {
     console.log(LOG_TAG, "Create user.")
     var data = {
-        "email": req.body.email,
-        "password": req.body.password,
-        "fullName": req.body.fullName,
-        "admin": req.body.admin
+        "email": req.email,
+        "password": req.password,
+        "fullName": req.fullName,
+        "admin": req.admin
     };
     db.createUserDB(data, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
