@@ -1,8 +1,13 @@
 /**
- * Here goes all the methos related to the database
+ * Here goes all the methods related to the database
  */
 var LOG_TAG = "database.js -->    ";
 var User = require("../../schemas/user.js");
+var Sandpit = require("../../schemas/sandpit.js");
+
+/**
+ * Here goes all the methods related CRUD users
+ */
 
 function createUserDB(data, callback) {
     var newUser = User({
@@ -75,7 +80,52 @@ function removeUserDB(email, callback){
     });
 }
 
+/**
+ * Here goes all the methods related CRUD sandpit
+ */
+
+function listSandpitsDB(callback){
+    Sandpit.find(function(err, object){
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback (false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "The database is empty");
+            callback (false, "The database is empty");
+        } else {
+            console.log(LOG_TAG, "UsersList");
+            callback (true, object);
+        }
+    });
+}
+
+
+function removeSandpitDB(name, callback){
+    Sandpit.remove({name:name}, function(err, object){
+        if (err){
+            console.log(LOG_TAG, err);
+            callback (false, err);
+        } else {
+            console.log(LOG_TAG, "User removed successfully");
+            callback (true);
+        }
+    });
+}
+
+
+/**
+ * Here goes all modules related User
+ */
+
 module.exports.createUserDB = createUserDB;
 module.exports.loginDB = loginDB;
 module.exports.listUsersDB = listUsersDB;
 module.exports.removeUserDB = removeUserDB;
+
+
+/**
+ * Here goes all the modules related sandpit
+ */
+
+module.exports.listSandpitsDB = listSandpitsDB;
+module.exports.removeSandpitDB = removeSandpitDB;
