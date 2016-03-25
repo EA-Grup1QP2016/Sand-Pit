@@ -37,10 +37,9 @@ function listUsers(req, res) {
     });
 }
 
-
 function removeUser(req, res){
     console.log(LOG_TAG, "Remove User");
-    var email = "email@mail.com";//req.body.email;
+    var email = req.body.email;
     db.removeUserDB(email, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });

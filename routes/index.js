@@ -1,23 +1,13 @@
-module.exports = function(app){
-    var express = require('express');
-    var router = express.Router();
-    //var app = express();
+var user = require("./user/user.js");
 
-    var loadWebPage = require('./loadWebPage.js');
-    var user = require("./user/user.js");
-
+module.exports = function(app) {
     /**
      * Generic Pages
      */
-    app.get("/login.html", loadWebPage.login);
-    app.get("", loadWebPage.login);
-    app.get("/register.html", loadWebPage.register);
     
     //User request
     app.post("/createUser", user.createUser);
     app.post("/loginUser", user.loginUser);
     app.get("/listUsers", user.listUsers);
     app.post("/removeUser", user.removeUser);
-
-    module.export = router;
 }
