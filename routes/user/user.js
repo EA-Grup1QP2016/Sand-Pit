@@ -7,12 +7,13 @@ var db = require("../database/database.js");
 var utils = require("../utils/utils.js");
 
 function createUser(req, res) {
-    console.log(LOG_TAG, "Create user.")
+    console.log(LOG_TAG, "Create user.");
+    console.log(req.body);
     var data = {
-        "email": req.email,
-        "password": req.password,
-        "fullName": req.fullName,
-        "admin": req.admin
+        "email": req.body.email,
+        "password": req.body.password,
+        "fullName": req.body.fullName,
+        "admin": req.body.admin
     };
     db.createUserDB(data, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
@@ -20,6 +21,7 @@ function createUser(req, res) {
 }
 
 function loginUser(req, res) {
+    console.log(req.email)
     console.log(LOG_TAG, "Login user.")
     var email = req.body.email;
     var pwd = req.body.password;
