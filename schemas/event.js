@@ -10,8 +10,8 @@ var eventSchema = new Schema({
     date: 		    { type: Date, required: true },
     description:    { type: String },
     duration:  	    { type: String, required: true },
-    creator:        { type: Schema.ObjectId, ref: "User"},
-    idSandpit:      { type: Schema.ObjectId, ref: "Sandpit"}
+    creator:        { type: String},
+    location:      { type: String}
 });
 
 
