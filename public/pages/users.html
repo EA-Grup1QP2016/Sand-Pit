@@ -513,27 +513,27 @@
                         <div class="panel-heading"><h3>{{header}}</h3></div>
                         <div class="panel-footer">
                             <label>Nombre Completo:</label>
-                            <input class="w3-input w3-border" type="text" ng-model="newUser.fullName" placeholder="Nombre y apellidos">
+                            <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newUser.fullName" placeholder="Nombre y apellidos">
                             <br>
                             <label>Localización:</label>
-                            <input class="w3-input w3-border" type="text" ng-model="newUser.location" placeholder="Localización">
+                            <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newUser.location" placeholder="Localización">
                             <br>
                             <label>Email:</label>
-                            <input class="w3-input w3-border" type="text" ng-model="newUser.email" placeholder="Email">
+                            <input class="w3-input w3-border" type="text" ng-disabled="!update || !edit" ng-model="newUser.email" placeholder="Email">
                             <br>
-                            <!--<label>Password:</label>
-                            <input class="w3-input w3-border" type="password" ng-model="passw1" placeholder="Password">
+                            <label>Password:</label>
+                            <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="newUser.password" placeholder="Password">
                             <br>
                             <label>Repite password:</label>
-                            <input class="w3-input w3-border" type="password" ng-model="passw2" placeholder="Password">
-                            <br>-->
-                            <button class="w3-btn-floating-large w3-teal" ng-hide="create" ng-click="createUser()">+</button>
-                            <button class="w3-btn w3-teal" ng-hide="update" ng-click="editUser()">Actualizar</button>
+                            <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="pass2" placeholder="Password">
+                            <br>
+                            <button class="w3-btn-floating-large w3-teal" ng-disabled="error || incomplete" ng-hide="create" ng-click="createUser()">+</button>
+                            <button class="w3-btn w3-teal" ng-hide="update" ng-disabled="error || incomplete" ng-click="editUser()">Actualizar</button>
 
                         </div>
                 </div>
             </div>
-            <!-- /Crear Usuarios -->
+            <!-- FIN/Crear y editar Usuarios -->
           </div>
         <!-- /#page-wrapper -->
 

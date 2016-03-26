@@ -72,8 +72,8 @@ function listUsersDB(callback) {
     });
 }
 
-function removeUserDB(email, callback) {
-    User.remove({ email: email }, function(err, object) {
+function removeUserDB(id, callback) {
+    User.remove({ _id: id }, function(err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -86,8 +86,8 @@ function removeUserDB(email, callback) {
     });
 }
 
-function updateUserDB(email, newPassword, callback) {
-    User.update({email:email}, {password:newPassword}, function(err, object) {
+function updateUserDB(id, fullName, location, password, callback) {
+    User.update({fullName:fullName}, {location:location}, {password:password}, function(err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);

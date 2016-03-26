@@ -40,17 +40,19 @@ function listUsers(req, res) {
 
 function removeUser(req, res){
     console.log(LOG_TAG, "Remove User");
-    var email = req.body.email;
-    db.removeUserDB(email, function(state, details) {
+    var id = req.params.user_id;
+    db.removeUserDB(id, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
 
 function updateUser(req, res){
     console.log(LOG_TAG, "Update User");
-    var email = req.body.email;
+    var id = req.params.user_id;
+    var fullName = req.body.fullName;
+    var location = req.body.location;
     var password = req.body.password;
-    db.updateUserDB(email, password, function(state, details) {
+    db.updateUserDB(id, fullName, location, password, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }

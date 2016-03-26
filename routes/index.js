@@ -12,10 +12,10 @@ module.exports = function(app) {
     app.post('/user', userCtrl.createUser);
 
     // Modificar los datos de un User
-    //app.put('/user/:user_id', userCtrl.updateUser);
+    app.put('/user/:user_id', userCtrl.updateUser);
 
     // Borrar un User
-    //app.delete('/user/:user_id', userCtrl.removeUser);
+    app.delete('/user/:user_id', userCtrl.removeUser);
 
     //Sandpit request
     //app.get("/listSandpits", sandpit.listSandpits);
