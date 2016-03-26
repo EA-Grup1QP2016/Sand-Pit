@@ -2,13 +2,22 @@
 	"id": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
 	"name": "SandPit",
 	"description": "",
-	"order": [
-		"6fc92d54-5e4e-53d9-0176-ae40c3128d15",
-		"709767c7-521a-58df-dd57-181537fc4edd",
-		"47028cee-7ca8-c3c1-35f1-01838209a754",
-		"5d2b4389-573e-9520-a0c3-a54d22162061"
+	"order": [],
+	"folders": [
+		{
+			"id": "9dfa1009-43e4-0426-773d-76461833c21f",
+			"name": "Users",
+			"description": "",
+			"order": [
+				"6fc92d54-5e4e-53d9-0176-ae40c3128d15",
+				"709767c7-521a-58df-dd57-181537fc4edd",
+				"47028cee-7ca8-c3c1-35f1-01838209a754",
+				"5d2b4389-573e-9520-a0c3-a54d22162061",
+				"f2df4cff-96c9-f46b-e2dc-3e7d9eee724d"
+			],
+			"owner": "165619"
+		}
 	],
-	"folders": [],
 	"timestamp": 1458569113189,
 	"owner": "165619",
 	"remoteLink": "",
@@ -33,6 +42,7 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
+			"folder": "9dfa1009-43e4-0426-773d-76461833c21f",
 			"rawModeData": "{\n\"email\":\"email@email.com\",\n\"password\":\"secret\"\n}"
 		},
 		{
@@ -53,6 +63,7 @@
 			"description": "",
 			"collectionId": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
 			"responses": [],
+			"folder": "9dfa1009-43e4-0426-773d-76461833c21f",
 			"rawModeData": "{\n\"email\":\"email@mail.com\"\n}"
 		},
 		{
@@ -68,11 +79,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1458755391234,
+			"time": 1458898464716,
 			"name": "Create user",
 			"description": "",
 			"collectionId": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
 			"responses": [],
+			"folder": "9dfa1009-43e4-0426-773d-76461833c21f",
 			"rawModeData": "{\n    \"email\" : \"email@mail.com\",\n    \"fullName\" : \"This is a name\",\n    \"password\" : \"secret\",\n    \"admin\" : false\n}"
 		},
 		{
@@ -93,7 +105,29 @@
 			"description": "",
 			"collectionId": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
 			"responses": [],
+			"folder": "9dfa1009-43e4-0426-773d-76461833c21f",
 			"rawModeData": "{\n\"email\":\"email@mail.com\",\n\"password\":\"secret\"\n}"
+		},
+		{
+			"id": "f2df4cff-96c9-f46b-e2dc-3e7d9eee724d",
+			"headers": "Content-Type: application/json\n",
+			"url": "localhost:5000/updateUser",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1459021004842,
+			"name": "Update user",
+			"description": "",
+			"collectionId": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
+			"responses": [],
+			"folder": "9dfa1009-43e4-0426-773d-76461833c21f",
+			"rawModeData": "{\n    \"email\" : \"email11@mail.com\",\n    \"password\" : \"secret2\"\n}"
 		}
 	]
 }

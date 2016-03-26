@@ -4,7 +4,7 @@
 var LOG_TAG = "database.js -->    ";
 var User = require("../../schemas/user.js");
 var Sandpit = require("../../schemas/sandpit.js");
-var Event = require("../../schemas/events.js");
+var Event = require("../../schemas/event.js");
 
 /**
  * Here goes all the methods related CRUD users
@@ -31,8 +31,10 @@ function createUserDB(data, callback) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
                 } else {
-                    console.log(LOG_TAG, "User saved in database");
-                    callback(true)
+                    listUsersDB(function(state, details){
+                        console.log(LOG_TAG, "User saved in database");
+                        callback(true, details);
+                    });
                 }
             });
         }
@@ -75,8 +77,24 @@ function removeUserDB(email, callback) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            console.log(LOG_TAG, "User removed successfully");
-            callback(true);
+            listUsersDB(function(state, details){
+                console.log(LOG_TAG, "User saved in database");
+                callback(true, details);
+            });
+        }
+    });
+}
+
+function updateUserDB(email, newPassword, callback) {
+    User.update({email:email}, {password:newPassword}, function(err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else {
+            listUsersDB(function(state, details){
+                console.log(LOG_TAG, "User updated in database");
+                callback(true, details);
+            });
         }
     });
 }
@@ -187,6 +205,7 @@ module.exports.createUserDB = createUserDB;
 module.exports.loginDB = loginDB;
 module.exports.listUsersDB = listUsersDB;
 module.exports.removeUserDB = removeUserDB;
+module.exports.updateUserDB = updateUserDB;
 
 
 /**

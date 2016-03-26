@@ -45,7 +45,17 @@ function removeUser(req, res){
     });
 }
 
+function updateUser(req, res){
+    console.log(LOG_TAG, "Update User");
+    var email = req.body.email;
+    var password = req.body.password;
+    db.updateUserDB(email, password, function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.listUsers = listUsers;
 module.exports.removeUser = removeUser;
+module.exports.updateUser = updateUser;

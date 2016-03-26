@@ -1,6 +1,6 @@
 var user = require("./user/user.js");
 var sandpit = require("./sandpit/sandpit.js");
-var event = require("./event/event.js");
+var event = require("./events/events.js");
 
 module.exports = function(app) {
     /**
@@ -12,6 +12,7 @@ module.exports = function(app) {
     app.post("/loginUser", user.loginUser);
     app.get("/listUsers", user.listUsers);
     app.post("/removeUser", user.removeUser);
+    app.post("/updateUser", user.updateUser);
 
     //Sandpit request
     app.get("/listSandpits", sandpit.listSandpits);
