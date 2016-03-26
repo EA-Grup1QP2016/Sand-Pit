@@ -13,6 +13,7 @@ function createUserDB(data, callback) {
     var newUser = User({
         email: data.email,
         fullName: data.fullName,
+        location: data.location,
         password: data.password,
         admin: data.admin
     });
@@ -31,6 +32,7 @@ function createUserDB(data, callback) {
                     callback (false, error);
                 } else {
                     console.log(LOG_TAG, "User saved in database");
+                    // Obtiene y devuelve todos los users tras crear uno
                     callback (true)
                 }
             });
