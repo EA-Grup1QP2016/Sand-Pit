@@ -12,6 +12,7 @@ function createUser(req, res) {
     var data = {
         "email": req.body.email,
         "password": req.body.password,
+        "location": req.body.location,
         "fullName": req.body.fullName,
         "admin": req.body.admin
     };

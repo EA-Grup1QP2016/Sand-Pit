@@ -6,8 +6,9 @@ var mongoose = require('mongoose'),
 var userSchema = new Schema({
     email: { type: String, required: true, unique: true},
     fullName: { type: String, required: true},
-    password: { type: String, required: true },
-    admin: Boolean//,
+    location: { type: String, required: true},
+    password: { type: String, required: false }
+    //admin: Boolean
     //idSandpit: { type: Schema.ObjectId, ref: "Sandpit"}
 });
 
