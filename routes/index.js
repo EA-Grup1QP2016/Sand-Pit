@@ -6,7 +6,7 @@ var eventCtrl = require("./events/events.js");
 module.exports = function(app) {
 
     // devolver todos los Users
-    app.get('/user', userCtrl.listUsers); //On sandpit. es el controlador
+    app.get('/user', userCtrl.listUsers);
 
     // Crear un nuevo User
     app.post('/user', userCtrl.createUser);

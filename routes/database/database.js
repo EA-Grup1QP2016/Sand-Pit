@@ -31,12 +31,11 @@ function createUserDB(data, callback) {
                 if (error) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
-                } else {
+                } else { //Lista todos los usuarios incluyendo el nuevo
                     listUsersDB(function(state, details){
                         console.log(LOG_TAG, "User saved in database");
                         callback(true, details);
                     });
-                    callback(true)
                 }
             });
         }
