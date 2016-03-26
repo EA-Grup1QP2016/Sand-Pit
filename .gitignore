@@ -8,3 +8,4 @@ runserver.sh
 .DS_Store
 .launch.json
 public/bower_components
+.vscode
