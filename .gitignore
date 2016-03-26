@@ -1,0 +1,10 @@
+.gitignore
+node_modules
+data
+bin
+runmongo.sh
+runserver.sh
+.idea
+.DS_Store
+.launch.json
+public/bower_components
