@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 var userCtrl = require("./user/user.js");
 var sandpitCtrl = require("./sandpit/sandpit.js");
+=======
+var user = require("./user/user.js");
+var sandpit = require("./sandpit/sandpit.js");
+var event = require("./event/event.js");
+>>>>>>> origin/master
 
 module.exports = function(app) {
 
@@ -17,6 +23,7 @@ module.exports = function(app) {
 
 
     //Sandpit request
+<<<<<<< HEAD
     //app.get("/listSandpits", sandpit.listSandpits);
     //app.post("/removeSandpit", sandpit.removeSandpit);
 
@@ -25,3 +32,13 @@ module.exports = function(app) {
         res.sendfile('./public/admin.html'); // Carga única de la vista
     });
 };
+=======
+    app.get("/listSandpits", sandpit.listSandpits);
+    app.post("/removeSandpit", sandpit.removeSandpit);
+    
+    //Events request
+    app.get("/listEvents", event.listEvents);
+    app.post("/createEvent", event.createEvent);
+    app.post("/removeEvent", event.removeEvent);
+}
+>>>>>>> origin/master
