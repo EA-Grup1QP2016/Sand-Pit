@@ -27,8 +27,8 @@ module.exports = function(app) {
     //app.post("/removeEvent", event.removeEvent);
 
 
-    // application -------------------------------------------------------------
-    app.get('*', function(req, res) {
-        res.sendfile('./public/admin.html'); // Carga única de la vista
-    });
+    // application --Código malicioso responsable del bucle ;-)
+    //app.get('*', function(req, res) {
+    //    res.sendfile('./public/admin.html'); // Carga única de la vista
+    //});
 };
