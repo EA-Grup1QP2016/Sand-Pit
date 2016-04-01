@@ -87,19 +87,46 @@
                     <!-- /xs screen only -->
                 </ul>
             </div>
+            <!-- /Inicio menú inicial -->
+
             <div class="navbar-collapse fdc-menu collapse" id="fdc-navigation">
                 <ul class="nav navbar-nav">
                     <li><a href="#" data-clicktrack="true">Inicio</a></li>
-                    <li><a href="#eventos" data-clicktrack="true">Eventos</a></li>
-                    <li><a href="#mapa" data-clicktrack="true">Mapa</a></li>
-                    <li><a href="#parques" data-clicktrack="true">Parques</a></li>
-                    <li><a href="admin.html" data-clicktrack="true">Administración</a></li>
+                    <li>
+                        <a data-clicktrack="true"  data-toggle="dropdown">Eventos</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#parques" data-clicktrack="true">Crear</a></li>
+                                <li><a href="#parques" data-clicktrack="true">Ver</a></li>
+                            </ul>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>                       <li>
+                        <a data-clicktrack="true"  data-toggle="dropdown">Parques</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#parques" data-clicktrack="true">Crear</a></li>
+                                <li><a href="#parques" data-clicktrack="true">Ver</a></li>
+                            </ul>
+                        </ul>
+                        <!-- /.nav-second-level -->
+                    </li>                    <li>
+                        <a data-clicktrack="true"  data-toggle="dropdown">Gestión</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <ul class="nav navbar-nav">
+                                <li><a href="#parques" data-clicktrack="true">Parques</a></li>
+                                <li><a href="#parques" data-clicktrack="true">Eventos</a></li>
+                                </ul>
+                            </ul>
+                        <!-- /.nav-second-level -->
+                    </li>
+
                     <li class="navbar-footer">
                         <ul>
                             <li><a href="https://github.com/EAgrup1QP2016/Sandpit" data-clicktrack="true">GitHub</a></li>
                             <li><a href="#about" data-clicktrack="true">¿Quiénes somos?</a></li>
                             <li><a href="https://eagrup1curs2016.wordpress.com/" data-clicktrack="true">Blog</a></li>
-                            <li><a href="mailto:admin@sandpit.com" data-clicktrack="true">Contáctanos</a></li>
+                            <li><a href="mailto:admin@sand-pit.me" data-clicktrack="true">Contáctanos</a></li>
                         </ul>
                         <div class="fd-navbar-tools">
                                 <dl>
@@ -122,48 +149,24 @@
                     </li>
                 </ul>
             </div>
+            <!-- /Final Menu inicial -->
+
         </div>
     </div>
 </div>
 <!-- Cuerpo de la web -->
-<div id="routes">
+
+    <div id="routes">
     <!-- Aquí inyectamos las vistas -->
     <div ng-view></div>
 
+    </div>
 
+    <!-- Ajusta contenido de la web -->
+
+    <div class="fd-content"></div>
 </div>
 
-
-<div class='fd-container-full container-fluid'>
-    <div class="container-fluid fd-container">
-        <header class='home'>
-            <div class="sponsored">
-                <div id="dfp_logo"></div>
-            </div>
-            <h1></h1>
-            <section class="subhead">
-                <h6 class="hashtag"></h6>
-            </section>
-        </header>
-    </div>
-</div>
-
-    <div class="container-fluid fd-container">
-
-<div class="fd-content">
-    <div class="fd-tile loader">
-        <div class="fd-inner-tile">
-            <div class="tile-content">
-                <i class="icon-fdc-loading fa-spin"></i>
-                <span>Loading...</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- </div>
-    </div>
 </body>
 </html>
 
