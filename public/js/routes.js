@@ -20,10 +20,6 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/parques.html',
             controller  : 'parquesController'
         })
-        .when('/mapa', {
-            templateUrl : 'views/eventos.html',
-            controller  : 'mapaController'
-        })
         .when('/registro', {
             templateUrl : 'views/registro.html',
             controller  : 'registerController'
@@ -51,10 +47,6 @@ angularRoutingApp.controller('eventosController', function($scope) {
 
 angularRoutingApp.controller('parquesController', function($scope) {
     $scope.message = 'Esta es la página de parques';
-});
-
-angularRoutingApp.controller('mapaController', function($scope) {
-    $scope.message = 'En este mapa salen los eventos y parques';
 });
 
 angularRoutingApp.controller('registerController', function($scope) {
