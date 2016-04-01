@@ -32,6 +32,10 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/login.html',
             controller  : 'loginController'
         })
+        .when('/users', {
+            templateUrl : 'views/users.html',
+            controller  : 'usersController'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -56,5 +60,10 @@ angularRoutingApp.controller('mapaController', function($scope) {
 angularRoutingApp.controller('registerController', function($scope) {
     $scope.message = 'View de registro';
 });
+
+angularRoutingApp.controller('usersController', function($scope) {
+    $scope.message = 'View de users';
+});
+
 
 
