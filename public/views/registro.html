@@ -12,19 +12,19 @@
                             <form role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" autofocus>
+                                        <input class="form-control" placeholder="Nombre y apellidos" ng-disabled="!edit" ng-model="newUser.fullName" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                        <input class="form-control" placeholder="Localización" ng-disabled="!edit" ng-model="newUser.location" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Nombre" name="nombre" type="nombre" autofocus>
+                                        <input class="form-control" placeholder="E-mail" ng-disabled="!update || !edit" ng-model="newUser.email" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Apellidos" name="apellidos" type="apellidos" autofocus>
+                                        <input class="form-control" placeholder="Contraseña" ng-disabled="!edit" ng-model="newUser.password" autofocus>
                                     </div>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
+                                        <input class="form-control" placeholder="Repite contraseña" ng-disabled="!edit" ng-model="pass2" autofocus>
                                     </div>
                                     <div class="checkbox">
                                         <label>
@@ -37,7 +37,7 @@
                                         </label>
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
-                                    <a href="SandPit.html" class="btn btn-lg btn-success btn-block">Registrarse</a>
+                                    <button  class="btn btn-lg btn-success btn-block" ng-disabled="error || incomplete" ng-hide="create" ng-click="createUser()">Registrarse</button>
                                 </fieldset>
                             </form>
                         </div>
