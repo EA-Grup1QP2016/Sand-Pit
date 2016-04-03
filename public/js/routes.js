@@ -62,13 +62,6 @@ angularRoutingApp.controller('registerController', function($scope, $http) {
     $scope.incomplete = false;
     $scope.edit = true;
 
-    // Obtenemos todos los datos de la base de datos
-    $http.get('/user').success(function(data) {
-            $scope.users = data;
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
 
     // Función para registrar un user
     $scope.createUser = function() {
@@ -76,51 +69,9 @@ angularRoutingApp.controller('registerController', function($scope, $http) {
             .success(function(data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
+                $scope.pass2 = {};
             })
             .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-
-    // Función que borra un objeto user conocido su id
-    $scope.deleteUser = function(id) {
-        $http.delete('/user/' + id)
-            .success(function(data) {
-                $scope.newUSER = {};
-                $scope.users = data;
-            })
-            .error(function(data) {
-                console.log('Error: ' + data);
-            });
-    };
-
-
-    // Función para coger el objeto seleccionado en la tabla antes de editarlo
-    $scope.selectUser = function(user) {
-        $scope.newUser = user;
-        $scope.selected = true;
-        $scope.header = "Editar usuario";
-        $scope.update = false;
-        $scope.create = true;
-
-        console.log($scope.newUser, $scope.selected);
-    };
-
-    // Función para editar los datos de una persona
-    $scope.editUser = function() {
-        $http.put('/user/' + $scope.newUser._id, $scope.newUser)
-            .success(function(data) {
-                $scope.newUser = {}; // Borramos los datos del formulario
-                $scope.users = data;
-                $scope.selected = false;
-                $scope.header = "Crear usuario";
-                $scope.update = true;
-                $scope.create = false;
-            })
-            .error(function(data) {
-                $scope.header = "Crear usuario";
-                $scope.update = true;
-                $scope.create = false;
                 console.log('Error: ' + data);
             });
     };
