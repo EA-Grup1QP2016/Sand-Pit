@@ -15,6 +15,20 @@ var app = express();
 
 mongoose.connect('mongodb://localhost:27017/sandPit');
 
+//Needed for passport; copy after var app has been initialized
+var passport = require('passport');
+var session = require('express-session');
+//configure passport object through config/passport.js
+require('./config/passport')(passport);
+
+app.use(session({ secret: 'zasentodalaboca', resave: true, saveUninitialized: true })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+
+app.set('view engine', 'jade');
+app.set('views', './views');
+
+//This goes before the routes are called
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
