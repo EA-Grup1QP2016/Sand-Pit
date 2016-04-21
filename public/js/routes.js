@@ -3,7 +3,7 @@
  */
 // Creación del módulo
 var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute']);
-
+var app = angular.module('meanMapApp', ['addCtrl', 'geolocation', 'gservice']);
 // Configuración de las rutas
 angularRoutingApp.config(function($routeProvider) {
 
@@ -32,6 +32,10 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/users1.html',
             controller  : 'usersController'
         })
+        .when('/maps', {
+            templateUrl : 'views/maps.html',
+            controller  : 'addCtrl,app,gservice'
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -51,7 +55,6 @@ angularRoutingApp.controller('parquesController', function($scope) {
 
 angularRoutingApp.controller('registerController', function($scope, $http) {
     $scope.message = 'View de registro';
-
     $scope.newUser = {}; //Limpiamos formulario de registro
     $scope.users = {}; //Limpiamos tabla de usuarios
     $scope.selected = false;
@@ -104,7 +107,6 @@ angularRoutingApp.controller('registerController', function($scope, $http) {
 
 angularRoutingApp.controller('usersController', function($scope, $http) {
     $scope.message = 'View de users';
-
     $scope.newUser = {}; //Limpiamos formulario de registro
     $scope.users = {}; //Limpiamos tabla de usuarios
     $scope.selected = false;
