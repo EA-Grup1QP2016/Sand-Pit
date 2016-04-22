@@ -39,4 +39,14 @@ module.exports = function(app) {
             res.json(req.body);
         });
     });
+
+
+    //application ---------------------------------------------------
+    // Carga una vista HTML simple donde irá nuestra Single App Page
+    // Angular Manejará el Frontend
+    app.get('*', function(req,res) {
+
+        res.sendfile('./public/index2.html'); //Carga única de la vista
+
+    });
 };  
