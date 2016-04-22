@@ -43,7 +43,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
+
+app.use(express.static(path.join(__dirname,'public')));
+//app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
 
 
 
