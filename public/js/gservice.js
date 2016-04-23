@@ -31,7 +31,7 @@ angular.module('gservice', [])
             selectedLong = longitude;
 
             // Perform an AJAX call to get all of the records in the db.
-            $http.get('/users').success(function(response){
+            $http.get('/sandpit').success(function(response){
 
                 // Convert the results into Google Map Format
                 locations = convertToMapPoints(response);
@@ -51,14 +51,13 @@ angular.module('gservice', [])
 
             // Loop through all of the JSON entries provided in the response
             for(var i= 0; i < response.length; i++) {
-                var user = response[i];
+                var sandpit = response[i];
 
                 // Create popup windows for each record
                 var  contentString =
-                    '<p><b>Nombre</b>: ' + user.username +
-                    '<br><b>Precio</b>: ' + user.age +
-                    '<br><b>Tipo</b>: ' + user.gender +
-                    '<br><b>Descripción</b>: ' + user.favlang +
+                    '<p><b>Nombre</b>: ' + sandpit.name +
+                    '<br><b>Precio</b>: ' + sandpit.price +
+                    '<br><b>Descripcion</b>: ' + sandpit.description +
                     '</p>';
 
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
@@ -68,10 +67,9 @@ angular.module('gservice', [])
                         content: contentString,
                         maxWidth: 320
                     }),
-                    username: user.username,
-                    gender: user.gender,
-                    age: user.age,
-                    favlang: user.favlang
+                    name: sandpit.name,
+                    description: sandpit.description,
+                    price: sandpit.price
             });
         }
         // location is now an array populated with records in Google Maps format

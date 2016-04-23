@@ -25,8 +25,8 @@
                     <form name ="addForm" novalidate>
                         <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
                         <div class="form-group">
-                            <label for="username">Nombre del Parque <span class="badge">Rellena todos los campos</span></label>
-                            <input type="text" class="form-control" id="username" placeholder="Nombre..." ng-model="formData.username" required>
+                            <label for="name">Nombre del Parque <span class="badge">Rellena todos los campos</span></label>
+                            <input type="text" class="form-control" id="name" placeholder="Nombre..." ng-model="formData.name" required>
                         </div>
                         <!--<label class="radio control-label">Gender</label>-->
                         <!--<div class="radio">-->
@@ -48,12 +48,12 @@
                             <!--</label>-->
                         <!--</div>-->
                         <div class="form-group">
-                            <label for="age">Precio de entrada (€)</label>
-                            <input type="number" class="form-control" id="age" placeholder="0" ng-model="formData.age" required>
+                            <label for="price">Precio de entrada (€)</label>
+                            <input type="number" class="form-control" id="price" placeholder="0" ng-model="formData.price" required>
                         </div>
                         <div class="form-group">
-                            <label for="language">Descripción del parque</label>
-                            <input type="text" class="form-control" id="language" placeholder="Descripción..." ng-model="formData.favlang" required>
+                            <label for="description">Descripción del parque</label>
+                            <input type="text" class="form-control" id="description" placeholder="Descripción..." ng-model="formData.description" required>
                         </div>
                         <div class="form-group">
                             <label for="latitude">Latitud</label>
@@ -65,10 +65,10 @@
                         </div>
                         <div class="form-group">
                             <label for="verified">Verificar localización por HTML5? <span><button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-refresh"></span></button></span></label>
-                            <!--<input type="text" class="form-control" id="verified" placeholder= "Añadido correctamente" ng-model="formData.htmlverified" readonly>-->
+                            <input type="text" class="form-control" id="verified" placeholder= "Añadido correctamente" ng-model="formData.htmlverified" readonly>
                         </div>
                         <!-- Submit button. Note that its tied to createUser() function from addCtrl. Also note ng-disabled logic which prevents early submits.  -->
-                        <button type="submit" class="btn btn-danger btn-block" ng-click="createUser()" ng-disabled="addForm.$invalid">Submit</button>
+                        <button type="submit" class="btn btn-danger btn-block" ng-click="createSandpit()" ng-disabled="addForm.$invalid">Submit</button>
                     </form>
                 </div>
             </div>

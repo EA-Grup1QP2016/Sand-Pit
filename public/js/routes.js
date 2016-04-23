@@ -92,27 +92,26 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
     });
 
     // Creates a new user based on the form fields
-    $scope.createUser = function() {
+    $scope.createSandpit = function() {
 
         // Grabs all of the text box fields
-        var userData = {
-            username: $scope.formData.username,
-            gender: $scope.formData.gender,
-            age: $scope.formData.age,
-            favlang: $scope.formData.favlang,
+        var sandpitData = {
+            name: $scope.formData.name,
+            description: $scope.formData.description,
+            price: $scope.formData.price,
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified
         };
 
         // Saves the user data to the db
-        $http.post('/users', userData)
+        $http.post('/sandpit', sandpitData)
             .success(function (data) {
 
                 // Once complete, clear the form (except location)
-                $scope.formData.username = "";
-                $scope.formData.gender = "";
-                $scope.formData.age = "";
-                $scope.formData.favlang = "";
+                $scope.formData.name = "";
+                $scope.formData.description = "";
+                $scope.formData.price = "";
+
                 // Refresh the map with new data
                 gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
 

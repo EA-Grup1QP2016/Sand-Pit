@@ -3,6 +3,9 @@ var sandpitCtrl = require("./sandpit/sandpit.js");
 var eventCtrl = require("./events/events.js");
 var express = require('express');
 var passport = require('passport');
+var Sandpit = require("./sandpit.js");
+var mongoose    = require('mongoose');
+
 
 module.exports = function (app) {
 
@@ -17,6 +20,40 @@ module.exports = function (app) {
 
     // Borrar un User
     app.delete('/user/:user_id', userCtrl.removeUser);
+
+//listar y crear parques
+
+        app.get('/sandpit', function(req, res){
+
+            // Uses Mongoose schema to run the search (empty conditions)
+            var query = Sandpit.find({});
+            query.exec(function(err, sandpits){
+                if(err)
+                    res.send(err);
+
+                // If no errors are found, it responds with a JSON of all users
+                res.json(sandpits);
+            });
+        });
+
+        // POST Routes
+        // --------------------------------------------------------
+        // Provides method for saving new users in the db
+        app.post('/sandpit', function(req, res){
+
+            // Creates a new User based on the Mongoose schema and the post bo.dy
+            var newsandpit = new Sandpit(req.body);
+
+            // New User is saved in the db.
+           newsandpit.save(function(err){
+                if(err)
+                    res.send(err);
+
+                // If no errors are found, it responds with a JSON of the new user
+                res.json(req.body);
+            });
+        });
+
 
     var router = express.Router();
 
