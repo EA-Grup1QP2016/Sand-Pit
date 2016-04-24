@@ -36,14 +36,23 @@ app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json'}));
 app.use(cookieParser());
 app.use(methodOverride());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+
+app.use(express.static(path.join(__dirname,'public')));
+//app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
+
 
 
 // Cargamos los endpoints
 require('./routes/index.js')(app);
-require('./app/routes.js')(app);
+
 
 app.listen(5000, function () {
-    console.log('Listening on port 5000...');
+  console.log('Listening on port 5000...');
 });
