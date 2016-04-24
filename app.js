@@ -47,8 +47,6 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname,'public')));
 //app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
 
-
-
 // Cargamos los endpoints
 require('./routes/index.js')(app);
 
