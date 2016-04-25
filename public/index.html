@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/lib-bundle.min.js?v=75b" ></script>
     <script type="text/javascript" src="js/jquery-plugins.min.js?v=75b" ></script>
 
-    <!-- Controlador dels parcs i events (amb gmaps)-->
+    <!-- Controladors-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLRQuMbzorcGujWn_76SLxzF3IkwoTM38"></script>
     <script src="bower_components/modernizr/bin/modernizr"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -24,10 +24,9 @@
     <script src="js/routes.js"></script>
     <!-- Controlador del mapa-->
     <script src="js/gservice.js"></script>
-
-
 </head>
 <body ng-controller='mainController'>
+
 
 <!-- Usamos el controlador principal -->
 
@@ -80,10 +79,6 @@
                         <li class="hidden-xs">
                             <a href="#registro"  class="navbar-toggle fd-log-btn sso-login"><span class="glyphicon glyphicon-user"></span> Registrarse</a>
                         </li>
-                        <li class="hidden-xs">
-                            <a href="#maps"  class="navbar-toggle fd-log-btn sso-login"><span class="glyphicon glyphicon-map-marker"></span> Maps</a>
-                        </li>
-
                         <!-- search button -->
                         <li class="visible-xs hidden-sm">
                             <button type="button" class="navbar-toggle fd-sch-btn" id="fd-search-button">
@@ -100,32 +95,16 @@
                 <div class="navbar-collapse fdc-menu collapse" id="fdc-navigation">
                     <ul class="nav navbar-nav">
                         <li><a href="#" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Inicio</a></li>
-                        <li>
-                            <a data-clicktrack="true"  data-toggle="dropdown"><span class="glyphicon glyphicon-map-marker"></span> Eventos</a>
-                            <ul class="dropdown-menu" role="menu">
-                                <ul class="nav navbar-nav">
-                                    <li><a href="#" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Crear</a></li>
-                                    <li><a href="#eventos" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Ver</a></li>
-                                </ul>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                        <a data-clicktrack="true"  data-toggle="dropdown"><span class="glyphicon glyphicon-map-marker"></span> Parques</a>
-                        <ul class="dropdown-menu" role="menu">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Crear</a></li>
-                                <li><a href="#parques" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Ver</a></li>
-                            </ul>
-                        </ul>
-                        <!-- /.nav-second-level -->
-                    </li>                    <li>
+                        <li><a href="#parques" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Parques</a></li>
+                        <li><a href="#eventos" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Eventos</a></li>
+
+                    <li>
                         <a data-clicktrack="true"  data-toggle="dropdown"><span class="glyphicon glyphicon-map-marker"></span> Gestión</a>
                         <ul class="dropdown-menu" role="menu">
                             <ul class="nav navbar-nav">
-                                <li><a href="#parques" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Eventos</a></li>
-                                <li><a href="#parques" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Parques</a></li>
-                                <li><a href="#users" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Usuarios</a></li>
+                                <li><a href="#gestion-eventos" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Eventos</a></li>
+                                <li><a href="#gestion-parques" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Parques</a></li>
+                                <li><a href="#gestion-users" data-clicktrack="true"><span class="glyphicon glyphicon-map-marker"></span> Usuarios</a></li>
                             </ul>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -171,10 +150,8 @@
         <div ng-view></div>
 
     </div>
-
-    <!-- Ajusta contenido de la web -->
-
-    <div class="fd-content"></div>
+    <!-- Ajusta contenido de la web
+    <div class="fd-content"></div> -->
 </div>
 
 </body>
