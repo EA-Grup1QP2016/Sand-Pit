@@ -80,7 +80,7 @@ module.exports = function (app) {
     }));
     //handle the callback after facebook has authenticated the user
     router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/facebook/profile',
+        successRedirect: '/profile',
         failureRedirect: '/'
     }));
     /* route middleware to check whether user is authenticated */
@@ -92,7 +92,7 @@ module.exports = function (app) {
         res.redirect('/');
     }
 
-    app.use('/facebook', router);
+    app.use('/', router);
 };
 
 
