@@ -2,6 +2,8 @@
  * Define passport strategies, i.e. what to do with the credentials
  * p y rovided by the OAuth provider
  */
+var User = require('../schemas/user.js');
+
 var FacebookStrategy = require('passport-facebook').Strategy;
 //var TwitterStrategy = require('passport-twitter).Strategy;
 
@@ -43,6 +45,28 @@ module.exports = function(passport) {
 function myFacebookStrategy(token, refreshToken, profile, done) {
         // asynchronous
             process.nextTick(function() {
+
+                User.findOne({provider_id: profile.id}, function(err, user) {
+                    if(err) throw(err);
+                    if(!err && user!= null) return done(null, user);
+
+                    console.log('profile data', profile);
+
+                    // Al igual que antes, si el usuario ya existe lo devuelve
+                    // y si no, lo crea y salva en la base de datos
+                    var user = new User({
+                        provider_id	    : profile.id,
+                        fullName		: profile.displayName,
+                        email           : profile.emails[0].value
+                        //photo			: profile.photos[0].value
+                    });
+
+                    console.log('user info', user)
+                    user.save(function(err) {
+                        if(err) throw err;
+                        done(null, user);
+                    });
+                });
 //Save profile info into newUser object
                 var newUser = Object();
                 newUser.id = profile.id;
