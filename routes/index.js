@@ -3,7 +3,6 @@ var sandpitCtrl = require("./sandpit/sandpit.js");
 var eventCtrl = require("./events/events.js");
 var express = require('express');
 var passport = require('passport');
-var Sandpit = require("./sandpit.js");
 var mongoose    = require('mongoose');
 
 
@@ -26,24 +25,6 @@ module.exports = function (app) {
     app.get('/sandpit', sandpitCtrl.listSandpits);
 
     app.post('/sandpit', sandpitCtrl.createSandpits);
-        // POST Routes
-        // --------------------------------------------------------
-        // Provides method for saving new users in the db
-        app.post('/sandpit', function(req, res){
-
-            // Creates a new User based on the Mongoose schema and the post bo.dy
-            var newsandpit = new Sandpit(req.body);
-
-            // New User is saved in the db.
-           newsandpit.save(function(err){
-                if(err)
-                    res.send(err);
-
-                // If no errors are found, it responds with a JSON of the new user
-                res.json(req.body);
-            });
-        });
-
 
     var router = express.Router();
 

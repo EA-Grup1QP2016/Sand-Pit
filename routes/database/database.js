@@ -121,23 +121,24 @@ function listSandpitsDB(callback) {
 }
 
 function createSandpitsDB(data, callback) {
-    var newSandpit = new Sandpit(data.body);
-
+    var newSandpit = new Sandpit(data);
+    console.log(data.location[0]);
+    var test = data.location[0];
     Sandpit.findOne({$and: [{"location[0]": newSandpit.location[0]}, {"location[1]": newSandpit.location[1]}]}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else if (object !== null) {
-            console.log(LOG_TAG, "An Sandpit with this name already exists, please change it");
-            callback(false, "An Sandpit with this name already exists, please change it");
+            console.log(LOG_TAG, "An Sandpit with this location already exists, please change it");
+            callback(false, "An Sandpit with this location already exists, please change it");
         } else {
-            console.log(LOG_TAG, "The event doesn't exists in the database");
+            console.log(LOG_TAG, "The SandPit doesn't exists in the database");
             newSandpit.save(newSandpit, function (error) {
                 if (error) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
                 } else {
-                    console.log(LOG_TAG, "Event saved in the database");
+                    console.log(LOG_TAG, "SandPit saved in the database");
                     callback(true)
                 }
             });
