@@ -18,7 +18,7 @@ function createUserDB(data, callback) {
         password: data.password,
         admin: data.admin
     });
-    User.findOne({ "email": data.email }, function(err, object) {
+    User.findOne({"email": data.email}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -27,12 +27,12 @@ function createUserDB(data, callback) {
             callback(false, "The user already exists");
         } else {
             console.log(LOG_TAG, "The user doesn't exists in the database");
-            newUser.save(newUser, function(error) {
+            newUser.save(newUser, function (error) {
                 if (error) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
                 } else { //Lista todos los usuarios incluyendo el nuevo
-                    listUsersDB(function(state, details){
+                    listUsersDB(function (state, details) {
                         console.log(LOG_TAG, "User saved in database");
                         callback(true, details);
                     });
@@ -43,7 +43,7 @@ function createUserDB(data, callback) {
 }
 
 function loginDB(email, pwd, callback) {
-    User.findOne({ $and: [{ email: email }, { password: pwd }] }, function(err, object) {
+    User.findOne({$and: [{email: email}, {password: pwd}]}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -58,7 +58,7 @@ function loginDB(email, pwd, callback) {
 }
 
 function listUsersDB(callback) {
-    User.find(function(err, object) {
+    User.find(function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -73,12 +73,12 @@ function listUsersDB(callback) {
 }
 
 function removeUserDB(id, callback) {
-    User.remove({ _id: id }, function(err, object) {
+    User.remove({_id: id}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            listUsersDB(function(state, details){
+            listUsersDB(function (state, details) {
                 console.log(LOG_TAG, "User saved in database");
                 callback(true, details);
             });
@@ -87,12 +87,12 @@ function removeUserDB(id, callback) {
 }
 
 function updateUserDB(id, fullName, location, password, callback) {
-    User.update({fullName:fullName}, {location:location}, {password:password}, function(err, object) {
+    User.update({fullName: fullName}, {location: location}, {password: password}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            listUsersDB(function(state, details){
+            listUsersDB(function (state, details) {
                 console.log(LOG_TAG, "User updated in database");
                 callback(true, details);
             });
@@ -106,7 +106,7 @@ function updateUserDB(id, fullName, location, password, callback) {
 
 function listSandpitsDB(callback) {
     var query = Sandpit.find({});
-    query.exec(function(err, sandpits){
+    query.exec(function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -114,30 +114,39 @@ function listSandpitsDB(callback) {
             console.log(LOG_TAG, "The database is empty");
             callback(false, "The database is empty");
         } else {
-            console.log(LOG_TAG, "UsersList");
+            console.log(LOG_TAG, "SandPit List");
             callback(true, object);
         }
-
-        // If no errors are found, it responds with a JSON of all users
-        res.json(sandpits);
     });
 }
 
-function createSandpitsDB(callback){
-    var newsandpit = new Sandpit(req.body);
+function createSandpitsDB(data, callback) {
+    var newSandpit = new Sandpit(data.body);
 
-    // New User is saved in the db.
-    newsandpit.save(function(err){
-        if(err)
-            res.send(err);
-
-        // If no errors are found, it responds with a JSON of the new user
-        res.json(req.body);
-    });
+    Sandpit.findOne({$and: [{"location[0]": data.location[0]}, {"location[1]": data.location[1]}]}, function (err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object !== null) {
+            console.log(LOG_TAG, "An Sandpit with this name already exists, please change it");
+            callback(false, "An Sandpit with this name already exists, please change it");
+        } else {
+            console.log(LOG_TAG, "The event doesn't exists in the database");
+            newSandpit.save(newSandpit, function (error) {
+                if (error) {
+                    console.log(LOG_TAG, error);
+                    callback(false, error);
+                } else {
+                    console.log(LOG_TAG, "Event saved in the database");
+                    callback(true)
+                }
+            });
+        }
+    })
 }
 
 function removeSandpitDB(name, callback) {
-    Sandpit.remove({ name: name }, function(err, object) {
+    Sandpit.remove({name: name}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -164,7 +173,7 @@ function createEventDB(data, callback) {
         creator: req.body.creator,
         location: req.body.location
     });
-    Event.findOne({ "name": data.name }, function(err, object) {
+    Event.findOne({"name": data.name}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -173,7 +182,7 @@ function createEventDB(data, callback) {
             callback(false, "An event with this name already exists, please change it");
         } else {
             console.log(LOG_TAG, "The event doesn't exists in the database");
-            newEvent.save(newEvent, function(error) {
+            newEvent.save(newEvent, function (error) {
                 if (error) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
@@ -187,7 +196,7 @@ function createEventDB(data, callback) {
 }
 
 function listEventsDB(callback) {
-    Event.find(function(err, object) {
+    Event.find(function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -202,7 +211,7 @@ function listEventsDB(callback) {
 }
 
 function removeEventDB(name, callback) {
-    Event.remove({ name: name }, function(err, object) {
+    Event.remove({name: name}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -231,7 +240,7 @@ module.exports.updateUserDB = updateUserDB;
 
 module.exports.listSandpitsDB = listSandpitsDB;
 module.exports.removeSandpitDB = removeSandpitDB;
-module.exports.createSandpitsDB = createSandpitsDB
+module.exports.createSandpitsDB = createSandpitsDB;
 
 /**
  * Here goes all the modules related to events
