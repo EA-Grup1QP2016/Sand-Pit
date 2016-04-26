@@ -48,6 +48,19 @@ angularRoutingApp.controller('mainController', function($scope) {
     $scope.message = 'Hola, Mundooooo!';
 });
 
+angularRoutingApp.controller('loginController', function($scope, $http) {
+    $scope.loginFacebook = function() {
+        $http.get('/profile').success(function(data) {
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('#gestion-users');
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+});
+
 angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geolocation, gservice){
 
     // Initializes Variables

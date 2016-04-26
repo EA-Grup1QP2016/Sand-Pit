@@ -105,7 +105,8 @@ function updateUserDB(id, fullName, location, password, callback) {
  */
 
 function listSandpitsDB(callback) {
-    Sandpit.find(function(err, object) {
+    var query = Sandpit.find({});
+    query.exec(function(err, sandpits){
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -116,9 +117,24 @@ function listSandpitsDB(callback) {
             console.log(LOG_TAG, "UsersList");
             callback(true, object);
         }
+
+        // If no errors are found, it responds with a JSON of all users
+        res.json(sandpits);
     });
 }
 
+function createSandpitsDB(callback){
+    var newsandpit = new Sandpit(req.body);
+
+    // New User is saved in the db.
+    newsandpit.save(function(err){
+        if(err)
+            res.send(err);
+
+        // If no errors are found, it responds with a JSON of the new user
+        res.json(req.body);
+    });
+}
 
 function removeSandpitDB(name, callback) {
     Sandpit.remove({ name: name }, function(err, object) {
@@ -215,6 +231,7 @@ module.exports.updateUserDB = updateUserDB;
 
 module.exports.listSandpitsDB = listSandpitsDB;
 module.exports.removeSandpitDB = removeSandpitDB;
+module.exports.createSandpitsDB = createSandpitsDB
 
 /**
  * Here goes all the modules related to events

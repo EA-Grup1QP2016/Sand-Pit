@@ -13,6 +13,13 @@ function listSandpits(req, res) {
     });
 }
 
+function createSandpits(req, res) {
+    console.log(LOG_TAG, "Create sandpit.");
+    db.createSandpitsDB(function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
 function removeSandpit(req, res){
     console.log(LOG_TAG, "Remove User");
     var name = req.body.name;
@@ -23,3 +30,5 @@ function removeSandpit(req, res){
 
 module.exports.listSandpits = listSandpits;
 module.exports.removeSandpit = removeSandpit;
+
+module.exports.createSandpits = createSandpits;

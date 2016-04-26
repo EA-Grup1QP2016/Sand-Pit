@@ -23,19 +23,9 @@ module.exports = function (app) {
 
 //listar y crear parques
 
-        app.get('/sandpit', function(req, res){
+    app.get('/sandpit', sandpitCtrl.listSandpits);
 
-            // Uses Mongoose schema to run the search (empty conditions)
-            var query = Sandpit.find({});
-            query.exec(function(err, sandpits){
-                if(err)
-                    res.send(err);
-
-                // If no errors are found, it responds with a JSON of all users
-                res.json(sandpits);
-            });
-        });
-
+    app.post('/sandpit', sandpitCtrl.createSandpits);
         // POST Routes
         // --------------------------------------------------------
         // Provides method for saving new users in the db
@@ -64,7 +54,9 @@ module.exports = function (app) {
 
     //route for showing the profile page; only accessible after authentication
     router.get('/profile', isAuth, function (req, res, next) {
-        res.render('profile', {title: 'Your profile page', user: req.user});
+        console.log('user information profile', req);
+        res.send(req.user);
+        //res.render('profile', {title: 'Your profile page', user: req.user});
     });
 
     //route for logging out
