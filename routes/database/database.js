@@ -123,7 +123,7 @@ function listSandpitsDB(callback) {
 function createSandpitsDB(data, callback) {
     var newSandpit = new Sandpit(data.body);
 
-    Sandpit.findOne({$and: [{"location[0]": data.location[0]}, {"location[1]": data.location[1]}]}, function (err, object) {
+    Sandpit.findOne({$and: [{"location[0]": newSandpit.location[0]}, {"location[1]": newSandpit.location[1]}]}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
