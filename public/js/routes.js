@@ -11,6 +11,10 @@ angularRoutingApp.config(function($routeProvider) {
             templateUrl : 'views/home.html',
             controller  : 'addCtrl'
         })
+        .when('/parques', {
+            templateUrl : 'views/maps.html',
+            controller  : 'addCtrl'
+        })
         .when('/eventos', {
             templateUrl : 'views/eventos.html',
             controller  : 'parquesController'
