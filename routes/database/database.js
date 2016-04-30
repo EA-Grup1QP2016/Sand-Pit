@@ -16,7 +16,7 @@ function createUserDB(data, callback) {
         fullName: data.fullName,
         location: data.location,
         password: data.password,
-        admin: data.admin
+        role: data.admin
     });
     User.findOne({"email": data.email}, function (err, object) {
         if (err) {

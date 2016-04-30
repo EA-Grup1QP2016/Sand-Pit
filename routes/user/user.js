@@ -14,8 +14,9 @@ function createUser(req, res) {
         "password": req.body.password,
         "location": req.body.location,
         "fullName": req.body.fullName,
-        "admin": req.body.admin
+        "role": false  //turn it to true if you want to create a admin user
     };
+    console.log(data);
     db.createUserDB(data, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });

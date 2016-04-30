@@ -9,8 +9,8 @@ var userSchema = new Schema({
     location: { type: String, required: false},
     password: { type: String, required: false },
     provider: { type: String },
-    provider_id: { type: String }
-    //admin: Boolean
+    provider_id: { type: String },
+    role: Boolean
     //idSandpit: { type: Schema.ObjectId, ref: "Sandpit"}
 });
 

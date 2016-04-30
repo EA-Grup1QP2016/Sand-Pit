@@ -51,14 +51,14 @@ function myFacebookStrategy(token, refreshToken, profile, done) {
                     if(!err && user!= null) return done(null, user);
 
                     console.log('profile data', profile);
+                    console.log(profile);
 
                     // Al igual que antes, si el usuario ya existe lo devuelve
                     // y si no, lo crea y salva en la base de datos
                     var user = new User({
-                        provider_id	    : profile.id,
                         fullName		: profile.displayName,
-                        email           : profile.emails[0].value
-                        //photo			: profile.photos[0].value
+                        email           : profile.emails[0].value,
+                        role			: false //set it to true if you want to create an admin user
                     });
 
                     console.log('user info', user)
