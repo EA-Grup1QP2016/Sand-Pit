@@ -7,26 +7,26 @@
             <div class="panel-heading"><h3>Lista de usuarios</h3></div>
             <div class="panel-footer">
                 <table style="width:100%">
-                    <tr> 
-                        <th type="text">Edit</th> 
+                    <tr>
+                        <th type="text">Edit</th>
                         <br>
-                        <th type="text">Name</th> 
+                        <th type="text">Name</th>
                         <br>
-                        <th type="text">Location</th> 
+                        <th type="text">Location</th>
                         <br>
-                        <th type="text">Email</th> 
+                        <th type="text">Email</th>
                         <br>
-                    </tr>  
-                    <tr ng-repeat="user in users"> 
-                        <td> 
-                            <button class="w3-btn-floating-large w3-teal" ng-click="selectUser(user)">&#9998;</button> 
-                        </td> 
-                        <td type="text">{{ user.fullName }}</td> 
-                        <td type="text">{{ user.location }}</td> 
-                        <td type="text">{{ user.email }}</td> 
-                        <td> 
-                            <button ng-click="deleteUser(user._id)">x</button> 
-                        </td> 
+                    </tr>
+                    <tr ng-repeat="user in users">
+                        <td>
+                            <button class="w3-btn-floating-large w3-teal" ng-click="selectUser(user)">&#9998;</button>
+                        </td>
+                        <td type="text">{{ user.fullName }}</td>
+                        <td type="text">{{ user.location }}</td>
+                        <td type="text">{{ user.email }}</td>
+                        <td>
+                            <button ng-click="deleteUser(user._id)">x</button>
+                        </td>
                     </tr>
                 </table>
             </div>

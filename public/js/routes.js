@@ -105,15 +105,21 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
     });
 
     // Creates a new user based on the form fields
-    $scope.createSandpit = function() {
-
+    $scope.createSandpit = function(req) {
+        console.log(req);
+        if (!req){
+            console.log("You need to be logged in to create a SandPit")
+            window.location.href="/";
+            return;
+        }
         // Grabs all of the text box fields
         var sandpitData = {
             name: $scope.formData.name,
             description: $scope.formData.description,
             price: $scope.formData.price,
             location: [$scope.formData.longitude, $scope.formData.latitude],
-            htmlverified: $scope.formData.htmlverified
+            htmlverified: $scope.formData.htmlverified,
+            creator: req.email
         };
 
         // Saves the user data to the db

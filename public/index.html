@@ -9,14 +9,14 @@
     <link rel="stylesheet" type="text/css" href="css/fd.min.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
-
+    <script type="text/javascript">window.user = <%- user %>;</script>
     <link rel="canonical" href="http://sand-pit.me"/>
     <style type="text/css"></style>
     <script type="text/javascript" src="js/lib-bundle.min.js?v=75b" ></script>
     <script type="text/javascript" src="js/jquery-plugins.min.js?v=75b" ></script>
 
 </head>
-<body ng-controller="mainController">
+<body ng-controller="mainController" ng-init="logged_in_user = {req.user}">
 <div id="routes">
     <nav class="navbar navbar-default navbar-fixed-top" >
         <div class="container-fluid">
@@ -66,7 +66,7 @@
 <div ng-view></div>
 
 
-<!-- Controlador dels parcs i events (amb gmaps)-->>
+<!-- Controlador dels parcs i events (amb gmaps)-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLRQuMbzorcGujWn_76SLxzF3IkwoTM38"></script>
 <script src="bower_components/modernizr/bin/modernizr"></script>
 <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -77,7 +77,7 @@
 <script src="js/app.js"></script>
 <script src="js/addCtrl.js"></script>
 <script src="js/gservice.js"></script>
-<!-- Controlador de les vistes-->>
+<!-- Controlador de les vistes-->
 <script src="js/routes.js"></script>
 
 </body>

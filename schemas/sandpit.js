@@ -12,9 +12,9 @@ var SandpitSchema = new Schema({
     price: {type: Number, required: true},
     location: {type: [Number], required: true}, // [Long, Lat]
     htmlverified: String,
+    creator: String,
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
-    
 });
 
 // Sets the created_at parameter equal to the current time
