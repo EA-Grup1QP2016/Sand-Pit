@@ -9,6 +9,7 @@ var Schema      = mongoose.Schema;
 var SandpitSchema = new Schema({
     name: {type: String, required: true},
     description: {type: String, required: false},
+    facilities: [String], //String de instalaciones
     price: {type: Number, required: true},
     location: {type: [Number], required: true}, // [Long, Lat]
     htmlverified: String,

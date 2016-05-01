@@ -20,15 +20,16 @@ function createSandpits(req, res) {
     });
 }
 
+
 function removeSandpit(req, res){
-    console.log(LOG_TAG, "Remove User");
-    var name = req.body.name;
-    db.removeSandpitDB(name, function(state, details) {
+    console.log(LOG_TAG, "Remove Sandpit");
+    var id = req.params.sandpit_id;
+    db.removeSandpitDB(id, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
 
 module.exports.listSandpits = listSandpits;
+module.exports.createSandpits = createSandpits;
 module.exports.removeSandpit = removeSandpit;
 
-module.exports.createSandpits = createSandpits;

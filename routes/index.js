@@ -8,26 +8,17 @@ var mongoose    = require('mongoose');
 
 module.exports = function (app) {
 
-    // devolver todos los Users
-    app.get('/user', userCtrl.listUsers);
-
-    // Crear un nuevo User
+    // CRUD Users
     app.post('/user', userCtrl.createUser);
-
-    // Modificar los datos de un User
+    app.get('/user', userCtrl.listUsers);
     app.put('/user/:user_id', userCtrl.updateUser);
-
-    // Borrar un User
     app.delete('/user/:user_id', userCtrl.removeUser);
 
-//listar y crear parques
 
-    app.get('/sandpit', sandpitCtrl.listSandpits);
-
+    //CRUD de parques
     app.post('/sandpit', sandpitCtrl.createSandpits);
-
-
-
+    app.get('/sandpit', sandpitCtrl.listSandpits);
+    app.delete('/sandpit/:sandpit_id', sandpitCtrl.removeSandpit);
 
 
     var router = express.Router();

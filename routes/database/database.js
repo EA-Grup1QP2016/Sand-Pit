@@ -79,7 +79,7 @@ function removeUserDB(id, callback) {
             callback(false, err);
         } else {
             listUsersDB(function (state, details) {
-                console.log(LOG_TAG, "User saved in database");
+                console.log(LOG_TAG, "User deleted from database");
                 callback(true, details);
             });
         }
@@ -146,18 +146,20 @@ function createSandpitsDB(data, callback) {
     })
 }
 
-function removeSandpitDB(name, callback) {
-    Sandpit.remove({name: name}, function (err, object) {
+
+function removeSandpitDB(id, callback) {
+    Sandpit.remove({_id: id}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            console.log(LOG_TAG, "User removed successfully");
-            callback(true);
+            listSandpitsDB(function (state, details) {
+                console.log(LOG_TAG, "Sandpit deleted from database");
+                callback(true, details);
+            });
         }
     });
 }
-
 /**
  * Here goes all the methods related CRUD events
  */

@@ -2,7 +2,7 @@
  * Created by oriol on 31/3/16.
  */
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'addCtrl', 'geolocation', 'gservice']);
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'addCtrl', 'geolocation', 'gservice', 'kendo.directives']);
 var addCtrl = angular.module('addCtrl', ['geolocation', 'gservice']);
 // Configuración de las rutas
 angularRoutingApp.config(function($routeProvider) {
@@ -12,7 +12,7 @@ angularRoutingApp.config(function($routeProvider) {
             controller  : 'addCtrl'
         })
         .when('/parques', {
-            templateUrl : 'views/maps.html',
+            templateUrl : 'views/parques.html',
             controller  : 'addCtrl'
         })
         .when('/eventos', {
@@ -76,10 +76,38 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
     var coords = {};
     var lat = 0;
     var long = 0;
-
     // Set initial coordinates to the center of the US
-    $scope.formData.latitude = 39.500;
-    $scope.formData.longitude = -98.350;
+    $scope.formData.latitude = 41;
+    $scope.formData.longitude = 2;
+    // Type of sport facilities
+    $scope.sport_facilities = [
+        "Campo de fútbol",
+        "Campo de fútbol 7",
+        "Campo de rugby",
+        "Campo de hockey",
+        "Campo de béisbol",
+        "Pista de atletismo",
+        "Pista de baloncesto",
+        "Pista de voleibol",
+        "Pista de vóley playa",
+        "Pista de tenis",
+        "Pista de bádminton",
+        "Pista de patinaje sobre ruedas",
+        "Pista de patinaje sobre hielo",
+        "Pista de hockey sobre hielo",
+        "Pista de frontón",
+        "Pista de squash",
+        "Pista de padel"
+    ];
+    // Add facilities to SandPit
+    $scope.items = [    ];
+    $scope.addFacilitie = function() {
+        $scope.items.push($scope.input);
+        $scope.input = '';
+        $scope.formData.facilities = $scope.items;
+        console.log("Instalaciones del parque: ", $scope.formData.facilities)
+    };
+
 
 
 // Initial Coordinates set
@@ -96,7 +124,7 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
         $scope.formData.latitude = parseFloat(coords.lat).toFixed(3);
 
         // Display message confirming that the coordinates verified.
-        $scope.formData.htmlverified = "Yep (Thanks for giving us real data!)";
+        $scope.formData.htmlverified = "Ubicación verificada correctamente";
 
         gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
 
@@ -111,18 +139,18 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
         $scope.$apply(function(){
             $scope.formData.latitude = parseFloat(gservice.clickLat).toFixed(3);
             $scope.formData.longitude = parseFloat(gservice.clickLong).toFixed(3);
-            $scope.formData.htmlverified = "Nope (Thanks for spamming my map...)";
+            $scope.formData.htmlverified = "Danos permiso para determinar tu ubicación";
         });
     });
 
     // Creates a new user based on the form fields
     $scope.createSandpit = function(req) {
         console.log(req);
-        if (!req){
-            console.log("You need to be logged in to create a SandPit")
-            window.location.href="/";
-            return;
-        }
+        //if (!req){
+        //    console.log("You need to be logged in to create a SandPit")
+        //    window.location.href="/";
+        //    return;
+        //}
         // Grabs all of the text box fields
         var sandpitData = {
             name: $scope.formData.name,
@@ -130,7 +158,8 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
             price: $scope.formData.price,
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified,
-            creator: req.email
+            facilities: $scope.formData.facilities,
+            //creator: req.email
         };
 
         // Saves the user data to the db
@@ -158,6 +187,9 @@ angularRoutingApp.controller('eventosController', function($scope) {
 
 angularRoutingApp.controller('parquesController', function($scope) {
     $scope.message = 'Esta es la página de parques';
+
+
+
 });
 
 angularRoutingApp.controller('registerController', function($scope, $http) {
@@ -343,12 +375,11 @@ angularRoutingApp.controller('parksController', function($scope, $http) {
             });
     };
 
-    // Función que borra un objeto user conocido su id
-    $scope.deleteUser = function(id) {
-        $http.delete('/user/' + id)
+    // Función que borra un objeto conocido su id
+    $scope.deleteSandpit = function(id) {
+        $http.delete('/sandpit/' + id)
             .success(function(data) {
-                $scope.newUSER = {};
-                $scope.users = data;
+                $scope.sandpits = data;
             })
             .error(function(data) {
                 console.log('Error: ' + data);
