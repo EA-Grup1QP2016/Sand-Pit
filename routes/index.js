@@ -26,6 +26,10 @@ module.exports = function (app) {
 
     app.post('/sandpit', sandpitCtrl.createSandpits);
 
+
+
+
+
     var router = express.Router();
 
     /* GET home page. */
@@ -43,7 +47,7 @@ module.exports = function (app) {
     //route for logging out
     router.get('/logout', function (req, res, next) {
         req.logout();
-        res.redirect('/');
+        res.redirect('/login');
     });
 
     //route for facebook authentication and login. See the list of permissions
@@ -51,11 +55,22 @@ module.exports = function (app) {
     router.get('/auth/facebook', passport.authenticate('facebook', {
         scope: ['public_profile', 'email']
     }));
+    router.get('/auth/twitter', passport.authenticate('twitter', {
+        scope: ['public_profile', 'email']
+    }));
+
+
     //handle the callback after facebook has authenticated the user
     router.get('/auth/facebook/callback', passport.authenticate('facebook', {
         successRedirect: '/',
         failureRedirect: '/registro'
     }));
+    router.get('/auth/twitter/callback', passport.authenticate('twitter', {
+        successRedirect: '/',
+        failureRedirect: '/registro'
+    }));
+
+
     /* route middleware to check whether user is authenticated */
     function isAuth(req, res, next) {
         // if user is authenticated, go on
