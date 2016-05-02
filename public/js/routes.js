@@ -72,6 +72,10 @@ angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geol
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
+    
+    
+    
+    
     $scope.formData = {};
     var coords = {};
     var lat = 0;
