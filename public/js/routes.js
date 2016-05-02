@@ -2,18 +2,18 @@
  * Created by oriol on 31/3/16.
  */
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'addCtrl', 'geolocation', 'gservice', 'kendo.directives']);
-var addCtrl = angular.module('addCtrl', ['geolocation', 'gservice']);
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'mapCtrl', 'geolocation', 'gservice', 'kendo.directives']);
+var mapCtrl = angular.module('mapCtrl', ['geolocation', 'gservice']);
 // Configuración de las rutas
 angularRoutingApp.config(function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl : 'views/home.html',
-            controller  : 'addCtrl'
+            controller  : 'mapCtrl'
         })
         .when('/parques', {
             templateUrl : 'views/parques.html',
-            controller  : 'addCtrl'
+            controller  : 'mapCtrl'
         })
         .when('/eventos', {
             templateUrl : 'views/eventos.html',
@@ -68,7 +68,7 @@ angularRoutingApp.controller('loginController', function($scope, $http) {
     };
 });
 
-angularRoutingApp.controller('addCtrl', function($scope, $http, $rootScope, geolocation, gservice){
+angularRoutingApp.controller('mapCtrl', function($scope, $http, $rootScope, geolocation, gservice){
 
     // Initializes Variables
     // ----------------------------------------------------------------------------

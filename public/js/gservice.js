@@ -10,9 +10,9 @@ angular.module('gservice', [])
         // Array of locations obtained from API calls
         var locations = [];
 
-        // Selected Location (initialize to center of America)
-        var selectedLat = 39.50;
-        var selectedLong = -98.35;
+        // Selected Location (initialize to center of Catalonia)
+        var selectedLat = 41.826129;
+        var selectedLong = 1.706835;
     // Handling Clicks and location selection
         googleMapService.clickLat  = 0;
         googleMapService.clickLong = 0;

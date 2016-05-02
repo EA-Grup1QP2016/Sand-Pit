@@ -10,14 +10,16 @@ var methodOverride = require('method-override');
 var http = require("http");
 var server = http.createServer(app);
 var router = express.Router();
-
 var app = express();
+var session = require('express-session');
+var passport = require('passport');
 
 mongoose.connect('mongodb://localhost:27017/sandPit');
 
+//app.get('*', function(req, res) {
+//  res.redirect('/#' + req.originalUrl);
+//});
 //Needed for passport; copy after var app has been initialized
-var passport = require('passport');
-var session = require('express-session');
 //configure passport object through config/passport.js
 require('./config/passport')(passport);
 
@@ -26,7 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 app.set('view engine', 'jade');
-app.set('views', './views');
+app.set('views', 'public/views');
 
 //This goes before the routes are called
 app.use(logger('dev'));
@@ -42,14 +44,11 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(express.static(__dirname + '/public'));
 
-
-app.use(express.static(path.join(__dirname,'public')));
-//app.use('/public/bower_components',  express.static(__dirname + '/public/bower_components'));
 
 // Cargamos los endpoints
 require('./routes/index.js')(app);
-
 
 app.listen(5000, function () {
   console.log('Listening on port 5000...');
