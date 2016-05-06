@@ -4,7 +4,9 @@ var eventCtrl = require("./events/events.js");
 var express = require('express');
 var passport = require('passport');
 var mongoose = require('mongoose');
-var session = require('../middleware/session.js');
+var middleware = require('../config/middleware.js');
+
+
 
 
 module.exports = function (app) {
@@ -12,14 +14,14 @@ module.exports = function (app) {
     // CRUD Users
     app.post('/user', userCtrl.createUser);
     app.get('/user', userCtrl.listUsers);
-    app.put('/user/:user_id', userCtrl.updateUser);
-    app.delete('/user/:user_id', userCtrl.removeUser);
+    app.put('/user/:user_id', middleware.ensureAuthenticated, userCtrl.updateUser);
+    app.delete('/user/:user_id', middleware.ensureAuthenticated, userCtrl.removeUser);
 
 
     //CRUD de parques
-    app.post('/sandpit', session.isAuth, sandpitCtrl.createSandpits);
+    app.post('/sandpit', middleware.ensureAuthenticated, sandpitCtrl.createSandpits);
     app.get('/sandpit', sandpitCtrl.listSandpits);
-    app.delete('/sandpit/:sandpit_id', session.isAuth, sandpitCtrl.removeSandpit);
+    app.delete('/sandpit/:sandpit_id', middleware.ensureAuthenticated, sandpitCtrl.removeSandpit);
 
 
     var router = express.Router();
@@ -30,7 +32,7 @@ module.exports = function (app) {
     });
 
     //route for showing the profile page; only accessible after authentication
-    router.get('/profile', session.isAuth, function (req, res, next) {
+    router.get('/profile', middleware.ensureAuthenticated, function (req, res, next) {
         console.log('user information profile', req);
         res.send(req.user);
         //res.render('profile', {title: 'Your profile page', user: req.user});

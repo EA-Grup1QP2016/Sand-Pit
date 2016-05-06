@@ -3,6 +3,7 @@
  * p y rovided by the OAuth provider
  */
 var User = require('../schemas/user.js');
+var service = require('./service');
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
@@ -104,7 +105,7 @@ function myFacebookStrategy(token, refreshToken, profile, done) {
 //Save the token for later actions with facebook (real actions
 //will require using facebook API or Node SDK (authorized by this token)
 //will require using facebook API or Node SDK (authorized by this token)
-        newUser.token = token;
+        newUser.token = service.createToken(profile);
 //Assume the user is authenticated
 //newUser is made accessible through the session (req.user)
 //jump back to passport.authenticate()

@@ -5,13 +5,15 @@
 var LOG_TAG = "users.js -->    ";
 var db = require("../database/database.js");
 var utils = require("../utils/utils.js");
+var Hashes = require('jshashes');
 
 function createUser(req, res) {
     console.log(LOG_TAG, "Create user.");
     console.log(req.body);
+    var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
     var data = {
         "email": req.body.email,
-        "password": req.body.password,
+        "password": passwordHash,
         "location": req.body.location,
         "fullName": req.body.fullName,
         "role": false  //turn it to true if you want to create a admin user
@@ -24,9 +26,10 @@ function createUser(req, res) {
 
 function loginUser(req, res) {
     console.log(req.email)
-    console.log(LOG_TAG, "Login user.")
+    console.log(LOG_TAG, "Login user.");
+    var passwordHash = new Hashes.SHA256(req.body.password).hex(req.body.password);
     var email = req.body.email;
-    var pwd = req.body.password;
+    var pwd = passwordHash;
     db.loginDB(email, pwd, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
