@@ -34,13 +34,24 @@ body {
   margin: 2px 0 0;
   font-size: 18px;
   list-style: none;
-  background-image: url("/images/aut.jpg");
+  background-color: dimgrey;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   background-clip: padding-box;
+}
+.own_row{
+  width: 42%;
+  float: right;
+  margin-right: -35%;
+}
+
+.my_map{
+  width: 850px;
+  height: 500px;
+  margin-left: 7px;
 }
 
 .dropdown-menu.pull-right {
@@ -1173,8 +1184,14 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
-.navbar-default {
+.navbar-default_old {
   background-image: url("/images/fulles.jpg");
+  border-color: transparent;
+  font-size: 18px;
+}
+
+.navbar-default {
+  background-color: lightgray;
   border-color: transparent;
   font-size: 18px;
 }
@@ -1199,7 +1216,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #336600;
+  color: slategrey;
   background-color: transparent;
 }
 
@@ -1245,7 +1262,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
   color: #000000;
-  background-image: url("/images/fulles.jpg");
+  background-color: whitesmoke;
 }
 
 .navbar-default .navbar-nav > .open > a .caret,
@@ -1744,7 +1761,6 @@ a.list-group-item.active > .badge,
 
 @media screen and (min-width: 768px) {
   .jumbotron {
-    padding-top: 48px;
     padding-bottom: 48px;
   }
   .container .jumbotron {
