@@ -8,35 +8,35 @@ var mapCtrl = angular.module('mapCtrl', ['geolocation', 'gservice']);
 angularRoutingApp.config(function($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl : 'views/home.html',
+            templateUrl : '../views/home.html',
             controller  : 'mapCtrl'
         })
         .when('/parques', {
-            templateUrl : 'views/parques.html',
+            templateUrl : '../views/parques.html',
             controller  : 'mapCtrl'
         })
         .when('/eventos', {
-            templateUrl : 'views/eventos.html',
+            templateUrl : '../views/eventos.html',
             controller  : 'parquesController'
         })
         .when('/registro', {
-            templateUrl : 'views/registro.html',
+            templateUrl : '../views/registro.html',
             controller  : 'registerController'
         })
         .when('/login', {
-            templateUrl : 'views/login.html',
+            templateUrl : '../views/login.html',
             controller  : 'loginController'
         })
         .when('/gestion-users', {
-            templateUrl : 'views/gestionUsuarios.html',
+            templateUrl : '../views/gestionUsuarios.html',
             controller  : 'usersController'
         })
         .when('/gestion-parques', {
-            templateUrl : 'views/gestionParques.html',
+            templateUrl : '../views/gestionParques.html',
             controller  : 'parksController'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/login'
         });
 });
 
@@ -72,9 +72,6 @@ angularRoutingApp.controller('mapCtrl', function($scope, $http, $rootScope, geol
 
     // Initializes Variables
     // ----------------------------------------------------------------------------
-    
-    
-    
     
     $scope.formData = {};
     var coords = {};
@@ -149,12 +146,9 @@ angularRoutingApp.controller('mapCtrl', function($scope, $http, $rootScope, geol
 
     // Creates a new user based on the form fields
     $scope.createSandpit = function(req) {
+
         console.log(req);
-        //if (!req){
-        //    console.log("You need to be logged in to create a SandPit")
-        //    window.location.href="/";
-        //    return;
-        //}
+
         // Grabs all of the text box fields
         var sandpitData = {
             name: $scope.formData.name,
@@ -191,8 +185,6 @@ angularRoutingApp.controller('eventosController', function($scope) {
 
 angularRoutingApp.controller('parquesController', function($scope) {
     $scope.message = 'Esta es la página de parques';
-
-
 
 });
 

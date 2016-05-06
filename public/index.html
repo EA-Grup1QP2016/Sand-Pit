@@ -31,32 +31,32 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="brand"><a href="#"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                    <li class="brand"><a href="#eventos"><span class="glyphicon glyphicon-bullhorn"></span> Events</a></li>
-                    <li class="brand"><a href="#parques"><span class="glyphicon glyphicon-tree-conifer"></span> Sandpits</a></li>
+                    <li class="brand"><a href="#/"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li class="brand"><a href="#/eventos"><span class="glyphicon glyphicon-bullhorn"></span> Events</a></li>
+                    <li class="brand"><a href="#/parques"><span class="glyphicon glyphicon-tree-conifer"></span> Sandpits</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-question-sign"></span> About us<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="https://github.com/EA-Grup1QP2016/Sand-Pit"><span class="glyphicon glyphicon-cloud"></span> GitHub</a></li>
-                            <li><a href="https://eagrup1curs2016.wordpress.com/"><span class="glyphicon glyphicon-list-alt"></span> Blog</a></li>
-                            <li><a href="#about"><span class="glyphicon glyphicon-info-sign"></span> ¿Quienes somos?</a></li>
-                            <li><a href="mailto:admin@sand-pit.me"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                            <li><a ng-href="https://github.com/EA-Grup1QP2016/Sand-Pit"><span class="glyphicon glyphicon-cloud"></span> GitHub</a></li>
+                            <li><a ng-href="https://eagrup1curs2016.wordpress.com/"><span class="glyphicon glyphicon-list-alt"></span> Blog</a></li>
+                            <li><a ng-href="#about"><span class="glyphicon glyphicon-info-sign"></span> ¿Quienes somos?</a></li>
+                            <li><a ng-href="mailto:admin@sand-pit.me"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
 
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> Gestión <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#gestion-users"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
-                            <li><a href="#gestion-parques"><span class="glyphicon glyphicon-tree-conifer"></span> Parques</a></li>
-                            <li><a href="#gestion-eventos"><span class="glyphicon glyphicon-bullhorn"></span> Eventos</a></li>
+                            <li><a ng-href="#gestion-users"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>
+                            <li><a ng-href="#gestion-parques"><span class="glyphicon glyphicon-tree-conifer"></span> Parques</a></li>
+                            <li><a ng-href="#gestion-eventos"><span class="glyphicon glyphicon-bullhorn"></span> Eventos</a></li>
                         </ul>
                     </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#registro"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a ng-href="#registro"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a ng-href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
             </div>
         </div>
@@ -64,7 +64,7 @@
 </div>
 
 <!-- Aquí inyectamos las vistas -->
-<div ng-view></div>
+<ng-view></ng-view>
 
 
 <!-- Controlador dels parcs i events (amb gmaps)-->

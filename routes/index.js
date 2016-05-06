@@ -3,7 +3,8 @@ var sandpitCtrl = require("./sandpit/sandpit.js");
 var eventCtrl = require("./events/events.js");
 var express = require('express');
 var passport = require('passport');
-var mongoose    = require('mongoose');
+var mongoose = require('mongoose');
+var session = require('../middleware/session.js');
 
 
 module.exports = function (app) {
@@ -16,20 +17,20 @@ module.exports = function (app) {
 
 
     //CRUD de parques
-    app.post('/sandpit', sandpitCtrl.createSandpits);
+    app.post('/sandpit', session.isAuth, sandpitCtrl.createSandpits);
     app.get('/sandpit', sandpitCtrl.listSandpits);
-    app.delete('/sandpit/:sandpit_id', sandpitCtrl.removeSandpit);
+    app.delete('/sandpit/:sandpit_id', session.isAuth, sandpitCtrl.removeSandpit);
 
 
     var router = express.Router();
 
     /* GET home page. */
     router.get('/', function (req, res, next) {
-        res.render('hello', {title: 'OAuth example: facebook'});
+        res.render('hello', { title: 'OAuth example: facebook' });
     });
 
     //route for showing the profile page; only accessible after authentication
-    router.get('/profile', isAuth, function (req, res, next) {
+    router.get('/profile', session.isAuth, function (req, res, next) {
         console.log('user information profile', req);
         res.send(req.user);
         //res.render('profile', {title: 'Your profile page', user: req.user});
@@ -60,16 +61,6 @@ module.exports = function (app) {
         successRedirect: '/',
         failureRedirect: '/registro'
     }));
-
-
-    /* route middleware to check whether user is authenticated */
-    function isAuth(req, res, next) {
-        // if user is authenticated, go on
-        if (req.isAuthenticated())
-            return next();
-        // otherwise, send her back to home
-        res.redirect('/');
-    }
 
     app.use('/', router);
 };
