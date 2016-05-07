@@ -6,9 +6,6 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var middleware = require('../config/middleware.js');
 
-
-
-
 module.exports = function (app) {
 
     // CRUD Users
@@ -63,6 +60,10 @@ module.exports = function (app) {
         successRedirect: '/',
         failureRedirect: '/registro'
     }));
+    
+    app.get('/*', function(req, res){
+       res.redirect("/")
+    });
 
     app.use('/', router);
 };
