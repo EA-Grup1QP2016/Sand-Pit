@@ -8,10 +8,10 @@
     <div class="row content">
         <!-- Google Map -->
         <div class="col-md-7">
-            <div id="map" class="my_map" style="width:140vh; height:80vh"></div>
+            <div id="map" class="my_map" style="width:140vh; height:83vh"></div>
         </div>
         <!-- Side Panel -->
-        <div class="own_row"  style="width:50vh" >
+        <div class="own_row"  style="width:50vh; height:70vh" >
             <div class="panel panel-default">
                 <!-- Panel Title -->
                 <div class="panel-heading">
@@ -23,7 +23,10 @@
                     <form name ="addForm" novalidate>
                         <!-- Text Boxes and Other User Inputs. Note ng-model binds the values to Angular $scope -->
                         <div class="form-group">
-                            <label for="name">Nombre del Parque <span class="badge">Rellena todos los campos</span></label>
+                            <span class="badge">Rellena todos los campos</span>
+                            <br>
+                        
+                            <label for="name">Nombre del Parque </label>
                             <input type="text" class="form-control" id="name" placeholder="Nombre..." ng-model="formData.name" required>
                         </div>
 
@@ -48,7 +51,7 @@
                             <label for="price">Precio de entrada (€)</label>
                             <input type="number" class="form-control" id="price" placeholder="0" ng-model="formData.price" required>
                         </div>
-
+<br>
                         <button type="submit" class="btn btn-danger btn-block" ng-click="createSandpit()" ng-disabled="addForm.$invalid">Enviar</button>
                     </form>
                 </div>
