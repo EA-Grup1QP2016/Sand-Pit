@@ -20,13 +20,13 @@
                     </tr>
                     <tr ng-repeat="user in users">
                         <td>
-                            <button class="w3-btn-floating-large w3-teal" ng-click="selectUser(user)">&#9998;</button>
+                            <button class="w3-btn-floating-large w3-teal" ng-click="selectUser(user)">&#9998</button>
                         </td>
                         <td type="text">{{ user.fullName }}</td>
                         <td type="text">{{ user.location }}</td>
                         <td type="text">{{ user.email }}</td>
                         <td>
-                            <button ng-click="deleteUser(user._id)">x</button>
+                            <button class="body_button" ng-click="deleteUser(user._id)">&#10008</button>
                         </td>
                     </tr>
                 </table>

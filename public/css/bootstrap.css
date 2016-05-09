@@ -48,6 +48,19 @@ body {
   
 }
 
+.body_button{
+font-size:.88888889em;
+font-family:TensoMedium;
+text-transform:uppercase;
+color: red;
+border-color: dimgray;
+}
+
+.body_button:hover, .btn:hover, .btn-link:hover {
+    color: dimgray;
+    border-color: #c9302c;
+}
+
 .my_map{
   width: 850px;
   height: 500px;
