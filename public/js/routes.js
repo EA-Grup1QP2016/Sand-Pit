@@ -298,8 +298,6 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     };
 // Función para coger el objeto seleccionado en la tabla antes de editarlo
     $scope.selectUser = function(user){
-        if (confirm('¿Estas seguro de editar este usuario?')){
-            console.log("funciona");
             $scope.newUser = user;
             $scope.selected = true;
             $scope.header = "Editar usuario";
@@ -307,9 +305,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
             $scope.create = true;
 
             console.log($scope.newUser, $scope.selected);
-        }
-        console.log("cancelado")
-    };
+        };
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {

@@ -3635,3 +3635,33 @@ td.visible-print {
     display: none !important;
   }
 }
+
+.button_accept_modal{
+  font-size:.88888889em;
+  font-weight: bold;
+  font-family:TensoLarge;
+  text-transform:uppercase;
+  color: green;
+  border-color: black;
+}
+
+.button_accept_modal:hover, .btn:hover, .btn-link:hover {
+  color: black;
+  border-color: green;
+  background: lightgreen;
+}
+
+.button_cancel_modal{
+  font-size:.88888889em;
+  font-weight: bold;
+  font-family:TensoLarge;
+  text-transform:uppercase;
+  color: red;
+  border-color: black;
+}
+
+.button_cancel_modal:hover, .btn:hover, .btn-link:hover {
+  color: black;
+  border-color: red;
+  background: pink;
+}
