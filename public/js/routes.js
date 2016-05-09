@@ -87,6 +87,32 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
+    $scope.message = 'Formulario para añadir estudiantes';
+    $scope.newUser = {};
+    $scope.users = {};
+
+    // Obtenemos todos los estudiantes
+    $http.get('/api/user').success(function(data) {
+            $scope.users = data;
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+
+    // Función para registrar estudiante
+    $scope.createUserModal = function() {
+        $http.post('/api/user', $scope.newUser)
+            .success(function(data) {
+                $scope.newUser = {}; // Borramos los datos del formulario
+                $scope.users = data;
+            })
+            .error(function(data) {
+                console.log('Error: ' + data);
+            });
+    };
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////Fin register Modal
+
     // Initializes Variables
     // ----------------------------------------------------------------------------
 

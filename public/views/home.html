@@ -9,3 +9,33 @@
       
     
 </div>
+
+<!-- Modal button Register-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form name myForm>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg text-center"  placeholder="Inserta un nombre" ng-model="newUser.fullName" required>
+                        <br>
+                        <input type="email" class="form-control input-lg text-center"  placeholder="Correo electrónico" ng-model="newUser.email" required>
+                        <br>
+                        <input type="password" class="form-control input-lg text-center"  placeholder="Password" ng-model="newUser.password" required>
+
+                    </div>
+                    <button type="button" ng-click="createUserModal()" class="button_accept_modal" data-dismiss="modal" >Register</button>
+                    <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+</div>

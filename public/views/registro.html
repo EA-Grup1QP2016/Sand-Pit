@@ -14,29 +14,21 @@
                             <form role="form">
                                 <fieldset>
                                     <div class="form-group">
-                                        <input class="form-control" placeholder="Nombre y apellidos" ng-disabled="!edit" ng-model="newUser.fullName" autofocus>
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control" placeholder="Localización" ng-disabled="!edit" ng-model="newUser.location" autofocus>
+                                        <input class="form-control" type="text" placeholder="Nombre y apellidos" ng-disabled="!edit" ng-model="newUser.fullName" autofocus>
+                                        <span ng-show="myForm.user.$error.required">Username is required.</span>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" type="email" placeholder="E-mail" ng-disabled="!update || !edit" ng-model="newUser.email" autofocus>
+                                        <span ng-show="myForm.email.$error.required">Email is required.</span>
+                                        <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" type="password" placeholder="Contraseña" ng-disabled="!edit" ng-model="newUser.password" autofocus>
+                                        <span ng-show="myForm.user.$error.required">Los passwords deben ser iguales</span>
                                     </div>
                                     <div class="form-group">
                                         <input class="form-control" type="password" placeholder="Repite contraseña" ng-disabled="!edit" ng-model="pass2" autofocus>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input name="remember" type="checkbox" value="Remember Me">Guardar sesión
-                                        </label>
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-
-                                        </label>
                                     </div>
                                     <!-- Change this to a button or input when using this as a form -->
                                     <button  class="btn btn-lg btn-success btn-block" ng-disabled="error || incomplete" ng-hide="create" ng-click="createUser()">Registrarse</button>
@@ -49,3 +41,9 @@
         </div>
     </div>
 </div>
+
+<style>
+    input.ng-invalid {
+        background-color: pink;
+    }
+</style>
