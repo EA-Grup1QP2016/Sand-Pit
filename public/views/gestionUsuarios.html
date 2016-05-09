@@ -22,8 +22,8 @@
                     <tr ng-repeat="user in users">
 
                         <td>
-                            <button type="button" class="w3-btn-floating-large w3-teal" data-toggle="modal" data-target="#myModal">&#9998</button>
-                            <button class="w3-btn-floating-large w3-teal" ng-click="selectUser(user)">&#9998</button>
+                            <button type="button" class="button_warning_modal" data-toggle="modal" data-target="#myModal">&#9998</button>
+                            <button class="button_accept_modal" ng-click="selectUser(user)">&#9998</button>
 
                             <!-- Modal button edit-->
                             <div class="modal fade" id="myModal" role="dialog">
@@ -52,7 +52,7 @@
                         <td type="text">{{ user.location }}</td>
                         <td type="text">{{ user.email }}</td>
                         <td>
-                            <button class="body_button" ng-click="deleteUser(user._id)">&#10008</button>
+                            <button class="button_cancel_modal" ng-click="deleteUser(user._id)">&#10008</button>
                         </td>
                     </tr>
                 </table>

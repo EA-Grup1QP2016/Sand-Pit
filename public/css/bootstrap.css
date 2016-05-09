@@ -3641,14 +3641,15 @@ td.visible-print {
   font-weight: bold;
   font-family:TensoLarge;
   text-transform:uppercase;
-  color: green;
+  color: black;
   border-color: black;
+  background: lightgreen;
 }
 
 .button_accept_modal:hover, .btn:hover, .btn-link:hover {
   color: black;
-  border-color: green;
-  background: lightgreen;
+  border-color: black;
+  background: lime;
 }
 
 .button_cancel_modal{
@@ -3656,12 +3657,30 @@ td.visible-print {
   font-weight: bold;
   font-family:TensoLarge;
   text-transform:uppercase;
-  color: red;
+  color: black;
   border-color: black;
+  background: pink;
 }
 
 .button_cancel_modal:hover, .btn:hover, .btn-link:hover {
   color: black;
-  border-color: red;
-  background: pink;
+  border-color: black;
+  background: red;
+}
+
+.button_warning_modal{
+  font-size:.88888889em;
+  font-weight: bold;
+  font-family:TensoLarge;
+  text-transform:uppercase;
+  color: black;
+  border-color: black;
+  background: Khaki;
+
+}
+
+.button_warning_modal:hover, .btn:hover, .btn-link:hover {
+  color: black;
+  border-color: black;
+  background: yellow;
 }
