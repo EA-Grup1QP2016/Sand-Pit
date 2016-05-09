@@ -46,7 +46,7 @@ angularRoutingApp.controller('mainController', function ($scope) {
 
 angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
     $scope.loginFacebook = function () {
-        $http.get('/profile').success(function (data) {
+        $http.get('/api/profile').success(function (data) {
             console.log('information data', data);
             $rootScope.authenticated = true;
             $location.path('#gestion-users');
@@ -57,7 +57,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
     };
 
     $scope.loginTwitter = function () {
-        $http.get('/profile').success(function (data) {
+        $http.get('/api/profile').success(function (data) {
             console.log('information data', data);
             $rootScope.authenticated = true;
             $location.path('#gestion-users');
@@ -74,7 +74,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
             email: email,
             password: pwd
         };
-        $http.post('/login', credentials)
+        $http.post('/api/login', credentials)
         .success(function(data){
             console.log("User Logged", data);
             $location.path("/")
@@ -176,7 +176,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         };
         console.log(req);
         // Saves the user data to the db
-        $http.post('/sandpit', sandpitData)
+        $http.post('/api/sandpit', sandpitData)
             .success(function (data) {
 
                 // Once complete, clear the form (except location)
@@ -218,7 +218,7 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
 
     // Función para registrar un user
     $scope.createUser = function () {
-        $http.post('/user', $scope.newUser)
+        $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
@@ -247,7 +247,7 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
             $scope.error = false;
         }
         $scope.incomplete = false;
-        if ($scope.edit && (!$scope.fullName.length || !$scope.lName.length || !$scope.newUser.password.length || !$scope.pass2.length)) {
+        if ($scope.edit && (!$scope.newUser.fullName.length || !$scope.newUser.password.length || !$scope.pass2.length)) {
             $scope.incomplete = true;
         }
     };
@@ -266,7 +266,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     $scope.edit = true;
 
     // Obtenemos todos los datos de la base de datos
-    $http.get('/user').success(function (data) {
+    $http.get('/api/user').success(function (data) {
         $scope.users = data;
     })
         .error(function (data) {
@@ -275,7 +275,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
     // Función para registrar un user
     $scope.createUser = function () {
-        $http.post('/user', $scope.newUser)
+        $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
@@ -287,7 +287,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
     // Función que borra un objeto user conocido su id
     $scope.deleteUser = function (id) {
-        $http.delete('/user/' + id)
+        $http.delete('/api/user/' + id)
             .success(function (data) {
                 $scope.newUSER = {};
                 $scope.users = data;
@@ -313,7 +313,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {
-        $http.put('/user/' + $scope.newUser._id, $scope.newUser)
+        $http.put('/api/user/' + $scope.newUser._id, $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
@@ -348,7 +348,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
             $scope.error = false;
         }
         $scope.incomplete = false;
-        if ($scope.edit && (!$scope.fullName.length ||
+        if ($scope.edit && (!$scope.newUser.fullName.length ||
             !$scope.lName.length ||
             !$scope.newUser.password.length || !$scope.pass2.length)) {
             $scope.incomplete = true;
@@ -369,7 +369,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
     $scope.edit = true;
 
     // Obtenemos todos los datos de la base de datos
-    $http.get('/sandpit').success(function (data) {
+    $http.get('/api/sandpit').success(function (data) {
         $scope.sandpits = data;
     })
         .error(function (data) {
@@ -378,7 +378,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
     // Función para registrar un user
     $scope.createUser = function () {
-        $http.post('/user', $scope.newUser)
+        $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
@@ -390,7 +390,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
     // Función que borra un objeto conocido su id
     $scope.deleteSandpit = function (id) {
-        $http.delete('/sandpit/' + id)
+        $http.delete('/api/sandpit/' + id)
             .success(function (data) {
                 $scope.sandpits = data;
             })
@@ -413,7 +413,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {
-        $http.put('/user/' + $scope.newUser._id, $scope.newUser)
+        $http.put('/api/user/' + $scope.newUser._id, $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
@@ -448,7 +448,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
             $scope.error = false;
         }
         $scope.incomplete = false;
-        if ($scope.edit && (!$scope.fullName.length ||
+        if ($scope.edit && (!$scope.newUser.fullName.length ||
             !$scope.lName.length ||
             !$scope.newUser.password.length || !$scope.pass2.length)) {
             $scope.incomplete = true;

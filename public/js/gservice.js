@@ -31,7 +31,7 @@ angular.module('gservice', [])
             selectedLong = longitude;
 
             // Perform an AJAX call to get all of the records in the db.
-            $http.get('/sandpit').success(function(response){
+            $http.get('/api/sandpit').success(function(response){
 
                 // Convert the results into Google Map Format
                 locations = convertToMapPoints(response);
