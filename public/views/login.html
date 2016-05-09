@@ -12,10 +12,10 @@
                     <form role="form">
                         <fieldset>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" autofocus>
+                                <input class="form-control" placeholder="Usuario" name="usuario" type="usuario" ng-model="login.email" autofocus>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" placeholder="Contraseña" name="password" type="password" value="">
+                                <input class="form-control" placeholder="Contraseña" name="password" type="password" ng-model="login.pwd" value="">
                             </div>
                             <div class="checkbox">
                                 <label>
@@ -29,7 +29,7 @@
                             </div>
 
                             <!-- Change this to a button or input when using this as a form -->
-                            <a href="/" class="btn btn-lg btn-success btn-block">Iniciar</a>
+                            <a ng-click="localLogin()" class="btn btn-lg btn-success btn-block">Iniciar</a>
                             <br>
                             <br>
                             <div class="fd-navbar-tools">

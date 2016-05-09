@@ -6,6 +6,7 @@ var LOG_TAG = "users.js -->    ";
 var db = require("../database/database.js");
 var utils = require("../utils/utils.js");
 var Hashes = require('jshashes');
+var passport = require('../../config/service.js');
 
 function createUser(req, res) {
     console.log(LOG_TAG, "Create user.");
@@ -31,6 +32,9 @@ function loginUser(req, res) {
     var email = req.body.email;
     var pwd = passwordHash;
     db.loginDB(email, pwd, function(state, details) {
+        if (state){
+            passport.createToken(details);
+        }
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
