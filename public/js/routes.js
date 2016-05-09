@@ -309,17 +309,6 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
             console.log($scope.newUser, $scope.selected);
         }
         console.log("cancelado")
-    }
-
-    // Función para coger el objeto seleccionado en la tabla antes de editarlo
-    $scope.selectUser = function (user) {
-        $scope.newUser = user;
-        $scope.selected = true;
-        $scope.header = "Editar usuario";
-        $scope.update = false;
-        $scope.create = true;
-
-        console.log($scope.newUser, $scope.selected);
     };
 
     // Función para editar los datos de una persona
