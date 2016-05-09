@@ -105,7 +105,7 @@ function myFacebookStrategy(token, refreshToken, profile, done) {
 //Save the token for later actions with facebook (real actions
 //will require using facebook API or Node SDK (authorized by this token)
 //will require using facebook API or Node SDK (authorized by this token)
-        newUser.token = service.createToken(profile);
+        newUser.token = token;
 //Assume the user is authenticated
 //newUser is made accessible through the session (req.user)
 //jump back to passport.authenticate()

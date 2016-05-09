@@ -11,7 +11,7 @@ module.exports = function (app) {
     // CRUD Users
     app.post('/user', userCtrl.createUser);
     app.get('/user', userCtrl.listUsers);
-    app.put('/user/:user_id', middleware.ensureAuthenticated, userCtrl.updateUser);
+    app.put('/user/:user_id', isLoggedIn, userCtrl.updateUser);
     app.delete('/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/login", userCtrl.loginUser);
 
@@ -28,7 +28,7 @@ module.exports = function (app) {
     });
 
     //route for showing the profile page; only accessible after authentication
-    router.get('/profile', middleware.ensureAuthenticated, function (req, res, next) {
+    router.get('/profile', function (req, res, next) {
         console.log('user information profile', req);
         res.send(req.user);
         //res.render('profile', {title: 'Your profile page', user: req.user});
