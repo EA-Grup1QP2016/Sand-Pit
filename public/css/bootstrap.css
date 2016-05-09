@@ -1216,7 +1216,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: slategrey;
+  color: #2E8263;
   background-color: transparent;
 }
 
