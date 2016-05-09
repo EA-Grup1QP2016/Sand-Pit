@@ -44,7 +44,7 @@ angularRoutingApp.controller('mainController', function ($scope) {
     $scope.message = 'Hola, Mundooooo!';
 });
 
-angularRoutingApp.controller('loginController', function ($scope, $http) {
+angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
     $scope.loginFacebook = function () {
         $http.get('/profile').success(function (data) {
             console.log('information data', data);
@@ -77,11 +77,11 @@ angularRoutingApp.controller('loginController', function ($scope, $http) {
         $http.post('/login', credentials)
         .success(function(data){
             console.log("User Logged", data);
+            $location.path("/")
         })
         .error(function(data){
             console.log(data);
         })
-        console.log(email, pwd);
     }
 });
 
@@ -172,9 +172,9 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             htmlverified: $scope.formData.htmlverified,
             facilities: $scope.formData.facilities,
             //TODO: add creators email to the request
-            //creator: req.email
+            creator: req.email
         };
-
+        console.log(req);
         // Saves the user data to the db
         $http.post('/sandpit', sandpitData)
             .success(function (data) {

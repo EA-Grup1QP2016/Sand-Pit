@@ -15,6 +15,7 @@ function listSandpits(req, res) {
 
 function createSandpits(req, res) {
     console.log(LOG_TAG, "Create sandpit.");
+    console.log(req.body);
     db.createSandpitsDB(req.body, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });

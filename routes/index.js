@@ -16,9 +16,9 @@ module.exports = function (app) {
     app.post("/login", userCtrl.loginUser);
 
     //CRUD de parques
-    app.post('/sandpit', middleware.ensureAuthenticated, sandpitCtrl.createSandpits);
+    app.post('/sandpit', isLoggedIn, sandpitCtrl.createSandpits);
     app.get('/sandpit', sandpitCtrl.listSandpits);
-    app.delete('/sandpit/:sandpit_id', middleware.ensureAuthenticated, sandpitCtrl.removeSandpit);
+    app.delete('/sandpit/:sandpit_id', isLoggedIn, sandpitCtrl.removeSandpit);
 
     var router = express.Router();
 
