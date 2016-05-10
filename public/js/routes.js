@@ -242,8 +242,8 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log("User Logged", data);
                 console.log(data);
 
-                window.localStorage.setItem("user", JSON.stringify(data));
-                var userlogged = window.localStorage.getItem("user");
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                var userlogged = window.sessionStorage.getItem("user");
                 $scope.usuariologeado = JSON.parse(userlogged);
                 console.log("Bienvenido", $scope.usuariologeado.fullName);
 
