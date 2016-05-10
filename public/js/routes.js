@@ -198,7 +198,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             htmlverified: $scope.formData.htmlverified,
             facilities: $scope.formData.facilities,
             //TODO: add creators email to the request
-            creator: req.email
+            //creator: req.email
         };
         console.log(req);
         // Saves the user data to the db

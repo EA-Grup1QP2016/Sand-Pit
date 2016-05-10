@@ -3,22 +3,20 @@ var sandpitCtrl = require("./sandpit/sandpit.js");
 var eventCtrl = require("./events/events.js");
 var express = require('express');
 var passport = require('passport');
-var mongoose = require('mongoose');
-var middleware = require('../config/middleware.js');
 
 module.exports = function (app) {
 
     // CRUD Users
     app.post('/api/user', userCtrl.createUser);
     app.get('/api/user', userCtrl.listUsers);
-    app.put('/api/user/:user_id', middleware.ensureAuthenticated, userCtrl.updateUser);
-    app.delete('/api/user/:user_id', middleware.ensureAuthenticated, userCtrl.removeUser);
+    app.put('/api/user/:user_id', isLoggedIn, userCtrl.updateUser);
+    app.delete('/api/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/api/login", userCtrl.loginUser);
 
     //CRUD de parques
-    app.post('/api/sandpit', middleware.ensureAuthenticated, sandpitCtrl.createSandpits);
+    app.post('/api/sandpit', isLoggedIn, sandpitCtrl.createSandpits);
     app.get('/api/sandpit', sandpitCtrl.listSandpits);
-    app.delete('/api/sandpit/:sandpit_id', middleware.ensureAuthenticated, sandpitCtrl.removeSandpit);
+    app.delete('/api/sandpit/:sandpit_id', isLoggedIn, sandpitCtrl.removeSandpit);
     
     var router = express.Router();
 
@@ -28,7 +26,7 @@ module.exports = function (app) {
     });
 
     //route for showing the profile page; only accessible after authentication
-    router.get('/api/profile', middleware.ensureAuthenticated, function (req, res, next) {
+    router.get('/api/profile', isLoggedIn, function (req, res, next) {
         console.log('user information profile', req);
         res.send(req.user);
         //res.render('profile', {title: 'Your profile page', user: req.user});
@@ -62,7 +60,7 @@ module.exports = function (app) {
 
     app.get('/*', function(req, res){
         console.log("********************** API URL ");
-        res.redirect("/api");
+        res.redirect("/");
     });
 
     app.use('/', router);
@@ -77,5 +75,3 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
-
-
