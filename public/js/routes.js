@@ -54,11 +54,39 @@ angularRoutingApp.config(function ($routeProvider) {
 
 angularRoutingApp.controller('mainController', function ($scope) {
     $scope.message = 'Hola, Mundooooo!';
-    ////Muestra nombre del usuario logeado///////////
-    var userlogged = window.sessionStorage.getItem("user");
-    $scope.usuariologeado = JSON.parse(userlogged);
-    console.log("Bienvenido", $scope.usuariologeado.fullName);
-    ///////////////
+    $scope.welcome = true; //Escondemos el botón
+    $scope.singup = true; //Escondemos el botón
+    $scope.singup2 = true; //Escondemos el botón
+    $scope.singin = true; //Escondemos el botón
+    $scope.logOut = true; //Escondemos el botón
+
+    ////Muestra nombre del usuario logeado y muestra-esconde botones///////////
+    try{
+        try{
+            $scope.welcome = false; //Mostramos botón
+            $scope.logOut = false; //Mostramos botón
+            var userlogged = window.localStorage.getItem("user");
+            $scope.usuariologeado = JSON.parse(userlogged);
+            console.log("Bienvenido", $scope.usuariologeado.fullName);
+
+        } catch (e) {
+            $scope.welcome = true;
+            $scope.logOut = true;
+            $scope.singin = false;
+            $scope.singup = false;
+            $scope.singup2 = false;
+            console.log("No estás logeado!",e);
+            throw e;
+        }
+    } catch (e){
+    }
+    /////////////////////////////////////////////////
+    $scope.logout = function(){
+        window.localStorage.removeItem("user");
+        console.log("Ha salido correctamente.")
+        window.location.reload();
+        $location.path('/');
+    }
 
 });
 
@@ -101,11 +129,12 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
             console.log("User Logged", data);
             console.log(data);
 
-            window.sessionStorage.setItem("user", JSON.stringify(data));
-            var userlogged = window.sessionStorage.getItem("user");
+            window.localStorage.setItem("user", JSON.stringify(data));
+            var userlogged = window.localStorage.getItem("user");
             $scope.usuariologeado = JSON.parse(userlogged);
             console.log("Bienvenido", $scope.usuariologeado.fullName);
 
+            window.location.reload();
             $location.path("/")
         })
         .error(function(data){

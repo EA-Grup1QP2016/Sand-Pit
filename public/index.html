@@ -55,10 +55,11 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a><span class="glyphicon glyphicon-user"></span> Hola, {{usuariologeado.fullName}}</a></li>
-                    <li><a ng-href="#registro"><span class="glyphicon glyphicon-user"></span> Sign Up antiguo</a></li>
-                    <li><a type="button" data-toggle="modal" data-target="#myModalRegister"><span class="glyphicon glyphicon-user"></span> Sing Up con Modal</a></li>
-                    <li><a ng-href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li ng-hide="welcome"><a><span class="glyphicon glyphicon-user"></span> Hola, {{usuariologeado.fullName}}</a></li>
+                    <li ng-hide="singup"><a ng-href="#registro"><span class="glyphicon glyphicon-user"></span> Sign Up antiguo</a></li>
+                    <li ng-hide="singup2"><a type="button" data-toggle="modal" data-target="#myModalRegister"><span class="glyphicon glyphicon-user"></span> Sing Up con Modal</a></li>
+                    <li ng-hide="singin"><a ng-href="#login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li ng-hide="logOut"><a ng-click="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
                 </ul>
             </div>
         </div>
