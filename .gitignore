@@ -9,5 +9,4 @@ runserver.sh
 .launch.json
 public/bower_components
 .vscode
-config/auth.js
 

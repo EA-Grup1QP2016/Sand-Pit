@@ -46,10 +46,10 @@ angularRoutingApp.controller('mainController', function ($scope) {
 
 angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
     $scope.loginFacebook = function () {
-        $http.get('/api/profile').success(function (data) {
+        $http.get('/api/auth/facebook/callback').success(function (data) {
             console.log('information data', data);
             $rootScope.authenticated = true;
-            $location.path('#gestion-users');
+            $location.path('/');
         })
             .error(function (data) {
                 console.log('Error: ' + data);

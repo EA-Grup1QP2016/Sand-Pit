@@ -40,7 +40,7 @@ module.exports = function (app) {
 
     //route for facebook authentication and login. See the list of permissions
     //(scopes): http://developers.facebook.com/docs/reference/login/
-    router.get('/api/auth/facebook', passport.authenticate('facebook', {
+    router.get('/auth/facebook', passport.authenticate('facebook', {
         scope: ['public_profile', 'email']
     }));
     router.get('/api/auth/twitter', passport.authenticate('twitter', {
@@ -49,10 +49,22 @@ module.exports = function (app) {
 
 
     //handle the callback after facebook has authenticated the user
-    router.get('/api/auth/facebook/callback', passport.authenticate('facebook', {
-        successRedirect: '/api/',
-        failureRedirect: '/api/registro'
-    }));
+    router.get('/auth/facebook/callback', passport.authenticate('facebook', function(err, user){
+        console.log('datos user', user);
+        if (err){
+            res.send(err);
+            return;
+        }
+        req.login(user, function(error){
+            if (error){
+                res.send(error);
+                return;
+            }
+            res.send(null, user);
+        })
+    })
+    );
+    //(req, res)
     router.get('/api/auth/twitter/callback', passport.authenticate('twitter', {
         successRedirect: '/api/',
         failureRedirect: '/api/registro'
