@@ -9,48 +9,55 @@ angularRoutingApp.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: '../views/home.html',
-            controller: 'mapCtrl'
+            controller: 'mapCtrl',
+            access: { requiredAuthentication: false }
         })
         .when('/parques', {
             templateUrl: '../views/parques.html',
-            controller: 'mapCtrl'
+            controller: 'mapCtrl',
+            access: { requiredAuthentication: true }
         })
         .when('/eventos', {
             templateUrl: '../views/eventos.html',
             controller: 'parquesController',
-            access: {restricted: true}
+            access: { requiredAuthentication: true }
         })
         .when('/registro', {
             templateUrl: '../views/registro.html',
-            controller: 'registerController'
+            controller: 'registerController',
+            access: { requiredAuthentication: false }
         })
         .when('/login', {
             templateUrl: '../views/login.html',
-            controller: 'loginController'
+            controller: 'loginController',
+            access: { requiredAuthentication: false }
         })
         .when('/gestion-users', {
             templateUrl: '../views/gestionUsuarios.html',
-            controller: 'usersController'
+            controller: 'usersController',
+            access: { requiredAuthentication: true }
         })
         .when('/gestion-parques', {
             templateUrl: '../views/gestionParques.html',
-            controller: 'parksController'
+            controller: 'parksController',
+            access: { requiredAuthentication: true }
         })
         .otherwise({
-            redirectTo: '/login'
+            redirectTo: '/'
         });
 });
 
-//angularRoutingApp.run(function ($rootScope) {
-//    $rootScope.$on('$routeChangeStart',
-//        function () {
-//            console.log("HOLA");
-//            var userlogged = window.sessionStorage.getItem("user");
-//            //$scope.usuariologeado = JSON.parse(userlogged);
-//            console.log("Hola", userlogged.fullName);
-//            return false;
-//        });
-//});
+angularRoutingApp.run(function($rootScope, $location, $window) {
+    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+        var userlogged = window.sessionStorage.getItem("user");
+        console.log(userlogged);
+        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication 
+            && userlogged === null) {
+
+            $location.path("/");
+        }
+    });
+});
 
 angularRoutingApp.controller('mainController', function ($scope) {
     $scope.message = 'Hola, Mundooooo!';
@@ -61,11 +68,11 @@ angularRoutingApp.controller('mainController', function ($scope) {
     $scope.logOut = true; //Escondemos el botón
 
     ////Muestra nombre del usuario logeado y muestra-esconde botones///////////
-    try{
-        try{
+    try {
+        try {
             $scope.welcome = false; //Mostramos botón
             $scope.logOut = false; //Mostramos botón
-            var userlogged = window.localStorage.getItem("user");
+            var userlogged = window.sessionStorage.getItem("user");
             $scope.usuariologeado = JSON.parse(userlogged);
             console.log("Bienvenido", $scope.usuariologeado.fullName);
 
@@ -75,14 +82,14 @@ angularRoutingApp.controller('mainController', function ($scope) {
             $scope.singin = false;
             $scope.singup = false;
             $scope.singup2 = false;
-            console.log("No estás logeado!",e);
+            console.log("No estás logeado!", e);
             throw e;
         }
-    } catch (e){
+    } catch (e) {
     }
     /////////////////////////////////////////////////
-    $scope.logout = function(){
-        window.localStorage.removeItem("user");
+    $scope.logout = function () {
+        window.sessionStorage.removeItem("user");
         console.log("Ha salido correctamente.")
         window.location.reload();
         $location.path('/');
@@ -125,22 +132,22 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
             password: pwd
         };
         $http.post('/api/login', credentials)
-        .success(function(data){
-            console.log("User Logged", data);
-            console.log(data);
+            .success(function (data) {
+                console.log("User Logged", data);
+                console.log(data);
 
-            window.localStorage.setItem("user", JSON.stringify(data));
-            var userlogged = window.localStorage.getItem("user");
-            $scope.usuariologeado = JSON.parse(userlogged);
-            console.log("Bienvenido", $scope.usuariologeado.fullName);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                var userlogged = window.sessionStorage.getItem("user");
+                $scope.usuariologeado = JSON.parse(userlogged);
+                console.log("Bienvenido", $scope.usuariologeado.fullName);
 
-            window.location.reload();
-            $location.path("/")
-        })
-        .error(function(data){
-            console.log(data);
+                window.location.reload();
+                $location.path("/")
+            })
+            .error(function (data) {
+                console.log(data);
 
-        })
+            })
     }
 
 
@@ -153,21 +160,21 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.users = {};
 
     // Obtenemos todos los estudiantes
-    $http.get('/api/user').success(function(data) {
-            $scope.users = data;
-        })
-        .error(function(data) {
+    $http.get('/api/user').success(function (data) {
+        $scope.users = data;
+    })
+        .error(function (data) {
             console.log('Error: ' + data);
         });
 
     // Función para registrar estudiante
-    $scope.createUserModal = function() {
+    $scope.createUserModal = function () {
         $http.post('/api/user', $scope.newUser)
-            .success(function(data) {
+            .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
             })
-            .error(function(data) {
+            .error(function (data) {
                 console.log('Error: ' + data);
             });
     };
@@ -441,7 +448,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
 
     // Función para coger el usuario antes de ejecutar el Mensaje de advertencia modal
-    $scope.takeUser = function(user){
+    $scope.takeUser = function (user) {
         $scope.UserTaket = user;
         console.log(user);
         console.log($scope.UserTaket);
@@ -454,17 +461,17 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     };
 
 
-// Función para poner el objeto en la tabla para editarlo
-    $scope.selectUser = function(){
-            $scope.newUser = $scope.UserTaket;
-            console.log($scope.UserTaket);
-            $scope.selected = true;
-            $scope.header = "Editar usuario";
-            $scope.update = false;
-            $scope.create = true;
+    // Función para poner el objeto en la tabla para editarlo
+    $scope.selectUser = function () {
+        $scope.newUser = $scope.UserTaket;
+        console.log($scope.UserTaket);
+        $scope.selected = true;
+        $scope.header = "Editar usuario";
+        $scope.update = false;
+        $scope.create = true;
 
-            console.log($scope.newUser, $scope.selected);
-        };
+        console.log($scope.newUser, $scope.selected);
+    };
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {
