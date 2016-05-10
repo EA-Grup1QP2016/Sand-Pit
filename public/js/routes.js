@@ -290,6 +290,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     $scope.error = false;
     $scope.incomplete = false;
     $scope.edit = true;
+    $scope.UserTaket = {};
 
     // Obtenemos todos los datos de la base de datos
     $http.get('/api/user').success(function (data) {
@@ -312,8 +313,8 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     };
 
     // Función que borra un objeto user conocido su id
-    $scope.deleteUser = function (id) {
-        $http.delete('/api/user/' + id)
+    $scope.deleteUser = function () {
+        $http.delete('/api/user/' + $scope.UserTaket._id)
             .success(function (data) {
                 $scope.newUSER = {};
                 $scope.users = data;
@@ -323,7 +324,7 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
             });
     };
 
-    $scope.UserTaket = {};
+
     // Función para coger el usuario antes de ejecutar el Mensaje de advertencia modal
     $scope.takeUser = function(user){
         $scope.UserTaket = user;
