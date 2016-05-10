@@ -17,7 +17,8 @@ angularRoutingApp.config(function ($routeProvider) {
         })
         .when('/eventos', {
             templateUrl: '../views/eventos.html',
-            controller: 'parquesController'
+            controller: 'parquesController',
+            access: {restricted: true}
         })
         .when('/registro', {
             templateUrl: '../views/registro.html',
@@ -40,11 +41,31 @@ angularRoutingApp.config(function ($routeProvider) {
         });
 });
 
+//angularRoutingApp.run(function ($rootScope) {
+//    $rootScope.$on('$routeChangeStart',
+//        function () {
+//            console.log("HOLA");
+//            var userlogged = window.sessionStorage.getItem("user");
+//            //$scope.usuariologeado = JSON.parse(userlogged);
+//            console.log("Hola", userlogged.fullName);
+//            return false;
+//        });
+//});
+
 angularRoutingApp.controller('mainController', function ($scope) {
     $scope.message = 'Hola, Mundooooo!';
+    ////Muestra nombre del usuario logeado///////////
+    var userlogged = window.sessionStorage.getItem("user");
+    $scope.usuariologeado = JSON.parse(userlogged);
+    console.log("Bienvenido", $scope.usuariologeado.fullName);
+    ///////////////
+
 });
 
 angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
+
+    $scope.usuariologeado = {};
+
     $scope.loginFacebook = function () {
         $http.get('/api/auth/facebook/callback').success(function (data) {
             console.log('information data', data);
@@ -68,6 +89,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
     };
 
     $scope.localLogin = function () {
+
         var email = $scope.login.email;
         var pwd = $scope.login.pwd;
         var credentials = {
@@ -77,16 +99,25 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
         $http.post('/api/login', credentials)
         .success(function(data){
             console.log("User Logged", data);
+            console.log(data);
+
+            window.sessionStorage.setItem("user", JSON.stringify(data));
+            var userlogged = window.sessionStorage.getItem("user");
+            $scope.usuariologeado = JSON.parse(userlogged);
+            console.log("Bienvenido", $scope.usuariologeado.fullName);
+
             $location.path("/")
         })
         .error(function(data){
             console.log(data);
+
         })
     }
+
+
 });
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
     $scope.message = 'Formulario para añadir estudiantes';
     $scope.newUser = {};
@@ -169,8 +200,8 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
         // Display message confirming that the coordinates verified.
         $scope.formData.htmlverified = "Ubicación verificada correctamente";
-
         gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
+        console.log($scope.formData.htmlverified, $scope.formData.latitude, $scope.formData.longitude);
 
     });
 
@@ -184,10 +215,11 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             $scope.formData.latitude = parseFloat(gservice.clickLat).toFixed(3);
             $scope.formData.longitude = parseFloat(gservice.clickLong).toFixed(3);
             $scope.formData.htmlverified = "Danos permiso para determinar tu ubicación";
+            console.log($scope.formData.htmlverified);
         });
     });
 
-    // Creates a new user based on the form fields
+    // Creates a new Sandpit based on the form fields
     $scope.createSandpit = function (req) {
         // Grabs all of the text box fields
         var sandpitData = {
@@ -196,7 +228,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             price: $scope.formData.price,
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified,
-            facilities: $scope.formData.facilities,
+            facilities: $scope.formData.facilities
             //TODO: add creators email to the request
             //creator: req.email
         };
@@ -389,7 +421,6 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
         }
         $scope.incomplete = false;
         if ($scope.edit && (!$scope.newUser.fullName.length ||
-            !$scope.lName.length ||
             !$scope.newUser.password.length || !$scope.pass2.length)) {
             $scope.incomplete = true;
         }
@@ -397,8 +428,8 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 });
 
 angularRoutingApp.controller('parksController', function ($scope, $http) {
-    $scope.message = 'View de users';
-    $scope.newUser = {}; //Limpiamos formulario de registro
+    $scope.message = 'Controlador de parques';
+    $scope.newSandpit = {}; //Limpiamos formulario de registro
     $scope.sandpits = {}; //Limpiamos tabla de usuarios
     $scope.selected = false;
     $scope.header = "Crear usuario"; //Mostramos "Crear usuario" en el panel derecho
@@ -441,29 +472,29 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
 
     // Función para coger el objeto seleccionado en la tabla antes de editarlo
-    $scope.selectUser = function (user) {
-        $scope.newUser = user;
+    $scope.selectSandpit = function (sandpit) {
+        $scope.newSandpit = user;
         $scope.selected = true;
-        $scope.header = "Editar usuario";
+        $scope.header = "Editar Sandpit";
         $scope.update = false;
         $scope.create = true;
 
-        console.log($scope.newUser, $scope.selected);
+        console.log($scope.newSandpit, $scope.selected);
     };
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {
-        $http.put('/api/user/' + $scope.newUser._id, $scope.newUser)
+        $http.put('/api/sandpit/' + $scope.newSandpit._id, $scope.newSandpit)
             .success(function (data) {
-                $scope.newUser = {}; // Borramos los datos del formulario
-                $scope.users = data;
+                $scope.newSandpit = {}; // Borramos los datos del formulario
+                $scope.sandpits = data;
                 $scope.selected = false;
-                $scope.header = "Crear usuario";
+                $scope.header = "Crear Sandpit";
                 $scope.update = true;
                 $scope.create = false;
             })
             .error(function (data) {
-                $scope.header = "Crear usuario";
+                $scope.header = "Crear Sandpit";
                 $scope.update = true;
                 $scope.create = false;
                 console.log('Error: ' + data);
@@ -475,22 +506,16 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
     $scope.incomplete = false;
     $scope.hideform = true;
 
-    $scope.$watch('newUser.password', function () { $scope.test(); });
+    $scope.$watch('newSandpit.password', function () { $scope.test(); });
     $scope.$watch('pass2', function () { $scope.test(); });
     $scope.$watch('fullName', function () { $scope.test(); });
 
 
 
     $scope.test = function () {
-        if ($scope.newUser.password !== $scope.pass2) {
-            $scope.error = true;
-        } else {
-            $scope.error = false;
-        }
         $scope.incomplete = false;
-        if ($scope.edit && (!$scope.newUser.fullName.length ||
-            !$scope.lName.length ||
-            !$scope.newUser.password.length || !$scope.pass2.length)) {
+        if ($scope.edit && (!$scope.newSandpit.name.length ||
+            !$scope.newSandpit.description.length || !$scope.price.length)) {
             $scope.incomplete = true;
         }
     };

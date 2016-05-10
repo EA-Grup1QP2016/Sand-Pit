@@ -32,27 +32,24 @@
             </div>
         </div>
     </div>
-    <!-- Crear y editar Usuarios
+    <!-- Crear y editar Usuarios -->
             <div class="col-md-7 col-md-offset-2">
                 <div class="chat-panel panel panel-default">
                     <div class="panel-heading"><h3>{{header}}</h3></div>
                     <div class="panel-footer">
-                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newUser.fullName" placeholder="Nombre y apellidos">
+                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newSandpit.name" placeholder="Nombre">
                         <br>
                         <br>
-                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newUser.location" placeholder="Localización">
+                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newSandpit.location" placeholder="Localización">
                         <br>
                         <br>
-                        <input class="w3-input w3-border" type="email" ng-disabled="!update || !edit" ng-model="newUser.email" placeholder="Email">
+                        <input class="w3-input w3-border" type="text" ng-disabled="!update || !edit" ng-model="newSandpit.description" placeholder="Descripción">
                         <br>
                         <br>
-                        <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="newUser.password" placeholder="Contraseña">
+                        <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="newSandpit.price" placeholder="Precio">
                         <br>
                         <br>
-                        <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="pass2" placeholder="Repite contraseña">
-                        <br>
-                        <br>
-                        <button class="w3-btn-floating-large w3-teal" ng-disabled="error || incomplete" ng-hide="create" ng-click="createUser()">+</button>
+                        <button class="w3-btn-floating-large w3-teal" ng-disabled="error || incomplete" ng-hide="create" ng-click="createSandpit()">+</button>
                         <button class="w3-btn w3-teal" ng-hide="update" ng-disabled="error || incomplete" ng-click="editUser()">Actualizar</button>
 
                     </div>
