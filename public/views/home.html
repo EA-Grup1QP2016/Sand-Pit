@@ -17,23 +17,39 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-header" style="background: gray; color: white; padding: 2%">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-lock"></span> Register</h4>
+                </div>
             </div>
             <div class="modal-body">
-                <form name myForm>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg text-center"  placeholder="Inserta un nombre" ng-model="newUser.fullName" required>
-                        <br>
-                        <input type="email" class="form-control input-lg text-center"  placeholder="Correo electrónico" ng-model="newUser.email" required>
-                        <br>
-                        <input type="password" class="form-control input-lg text-center"  placeholder="Password" ng-model="newUser.password" required>
-
+                <br>
+                <form name="myFormRegister" role="form">
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-user"></span> Name</label>
+                        <input type="text" class="form-control" name="nombre" ng-model="newUser.fullName" placeholder="Enter your name" required>
                     </div>
-                    <button type="button" ng-click="createUserModal()" class="button_accept_modal" data-dismiss="modal" >Register</button>
-                    <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                        <input type="email" class="form-control" name="usuario" ng-model="newUser.email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                        <input type="password" class="form-control" name="password" ng-model="newUser.password" placeholder="Enter password" required>
+                        <input type="password" class="form-control" name="password" ng-model="pass2" placeholder="Repeat password" required>
+                    </div>
+                    <button type="submit" ng-click="createUser()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
+                    <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                 </form>
             </div>
             <div class="modal-footer">
+                <p style="margin-bottom: 0px">Alternative Register</p>
+                <h1 style="margin-top: 0px;">
+                    <a class="icon-fdc-facebook" href="auth/facebook"  target="_blank" data-clicktrack="true" ng-click="loginFacebook()" ></a>
+                    <a class="icon-fdc-twitter" href="auth/twitter" target="_blank" data-clicktrack="true" ng-click="loginTwitter()"></a>
+                    <a class="icon-fdc-google" href="https://plus.google.com/" target="_blank" data-clicktrack="true"></a>
+                </h1>
+                <p style="margin-bottom: 0px">Already a member?  <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalLogin"> Login</a></p>
             </div>
         </div>
 

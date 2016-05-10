@@ -148,28 +148,51 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
-    $scope.message = 'Formulario para añadir estudiantes';
-    $scope.newUser = {};
-    $scope.users = {};
+    $scope.message = 'View de registro';
+    $scope.newUser = {}; //Limpiamos formulario de registro
+    $scope.users = {}; //Limpiamos tabla de usuarios
+    $scope.selected = false;
+    $scope.header = "Crear usuario"; //Mostramos "Crear usuario" en el panel derecho
+    $scope.update = true; //Escondemos el botón update
+    $scope.create = false; //Mostramos botñon create
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.edit = true;
 
-    // Obtenemos todos los estudiantes
-    $http.get('/api/user').success(function(data) {
-            $scope.users = data;
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
-
-    // Función para registrar estudiante
-    $scope.createUserModal = function() {
+    // Función para registrar un user
+    $scope.createUser = function () {
         $http.post('/api/user', $scope.newUser)
-            .success(function(data) {
+            .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
+                $scope.pass2 = {};
             })
-            .error(function(data) {
+            .error(function (data) {
                 console.log('Error: ' + data);
             });
+    };
+
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.hideform = true;
+
+    $scope.$watch('newUser.password', function () { $scope.test(); });
+    $scope.$watch('pass2', function () { $scope.test(); });
+    $scope.$watch('fullName', function () { $scope.test(); });
+
+
+
+    $scope.test = function () {
+        if ($scope.newUser.password !== $scope.pass2) {
+            $scope.error = true;
+        } else {
+            $scope.error = false;
+        }
+        $scope.incomplete = false;
+        if ($scope.edit && (!$scope.newUser.fullName.length || !$scope.newUser.password.length || !$scope.pass2.length)) {
+            $scope.incomplete = true;
+        }
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////Fin register Modal
 
