@@ -6,7 +6,42 @@
 
     <div class="col-md-12 col-md-offset-4">
         <div class="chat-panel panel panel-default">
-            <div class="panel-heading"><h3>Lista de usuarios</h3></div>
+            <div class="panel-heading">
+
+                <h3 style="text-align: center;">Lista de usuarios
+                    <button  type="button" class="button_accept_modal" data-toggle="modal" data-target="#myModalAdd"><span class="glyphicon glyphicon-plus"></span></button>
+                </h3>
+
+            </div>
+            <!-- Modal create user-->
+            <div class="modal fade" id="myModalAdd" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form name myForm>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg text-center"  placeholder="Inserta un nombre" ng-model="newUser.fullName" required>
+                                    <br>
+                                    <input type="email" class="form-control input-lg text-center"  placeholder="Correo electrónico" ng-model="newUser.email" required>
+                                    <br>
+                                    <input type="password" class="form-control input-lg text-center"  placeholder="Password" ng-model="newUser.password" required>
+
+                                </div>
+                                <button type="button" ng-click="createUser()" class="button_accept_modal" data-dismiss="modal" >Create</button>
+                                <button type="button" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
             <div class="panel-footer">
                 <table style="width:100%">
                     <tr>
@@ -18,7 +53,7 @@
                     <tr ng-repeat="user in users">
 
                         <td>
-                            <button type="button" ng-click="takeUser(user)" class="button_warning_modal" data-toggle="modal" data-target="#myModalEdit">&#9998</button>
+                            <button type="button" ng-click="takeUser(user)" class="button_warning_modal" data-toggle="modal" data-target="#myModalEdit"><span class="glyphicon glyphicon-pencil"></span></button>
 
                             <!-- Modal button edit-->
                             <div class="modal fade" id="myModalEdit" role="dialog">
@@ -33,8 +68,8 @@
                                             <p>Seguro que quieres editar este usuario?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" ng-click="selectUser()" class="button_accept_modal" data-dismiss="modal" >Accept</button>
-                                            <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
+                                            <button type="button" ng-click="selectUser()" class="button_accept_modal" data-dismiss="modal" ><span class="glyphicon glyphicon-ok"></span></button>
+                                            <button type="button" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></button>
                                         </div>
                                     </div>
 
