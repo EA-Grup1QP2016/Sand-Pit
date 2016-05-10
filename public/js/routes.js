@@ -154,7 +154,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
-<<<<<<< HEAD
+
     $scope.message = 'View de registro';
     $scope.newUser = {}; //Limpiamos formulario de registro
     $scope.users = {}; //Limpiamos tabla de usuarios
@@ -168,22 +168,6 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
     // Función para registrar un user
     $scope.createUser = function () {
-=======
-    $scope.message = 'Formulario para añadir estudiantes';
-    $scope.newUser = {};
-    $scope.users = {};
-
-    // Obtenemos todos los estudiantes
-    $http.get('/api/user').success(function (data) {
-        $scope.users = data;
-    })
-        .error(function (data) {
-            console.log('Error: ' + data);
-        });
-
-    // Función para registrar estudiante
-    $scope.createUserModal = function () {
->>>>>>> origin/master
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
