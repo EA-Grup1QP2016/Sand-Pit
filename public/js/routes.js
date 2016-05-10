@@ -173,6 +173,60 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////Fin register Modal
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////Login register Modal
+    $scope.usuariologeado = {};
+
+    $scope.loginFacebook = function () {
+        $http.get('/api/auth/facebook/callback').success(function (data) {
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('/');
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    $scope.loginTwitter = function () {
+        $http.get('/api/profile').success(function (data) {
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('#gestion-users');
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    $scope.localLogin = function () {
+
+        var email = $scope.login.email;
+        var pwd = $scope.login.pwd;
+        var credentials = {
+            email: email,
+            password: pwd
+        };
+        $http.post('/api/login', credentials)
+            .success(function(data){
+                console.log("User Logged", data);
+                console.log(data);
+
+                window.localStorage.setItem("user", JSON.stringify(data));
+                var userlogged = window.localStorage.getItem("user");
+                $scope.usuariologeado = JSON.parse(userlogged);
+                console.log("Bienvenido", $scope.usuariologeado.fullName);
+
+                window.location.reload();
+                $location.path("/")
+            })
+            .error(function(data){
+                console.log(data);
+
+            })
+    };
+    ////////////////////////////////////////////////////////////////////////////////////////Fin login modal
+
     // Initializes Variables
     // ----------------------------------------------------------------------------
 

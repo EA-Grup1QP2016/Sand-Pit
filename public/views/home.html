@@ -10,7 +10,7 @@
     
 </div>
 
-<!-- Modal button Register-->
+<!-- ///////////////////////////////////////////////////////////////////////////////////Modal button Register-->
 <div class="modal fade" id="myModalRegister" role="dialog">
     <div class="modal-dialog">
 
@@ -34,6 +34,49 @@
                 </form>
             </div>
             <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--////////////////////////////////////////////////////////////////////////////////////Modal button login-->
+<!-- Modal -->
+<div class="modal fade" id="myModalLogin" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="background: gray; color: white; padding: 2%">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+            </div>
+            <div class="modal-body">
+                <br>
+                <form role="form">
+                    <div class="form-group" style="text-align: left">
+                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                        <input type="email" class="form-control" name="usuario" id="usrname" ng-model="login.email" placeholder="Enter email" required>
+
+                    </div>
+                    <div class="form-group" style="text-align: left">
+                        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+                        <input type="password" class="form-control" name="password" id="psw" ng-model="login.pwd" placeholder="Enter password" required>
+
+                    </div>
+                    <button type="submit" ng-click="localLogin()" class="button_accept_modal"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+                    <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p style="margin-bottom: 0px">Alternative login</p>
+                <h1 style="margin-top: 0px;">
+                <a class="icon-fdc-facebook" href="auth/facebook"  target="_blank" data-clicktrack="true" ng-click="loginFacebook()" ></a>
+                <a class="icon-fdc-twitter" href="auth/twitter" target="_blank" data-clicktrack="true" ng-click="loginTwitter()"></a>
+                <a class="icon-fdc-google" href="https://plus.google.com/" target="_blank" data-clicktrack="true"></a>
+                </h1>
+                <p style="margin-bottom: 0px">Not a member?  <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegister"> Sign Up</a></p>
             </div>
         </div>
 
