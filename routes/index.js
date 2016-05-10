@@ -12,6 +12,10 @@ module.exports = function (app) {
     app.put('/api/user/:user_id', isLoggedIn, userCtrl.updateUser);
     app.delete('/api/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/api/login", userCtrl.loginUser);
+    app.get("/api/logout", function(req){
+        req.logout();
+        req.session.destroy();
+    });
 
     //CRUD de parques
     app.post('/api/sandpit', isLoggedIn, sandpitCtrl.createSandpits);

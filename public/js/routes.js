@@ -47,19 +47,17 @@ angularRoutingApp.config(function ($routeProvider) {
         });
 });
 
-angularRoutingApp.run(function($rootScope, $location, $window) {
-    $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+angularRoutingApp.run(function ($rootScope, $location, $window) {
+    $rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
         var userlogged = window.sessionStorage.getItem("user");
-        console.log(userlogged);
-        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication 
+        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
             && userlogged === null) {
-
             $location.path("/");
         }
     });
 });
 
-angularRoutingApp.controller('mainController', function ($scope) {
+angularRoutingApp.controller('mainController', function ($scope, $http) {
     $scope.message = 'Hola, Mundooooo!';
     $scope.welcome = true; //Escondemos el botón
     $scope.singup = true; //Escondemos el botón
@@ -68,6 +66,7 @@ angularRoutingApp.controller('mainController', function ($scope) {
     $scope.logOut = true; //Escondemos el botón
 
     ////Muestra nombre del usuario logeado y muestra-esconde botones///////////
+
     try {
         try {
             $scope.welcome = false; //Mostramos botón
@@ -90,11 +89,11 @@ angularRoutingApp.controller('mainController', function ($scope) {
     /////////////////////////////////////////////////
     $scope.logout = function () {
         window.sessionStorage.removeItem("user");
+        $http.get("/api/logout")
         console.log("Ha salido correctamente.")
         window.location.reload();
         $location.path('/');
     }
-
 });
 
 angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
@@ -226,10 +225,10 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
     $scope.loginFacebook = function () {
         $http.get('/api/auth/facebook/callback').success(function (data) {
-                console.log('information data', data);
-                $rootScope.authenticated = true;
-                $location.path('/');
-            })
+            console.log('information data', data);
+            $rootScope.authenticated = true;
+            $location.path('/');
+        })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
@@ -237,10 +236,10 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
     $scope.loginTwitter = function () {
         $http.get('/api/profile').success(function (data) {
-                console.log('information data', data);
-                $rootScope.authenticated = true;
-                $location.path('#gestion-users');
-            })
+            console.log('information data', data);
+            $rootScope.authenticated = true;
+            $location.path('#gestion-users');
+        })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
@@ -255,7 +254,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             password: pwd
         };
         $http.post('/api/login', credentials)
-            .success(function(data){
+            .success(function (data) {
                 console.log("User Logged", data);
                 console.log(data);
 
@@ -267,7 +266,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 window.location.reload();
                 $location.path("/")
             })
-            .error(function(data){
+            .error(function (data) {
                 console.log(data);
 
             })
