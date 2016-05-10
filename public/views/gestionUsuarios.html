@@ -19,8 +19,7 @@
                     <tr ng-repeat="user in users">
 
                         <td>
-                            <button type="button" class="button_warning_modal" data-toggle="modal" data-target="#myModal">&#9998</button>
-                            <button class="button_accept_modal" ng-click="selectUser(user)">&#9998</button>
+                            <button type="button" ng-click="takeUser(user)" class="button_warning_modal" data-toggle="modal" data-target="#myModal">&#9998</button>
 
                             <!-- Modal button edit-->
                             <div class="modal fade" id="myModal" role="dialog">
@@ -35,7 +34,7 @@
                                             <p>Seguro que quieres editar este usuario?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" ng-click="selectUser(user)" class="button_accept_modal" data-dismiss="modal" >Accept</button>
+                                            <button type="button" ng-click="selectUser()" class="button_accept_modal" data-dismiss="modal" >Accept</button>
                                             <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>

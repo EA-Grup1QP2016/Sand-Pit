@@ -322,9 +322,26 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
                 console.log('Error: ' + data);
             });
     };
-// Función para coger el objeto seleccionado en la tabla antes de editarlo
-    $scope.selectUser = function(user){
-            $scope.newUser = user;
+
+    $scope.UserTaket = {};
+    // Función para coger el usuario antes de ejecutar el Mensaje de advertencia modal
+    $scope.takeUser = function(user){
+        $scope.UserTaket = user;
+        console.log(user);
+        console.log($scope.UserTaket);
+        $scope.selected = true;
+        $scope.header = "Editar usuario";
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.UserTaket, $scope.selected);
+    };
+
+
+// Función para poner el objeto en la tabla para editarlo
+    $scope.selectUser = function(){
+            $scope.newUser = $scope.UserTaket;
+            console.log($scope.UserTaket);
             $scope.selected = true;
             $scope.header = "Editar usuario";
             $scope.update = false;
