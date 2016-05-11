@@ -60,7 +60,7 @@
                     <li ng-hide="singup2"><a type="button" data-toggle="modal" data-target="#myModalRegister"><span class="glyphicon glyphicon-user"></span> Sing Up</a></li>
                     <!--<li ng-hide="singin"><a ng-href="#login"><span class="glyphicon glyphicon-log-in"></span> Login antiguo</a></li>-->
                     <li ng-hide="logOut"><a type="button" ng-click="takeUser()" data-toggle="modal" data-target="#myModalEditUser"><span class="glyphicon glyphicon-pencil"></span> </a></li>
-                    <li ng-hide="logOut"><a ng-click="logout()"><span class="glyphicon glyphicon-off"></span> </a></li>
+                    <li ng-hide="logOut"><a data-toggle="modal" data-target="#myModalLogOut"><span class="glyphicon glyphicon-off"></span> </a></li>
                     <li ng-hide="singin"><a type="button" data-toggle="modal" data-target="#myModalLogin"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
 
                 </ul>
@@ -126,6 +126,27 @@
             <div class="modal-footer">
                 <button type="submit" ng-click="editUser()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
                 <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal aviso logout-->
+<div class="modal fade" id="myModalLogOut" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Sure to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="logout()" class="button_accept_modal" data-dismiss="modal">Accept</button>
+                <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
             </div>
         </div>
 
