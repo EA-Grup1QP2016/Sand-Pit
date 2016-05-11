@@ -65,6 +65,17 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     $scope.singin = true; //Escondemos el botón
     $scope.logOut = true; //Escondemos el botón
 
+    $scope.newUser = {}; //Limpiamos formulario de registro
+    $scope.users = {}; //Limpiamos tabla de usuarios
+    $scope.selected = false;
+    $scope.header = "Crear usuario"; //Mostramos "Crear usuario" en el panel derecho
+    $scope.update = true; //Escondemos el botón update
+    $scope.create = false; //Mostramos botñon create
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.edit = true;
+    $scope.UserTaket = {};
+
     ////Muestra nombre del usuario logeado y muestra-esconde botones///////////
 
     try {
@@ -89,11 +100,43 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     /////////////////////////////////////////////////
     $scope.logout = function () {
         window.sessionStorage.removeItem("user");
-        $http.get("/api/logout")
-        console.log("Ha salido correctamente.")
+        $http.get("/api/logout");
+        console.log("Ha salido correctamente.");
         window.location.reload();
         $location.path('/');
-    }
+    };
+
+    // Función para coger el usuario logueado y ponerlo en la ventana modal de edición de usuario
+    $scope.takeUser = function () {
+        $scope.UserTaket = $scope.usuariologeado;
+        $scope.selected = true;
+        $scope.header = "Editar usuario";
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.UserTaket, $scope.selected);
+    };
+
+    //Función para editar los datos del usuario
+    $scope.editUser = function () {
+        $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
+                console.log("Aquí llego routes.js");
+                $scope.newUser = {}; // Borramos los datos del formulario
+                $scope.users = data;
+                $scope.selected = false;
+                //$scope.header = "Crear usuario";
+                //$scope.update = true;
+                //$scope.create = false;
+                console.log(data);
+            })
+            .error(function (data) {
+                //$scope.header = "Crear usuario";
+                //$scope.update = true;
+                //$scope.create = false;
+                console.log('Error: ' + data);
+                console.log($scope.newUser);
+            });
+    };
 });
 
 angularRoutingApp.controller('loginController', function ($scope, $http, $location) {
