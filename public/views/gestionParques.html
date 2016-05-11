@@ -113,36 +113,34 @@
                         <td type="text">{{ sandpit.creator }}</td> 
                         <td> 
                             <button ng-click="deleteSandpit(sandpit._id)">x</button> 
+                            <button type="button" ng-click="takeSandpit(sandpit)" class="button_cancel_modal" data-toggle="modal" data-target="#myModalDelete">&#10008</button>
+
+                            <!-- Modal button Delete-->
+                            <div class="modal fade" id="myModalDelete" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>¿Seguro que quieres eliminar este usuario?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" ng-click="deleteSandpit()" class="button_accept_modal" data-dismiss="modal">Accept</button>
+                                            <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </td> 
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-    <!-- Crear y editar Usuarios -->
-            <div class="col-md-7 col-md-offset-2">
-                <div class="chat-panel panel panel-default">
-                    <div class="panel-heading"><h3>{{header}}</h3></div>
-                    <div class="panel-footer">
-                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newSandpit.name" placeholder="Nombre">
-                        <br>
-                        <br>
-                        <input class="w3-input w3-border" type="text" ng-disabled="!edit" ng-model="newSandpit.location" placeholder="Localización">
-                        <br>
-                        <br>
-                        <input class="w3-input w3-border" type="text" ng-disabled="!update || !edit" ng-model="newSandpit.description" placeholder="Descripción">
-                        <br>
-                        <br>
-                        <input class="w3-input w3-border" type="password" ng-disabled="!edit" ng-model="newSandpit.price" placeholder="Precio">
-                        <br>
-                        <br>
-                        <button class="w3-btn-floating-large w3-teal" ng-disabled="error || incomplete" ng-hide="create" ng-click="createSandpit()">+</button>
-                        <button class="w3-btn w3-teal" ng-hide="update" ng-disabled="error || incomplete" ng-click="editUser()">Actualizar</button>
-
-                    </div>
-                </div>
-            </div>
-            <!-- FIN/Crear y editar Usuarios -->
 </div>
 
 
