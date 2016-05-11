@@ -2,7 +2,18 @@
     <br><h2 style="color:white">¡Bienvenid@ a Sandpit!</h2>
     <h3 style="color:white"> Busca los parques que hay a tu alrededor</h3>
  
+       <form name="buscador">
+    <div> <label for="distance">Max distance</label>
+             
+        <input type="number" class="form-control" id="distance" ng-model="formData.distance" required > 
+      </div>
+        
+        <button type="submit" class="btn btn-danger btn-block" ng-click="querySandpits()">Busca parques</button>
        
+        </form>
+      <div ng-show="queryCount>0" class="panel-footer">
+            <p class="text-center">We Found {{queryCount}} SandPits.</p>
+        </div>
    
                 <div id="map" style="width:95vw; height:77vh" class="col-md-offset-0"></div>
           

@@ -406,6 +406,45 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log('Error: ' + data);
             });
     };
+    
+    
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+    //Search based on parameters
+     var queryBody = {};
+    
+     // Take query parameters and incorporate into a JSON queryBody
+    $scope.querySandpits = function(){
+
+        // Assemble Query Body
+        queryBody = {
+            longitude: parseFloat($scope.formData.longitude),
+            latitude: parseFloat($scope.formData.latitude),
+            distance: parseFloat($scope.formData.distance),
+          
+        };
+
+        // Post the queryBody to the /query POST route to retrieve the filtered results
+        $http.post('/api/home', queryBody)
+
+            // Store the filtered results in queryResults
+            .success(function(queryResults){
+
+                // Query Body and Result Logging
+                gservice.refresh(queryBody.latitude, queryBody.longitude, queryResults);
+
+                // Count the number of records retrieved for the panel-footer
+                $scope.queryCount = queryResults.length;
+            })
+            .error(function(queryResults){
+                console.log('Error ' + queryResults);
+            })
+    };
+
+    
+///////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
 });
 
 angularRoutingApp.controller('eventosController', function ($scope) {
