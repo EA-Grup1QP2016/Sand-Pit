@@ -498,20 +498,22 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
     // Función para editar los datos de una persona
     $scope.editUser = function () {
-        $http.put('/api/user/' + $scope.newUser._id, $scope.newUser)
-            .success(function (data) {
+        $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
+                console.log("Aquí llego routes.js");
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
                 $scope.selected = false;
-                $scope.header = "Crear usuario";
-                $scope.update = true;
-                $scope.create = false;
+                //$scope.header = "Crear usuario";
+                //$scope.update = true;
+                //$scope.create = false;
+                console.log(data);
             })
             .error(function (data) {
-                $scope.header = "Crear usuario";
-                $scope.update = true;
-                $scope.create = false;
+                //$scope.header = "Crear usuario";
+                //$scope.update = true;
+                //$scope.create = false;
                 console.log('Error: ' + data);
+                console.log($scope.newUser);
             });
     };
 

@@ -61,19 +61,42 @@ function removeUser(req, res){
     });
 }
 
-function updateUser(req, res){
+
+//////////////////////////////////////////////////////////////editar usuario by Marc
+var User = require("../../schemas/user.js");
+exports.updateUser = function(req,res){
+    User.update({_id : req.params.user_id}, {$set:{fullName: req.body.fullName,email: req.body.email,password: req.body.password}}, function (err,user){
+        if (err){
+            res.send(err);
+        }
+        //Obtengo y devuelvo todos los usuarios tras borrar uno de ellos
+        User.find(function(err,user){
+            if(err){
+                res.send(err)
+            }
+            res.json(user)
+        });
+    }
+
+    );
+}
+///////////////////////////////////////////////////////////////
+//editar usuario antiguo
+/*function updateUser(req, res){
+    console.log("aquí llego user/user.js")
     console.log(LOG_TAG, "Update User");
     var id = req.params.user_id;
     var fullName = req.body.fullName;
-    var location = req.body.location;
+    var email = req.body.email;
     var password = req.body.password;
-    db.updateUserDB(id, fullName, location, password, function(state, details) {
+    db.updateUserDB(id, fullName, email, password, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
+*/
 
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.listUsers = listUsers;
 module.exports.removeUser = removeUser;
-module.exports.updateUser = updateUser;
+//module.exports.updateUser = updateUser;

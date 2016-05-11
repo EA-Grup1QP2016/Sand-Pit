@@ -55,12 +55,14 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-hide="welcome"><a><span class="glyphicon glyphicon-user"></span> Hola, {{usuariologeado.fullName}}</a></li>
+                    <li ng-hide="welcome" data-toggle="modal" data-target="myModalEditUser" style="height: 52px;padding-top: 15px;"><span class="glyphicon glyphicon-user"></span> Hola, {{usuariologeado.fullName}} </input></li>
                     <!--<li ng-hide="singup"><a ng-href="#registro"><span class="glyphicon glyphicon-user"></span> Sign Up antiguo</a></li>-->
                     <li ng-hide="singup2"><a type="button" data-toggle="modal" data-target="#myModalRegister"><span class="glyphicon glyphicon-user"></span> Sing Up</a></li>
                     <!--<li ng-hide="singin"><a ng-href="#login"><span class="glyphicon glyphicon-log-in"></span> Login antiguo</a></li>-->
-                    <li ng-hide="logOut"><a ng-click="logout()"><span class="glyphicon glyphicon-off"></span> Logout</a></li>
+                    <li ng-hide="logOut"><a type="button" data-toggle="modal" data-target="#myModalEditUser"><span class="glyphicon glyphicon-pencil"></span> </a></li>
+                    <li ng-hide="logOut"><a ng-click="logout()"><span class="glyphicon glyphicon-off"></span> </a></li>
                     <li ng-hide="singin"><a type="button" data-toggle="modal" data-target="#myModalLogin"><span class="glyphicon glyphicon-log-in"></span> login</a></li>
+
                 </ul>
             </div>
         </div>
@@ -85,6 +87,50 @@
     
  <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.412/styles/kendo.common-material.min.css"/>
  <link rel="stylesheet" href="//kendo.cdn.telerik.com/2016.1.412/styles/kendo.material.min.css"/>
+
+
+<!-- Modal button edit USER accesible desde todas las views-->
+<div class="modal fade" id="myModalEditUser" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header" style="background: gray; color: white; padding: 2%">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4><span class="glyphicon glyphicon-pencil"></span> Edit User (not working yet)</h4>
+                </div>
+            </div>
+            <div class="modal-body">
+                <br>
+                <form name="myFormRegister" role="form">
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-user"></span> Name</label>
+                        <input type="text" class="form-control" name="nombre" ng-model="newUser.fullName" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-envelope"></span> Email</label>
+                        <input type="email" class="form-control" name="usuario" ng-model="newUser.email" placeholder="Enter email" required>
+                    </div>
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-eye-close"></span> Old Password</label>
+                        <input type="password" class="form-control" name="password" ng-model="newUser.password" placeholder="Enter the old password" required>
+                    </div>
+                    <div class="form-group" style="text-align: left">
+                        <label><span class="glyphicon glyphicon-eye-open"></span> New Password</label>
+                        <input type="password" class="form-control" name="password" ng-model="newUser.password" placeholder="Enter the new password" required>
+                        <input type="password" class="form-control" name="password" ng-model="pass2" placeholder="Repeat the new password" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" disabled ng-click="createUser()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
+                <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 </body>
