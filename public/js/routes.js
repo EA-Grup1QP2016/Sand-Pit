@@ -397,7 +397,8 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 $scope.formData.name = "";
                 $scope.formData.description = "";
                 $scope.formData.price = "";
-
+                $scope.formData.facilities = [];
+                $scope.items = [];
                 // Refresh the map with new data
                 gservice.refresh($scope.formData.latitude, $scope.formData.longitude);
 
