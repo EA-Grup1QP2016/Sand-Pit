@@ -35,12 +35,12 @@ angularRoutingApp.config(function ($routeProvider) {
         .when('/gestion-users', {
             templateUrl: '../views/gestionUsuarios.html',
             controller: 'usersController',
-            access: { requiredAuthentication: true }
+            access: { requiredAuthentication: "admin" }
         })
         .when('/gestion-parques', {
             templateUrl: '../views/gestionParques.html',
             controller: 'parksController',
-            access: { requiredAuthentication: true }
+            access: { requiredAuthentication: "admin" }
         })
         .otherwise({
             redirectTo: '/'
@@ -50,8 +50,13 @@ angularRoutingApp.config(function ($routeProvider) {
 angularRoutingApp.run(function ($rootScope, $location, $window) {
     $rootScope.$on("$routeChangeStart", function (event, nextRoute, currentRoute) {
         var userlogged = window.sessionStorage.getItem("user");
-        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication
+        var user = JSON.parse(userlogged);
+        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication !== false
             && userlogged === null) {
+            $location.path("/");
+        }
+        if (nextRoute != null && nextRoute.access != null && nextRoute.access.requiredAuthentication === "admin"
+            && user.role === false) {
             $location.path("/");
         }
     });
@@ -100,6 +105,7 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     /////////////////////////////////////////////////
     $scope.logout = function () {
         window.sessionStorage.removeItem("user");
+        $scope.userlogged = null;
         $http.get("/api/logout");
         console.log("Ha salido correctamente.");
         window.location.reload();
@@ -182,17 +188,13 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
                 var userlogged = window.sessionStorage.getItem("user");
                 $scope.usuariologeado = JSON.parse(userlogged);
                 console.log("Bienvenido", $scope.usuariologeado.fullName);
-
                 window.location.reload();
                 $location.path("/")
             })
             .error(function (data) {
                 console.log(data);
-
             })
     }
-
-
 });
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
