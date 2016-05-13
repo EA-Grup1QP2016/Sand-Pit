@@ -1,24 +1,21 @@
 <div class="jumbotron text-center" style="height:100%; width:100%; margin-right:30px">
-    <br><h2 style="color:white">¡Bienvenid@ a Sandpit!</h2>
+    <br>
+    <h2 style="color:white">¡Bienvenid@ a Sandpit!</h2>
     <h3 style="color:white"> Busca los parques que hay a tu alrededor</h3>
- 
-       <form name="buscador">
-    <div>
-             
-        <input type="number" class="form-control" placeholder="Distance" id="distance" ng-model="formData.distance" required > 
-      </div>
-        
-        <button type="submit" class="btn btn-danger btn-block" ng-click="querySandpits()">Busca parques</button>
-       
-        </form>
-      <div ng-show="queryCount>0" class="panel-footer">
-            <p class="text-center">We Found {{queryCount}} SandPits.</p>
+
+    <form name="buscador">
+        <div>
+            <input type="number" class="form-control sandpit_search" style="width:70%" placeholder="Busca parques en un ratio a tu alrededor (Kilometros)" id="distance" ng-model="formData.distance"
+                required>
+            <button type="submit" class="btn sandpit_search_btn "  ng-click="querySandpits()">Busca parques</button>
         </div>
-   
-                <div id="map" style="width:95vw; height:77vh" class="col-md-offset-0"></div>
-          
-      
-    
+    </form>
+    <div ng-show="queryCount>0" class="panel-footer">
+        <p class="text-center">We Found {{queryCount}} SandPits.</p>
+    </div>
+
+    <div id="map" style="width:95vw; height:77vh" class="col-md-offset-0"></div>
+
 </div>
 
 <!-- ///////////////////////////////////////////////////////////////////////////////////Modal button Register-->
@@ -54,7 +51,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <p style="margin-bottom: 0px">Already a member?  <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalLogin"> Login</a></p>
+                <p style="margin-bottom: 0px">Already a member? <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalLogin"> Login</a></p>
             </div>
         </div>
 
@@ -78,7 +75,7 @@
                 <form role="form">
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-user"></span> Username</label>
-                        <input type="email" class="form-control" name="usuario"  ng-model="login.email" placeholder="Enter email" required>
+                        <input type="email" class="form-control" name="usuario" ng-model="login.email" placeholder="Enter email" required>
 
                     </div>
                     <div class="form-group" style="text-align: left">
@@ -97,7 +94,7 @@
                 <a class="icon-fdc-twitter" href="auth/twitter" target="_blank" data-clicktrack="true" ng-click="loginTwitter()"></a>
                 <a class="icon-fdc-google" href="https://plus.google.com/" target="_blank" data-clicktrack="true"></a>
                 </h1>
-                <p style="margin-bottom: 0px">Not a member?  <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegister"> Sign Up</a></p>
+                <p style="margin-bottom: 0px">Not a member? <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegister"> Sign Up</a></p>
             </div>
         </div>
 
