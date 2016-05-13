@@ -126,16 +126,16 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     //Función para editar los datos del usuario
     $scope.editUser = function () {
         $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
-                console.log("Aquí llego routes.js");
-                $scope.newUser = {}; // Borramos los datos del formulario
-                $scope.users = data;
-                $scope.selected = false;
-                //$scope.header = "Crear usuario";
-                //$scope.update = true;
-                //$scope.create = false;
-                console.log(data);
-            })
-            .error(function (data) {
+            console.log("Aquí llego routes.js");
+            $scope.newUser = {}; // Borramos los datos del formulario
+            $scope.users = data;
+            $scope.selected = false;
+            //$scope.header = "Crear usuario";
+            //$scope.update = true;
+            //$scope.create = false;
+            console.log(data);
+        })
+            .error(function (data) {//TODO: delete commented lines
                 //$scope.header = "Crear usuario";
                 //$scope.update = true;
                 //$scope.create = false;
@@ -182,12 +182,8 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
         $http.post('/api/login', credentials)
             .success(function (data) {
                 console.log("User Logged", data);
-                console.log(data);
-
                 window.sessionStorage.setItem("user", JSON.stringify(data));
-                var userlogged = window.sessionStorage.getItem("user");
-                $scope.usuariologeado = JSON.parse(userlogged);
-                console.log("Bienvenido", $scope.usuariologeado.fullName);
+                $scope.usuariologeado = data;
                 window.location.reload();
                 $location.path("/")
             })
@@ -195,7 +191,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
                 console.log(data);
             })
     }
-});
+});//TODO: Remove this maybe?
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
@@ -215,14 +211,40 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.createUser = function () {
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
+                var email = $scope.newUser.email;
+                var pwd = $scope.newUser.password;
+                var credentials = {
+                    email: email,
+                    password: pwd
+                };
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
                 $scope.pass2 = {};
+                loginAfterRegister(credentials);
+                /*console.log(data);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
+                window.location.reload();
+                $location.path("/");*/
             })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
     };
+
+    function loginAfterRegister(credentials) {
+        $http.post('/api/login', credentials)
+            .success(function (data) {
+                console.log("User Logged", data);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
+                window.location.reload();
+                $location.path("/")
+            })
+            .error(function (data) {
+                console.log(data);
+            })
+    }
 
     $scope.edit = true;
     $scope.error = false;
@@ -232,8 +254,6 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.$watch('newUser.password', function () { $scope.test(); });
     $scope.$watch('pass2', function () { $scope.test(); });
     $scope.$watch('fullName', function () { $scope.test(); });
-
-
 
     $scope.test = function () {
         if ($scope.newUser.password !== $scope.pass2) {
@@ -285,21 +305,15 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         $http.post('/api/login', credentials)
             .success(function (data) {
                 console.log("User Logged", data);
-                console.log(data);
-
                 window.sessionStorage.setItem("user", JSON.stringify(data));
-                var userlogged = window.sessionStorage.getItem("user");
-                $scope.usuariologeado = JSON.parse(userlogged);
-                console.log("Bienvenido", $scope.usuariologeado.fullName);
-
+                $scope.usuariologeado = data;
                 window.location.reload();
                 $location.path("/")
             })
             .error(function (data) {
                 console.log(data);
-
             })
-    };
+    };//TODO: Remove this maybe?
     ////////////////////////////////////////////////////////////////////////////////////////Fin login modal
 
     // Initializes Variables
@@ -380,15 +394,15 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     // Creates a new Sandpit based on the form fields
     $scope.createSandpit = function (req) {
         // Grabs all of the text box fields
+        var user = JSON.parse(window.sessionStorage.getItem("user"));
         var sandpitData = {
             name: $scope.formData.name,
             description: $scope.formData.description,
             price: $scope.formData.price,
             location: [$scope.formData.longitude, $scope.formData.latitude],
             htmlverified: $scope.formData.htmlverified,
-            facilities: $scope.formData.facilities
-            //TODO: add creators email to the request
-            //creator: req.email
+            facilities: $scope.formData.facilities,
+            creator: user.email
         };
         console.log(req);
         // Saves the user data to the db
@@ -409,28 +423,28 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log('Error: ' + data);
             });
     };
-    
-    
-        /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
     //Search based on parameters
-     var queryBody = {};
-    
-     // Take query parameters and incorporate into a JSON queryBody
-    $scope.querySandpits = function(){
+    var queryBody = {};
+
+    // Take query parameters and incorporate into a JSON queryBody
+    $scope.querySandpits = function () {
 
         // Assemble Query Body
         queryBody = {
             longitude: parseFloat($scope.formData.longitude),
             latitude: parseFloat($scope.formData.latitude),
             distance: parseFloat($scope.formData.distance),
-          
+
         };
 
         // Post the queryBody to the /query POST route to retrieve the filtered results
         $http.post('/api/home', queryBody)
 
             // Store the filtered results in queryResults
-            .success(function(queryResults){
+            .success(function (queryResults) {
 
                 // Query Body and Result Logging
                 gservice.refresh(queryBody.latitude, queryBody.longitude, queryResults);
@@ -438,16 +452,16 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 // Count the number of records retrieved for the panel-footer
                 $scope.queryCount = queryResults.length;
             })
-            .error(function(queryResults){
+            .error(function (queryResults) {
                 console.log('Error ' + queryResults);
             })
     };
 
-    
-///////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 });
 
 angularRoutingApp.controller('eventosController', function ($scope) {
@@ -472,18 +486,24 @@ angularRoutingApp.controller('registerController', function ($scope, $http) {
     $scope.edit = true;
 
 
-    // Función para registrar un user
+    /*// Función para registrar un user
     $scope.createUser = function () {
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
                 $scope.pass2 = {};
+                console.log(data);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
+                window.location.reload();
+                $location.path("/")
             })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
-    };
+    };*/
+    //TODO: Remove this maybe?
 
     $scope.edit = true;
     $scope.error = false;
@@ -530,17 +550,24 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    // Función para registrar un user
+    /*// Función para registrar un user
     $scope.createUser = function () {
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
+                $scope.pass2 = {};
+                console.log(data);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
+                window.location.reload();
+                $location.path("/")
             })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
-    };
+    };*/
+    //TODO: Remove this maybe?
 
     // Función que borra un objeto user conocido su id
     $scope.deleteUser = function () {
@@ -584,15 +611,15 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     // Función para editar los datos de una persona
     $scope.editUser = function () {
         $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
-                console.log("Aquí llego routes.js");
-                $scope.newUser = {}; // Borramos los datos del formulario
-                $scope.users = data;
-                $scope.selected = false;
-                //$scope.header = "Crear usuario";
-                //$scope.update = true;
-                //$scope.create = false;
-                console.log(data);
-            })
+            console.log("Aquí llego routes.js");
+            $scope.newUser = {}; // Borramos los datos del formulario
+            $scope.users = data;
+            $scope.selected = false;
+            //$scope.header = "Crear usuario";
+            //$scope.update = true;
+            //$scope.create = false;
+            console.log(data);
+        })
             .error(function (data) {
                 //$scope.header = "Crear usuario";
                 //$scope.update = true;
@@ -648,16 +675,23 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
         });
 
     // Función para registrar un user
-    $scope.createUser = function () {
+    /*$scope.createUser = function () {
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 $scope.newUser = {}; // Borramos los datos del formulario
                 $scope.users = data;
+                $scope.pass2 = {};
+                console.log(data);
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
+                window.location.reload();
+                $location.path("/")
             })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
-    };
+    };*/
+    //TODO: Remove this maybe?
 
     // Función que borra un objeto conocido su id
     $scope.deleteSandpit = function (id) {
