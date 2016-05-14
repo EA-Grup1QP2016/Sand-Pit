@@ -32,12 +32,12 @@ angularRoutingApp.config(function ($routeProvider) {
         .when('/gestion-users', {
             templateUrl: '../views/gestionUsuarios.html',
             controller: 'usersController',
-            access: { requiredAuthentication: "admin" }
+           // access: { requiredAuthentication: "admin" }
         })
         .when('/gestion-parques', {
             templateUrl: '../views/gestionParques.html',
             controller: 'parksController',
-            access: { requiredAuthentication: "admin" }
+           // access: { requiredAuthentication: "admin" }
         })
         .otherwise({
             redirectTo: '/'

@@ -1,5 +1,5 @@
 <div><br>
-   
+
     <!-- Lista de usuarios -->
     <br><br>
     <div class="col-md-30">
@@ -66,11 +66,12 @@
                         <td type="text">{{ sandpit.name }}</td> 
                         <td type="text">{{ sandpit.description }}</td> 
                         <td type="text">{{ sandpit.facilities }}</td> 
-                        <td type="text">{{ sandpit.location }}</td> 
+                        <td type="text">{{ sandpit.location }}</td>
                         <td type="text">{{ sandpit.price }}</td> 
                         <td type="text">{{ sandpit.created_at }}</td> 
                         <td type="text">{{ sandpit.creator }}</td> 
                         <td> 
+                            <button ng-click="deleteSandpit(sandpit._id)">x</button>
                             <button type="button" ng-click="takeSandpit(sandpit)" class="button_cancel_modal" data-toggle="modal" data-target="#myModalDelete">&#10008</button>
                             <!-- Modal button Delete-->
                             <div class="modal fade" id="myModalDelete" role="dialog">
@@ -85,7 +86,7 @@
                                             <p>¿Seguro que quieres eliminar este usuario?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" ng-click="deleteSandpit(sandpit._id)" class="button_accept_modal" data-dismiss="modal">Accept</button>
+                                            <button type="button" ng-click="deleteSandpit()" class="button_accept_modal" data-dismiss="modal">Accept</button>
                                             <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>

@@ -10,3 +10,5 @@ runserver.sh
 public/bower_components
 .vscode
 
+
+.idea/Sand-Pit.iml
