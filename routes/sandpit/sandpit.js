@@ -20,16 +20,6 @@ function createSandpits(req, res) {
     });
 }
 
-function updateSandpit(req, res){
-    console.log(LOG_TAG, "Update Sandpit");
-    var id = req.params.sandpit_id;
-    var name = req.body.name;
-    var description = req.body.description;
-    var price = req.body.price;
-    db.updateSandpitDB(id, name, description, price, function(state, details) {
-        utils.sendResponse(LOG_TAG, state, details, res);
-    });
-}
 
 function removeSandpit(req, res){
     console.log(LOG_TAG, "Remove Sandpit");
@@ -41,7 +31,5 @@ function removeSandpit(req, res){
 
 module.exports.listSandpits = listSandpits;
 module.exports.createSandpits = createSandpits;
-module.exports.updateSandpit = updateSandpit;
 module.exports.removeSandpit = removeSandpit;
-
 
