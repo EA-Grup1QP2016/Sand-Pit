@@ -66,6 +66,9 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     $scope.singup2 = true; //Escondemos el botón
     $scope.singin = true; //Escondemos el botón
     $scope.logOut = true; //Escondemos el botón
+    $scope.eventsmenu = true;
+    $scope.sandpitsmenu = true;
+    $scope.gestionmenu = true;
 
     $scope.newUser = {}; //Limpiamos formulario de registro
     $scope.users = {}; //Limpiamos tabla de usuarios
@@ -84,6 +87,9 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
         try {
             $scope.welcome = false; //Mostramos botón
             $scope.logOut = false; //Mostramos botón
+            $scope.eventsmenu = false;
+            $scope.sandpitsmenu = false;
+            $scope.gestionmenu = false;
             var userlogged = window.sessionStorage.getItem("user");
             $scope.usuariologeado = JSON.parse(userlogged);
             console.log("Bienvenido", $scope.usuariologeado.fullName);
@@ -94,6 +100,9 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
             $scope.singin = false;
             $scope.singup = false;
             $scope.singup2 = false;
+            $scope.eventsmenu = true;
+            $scope.sandpitsmenu = true;
+            $scope.gestionmenu = true;
             console.log("No estás logeado!", e);
             throw e;
         }
@@ -374,7 +383,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             facilities: $scope.formData.facilities,
             creator: user.email
         };
-        console.log(req);
+        console.log(sandpitData);
         // Saves the user data to the db
         $http.post('/api/sandpit', sandpitData)
             .success(function (data) {

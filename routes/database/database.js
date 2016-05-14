@@ -146,6 +146,20 @@ function createSandpitsDB(data, callback) {
     })
 }
 
+function updateSandpitDB(id, name, description, price, callback) {
+    Sandpit.update({name: name}, {description: description}, {price: price}, function (err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else {
+            listSandpitsDB(function (state, details) {
+                console.log(LOG_TAG, "Sandpit updated in database");
+                callback(true, details);
+            });
+        }
+    });
+}
+
 
 function removeSandpitDB(id, callback) {
     Sandpit.remove({_id: id}, function (err, object) {
@@ -243,6 +257,7 @@ module.exports.updateUserDB = updateUserDB;
 
 module.exports.listSandpitsDB = listSandpitsDB;
 module.exports.removeSandpitDB = removeSandpitDB;
+module.exports.updateSandpitDB = updateSandpitDB;
 module.exports.createSandpitsDB = createSandpitsDB;
 
 /**

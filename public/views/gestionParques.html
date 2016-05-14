@@ -5,49 +5,8 @@
     <div class="col-md-30">
         <div class="chat-panel panel panel-default">
             <div class="panel-heading">
-                <h3 style="text-align: center; background: gray; color: white; padding: 2%;margin-top: 0px;margin-bottom: 0px;">Lista de parques
-                    <button  type="button" class="button_accept_modal" data-toggle="modal" data-target="#myModalAdd"><span class="glyphicon glyphicon-plus"></span></button>
-                </h3>
+                <h3 style="text-align: center; background: gray; color: white; padding: 2%;margin-top: 0px;margin-bottom: 0px;">Lista de parques</h3>
             </div>
-            <!-- Modal create parc-->
-            <div class="modal fade" id="myModalAdd" role="dialog">
-                <div class="modal-dialog">
-
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="modal-header" style="background: gray; color: white; padding: 2%">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4><span class="glyphicon glyphicon-user"></span> NOT WORKING YET</h4>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <br>
-                            <form name="myFormRegister" role="form">
-                                <div class="form-group" style="text-align: left">
-                                    <label><span class="glyphicon glyphicon-user"></span> Name</label>
-                                    <input type="text" class="form-control" name="nombre" ng-model="newUser.fullName" placeholder="Enter your name" required>
-                                </div>
-                                <div class="form-group" style="text-align: left">
-                                    <label><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                                    <input type="email" class="form-control" name="usuario" ng-model="newUser.email" placeholder="Enter email" required>
-                                </div>
-                                <div class="form-group" style="text-align: left">
-                                    <label><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                                    <input type="password" class="form-control" name="password" ng-model="newUser.password" placeholder="Enter password" required>
-                                    <input type="password" class="form-control" name="password" ng-model="pass2" placeholder="Repeat password" required>
-                                </div>
-                                <button disabled type="submit" ng-click="createUser()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Create</button>
-                                <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
 
             <div class="panel-footer">
                 <table style="width:100%">
@@ -112,9 +71,7 @@
                         <td type="text">{{ sandpit.created_at }}</td> 
                         <td type="text">{{ sandpit.creator }}</td> 
                         <td> 
-                            <button ng-click="deleteSandpit(sandpit._id)">x</button> 
                             <button type="button" ng-click="takeSandpit(sandpit)" class="button_cancel_modal" data-toggle="modal" data-target="#myModalDelete">&#10008</button>
-
                             <!-- Modal button Delete-->
                             <div class="modal fade" id="myModalDelete" role="dialog">
                                 <div class="modal-dialog">
@@ -128,7 +85,7 @@
                                             <p>¿Seguro que quieres eliminar este usuario?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" ng-click="deleteSandpit()" class="button_accept_modal" data-dismiss="modal">Accept</button>
+                                            <button type="button" ng-click="deleteSandpit(sandpit._id)" class="button_accept_modal" data-dismiss="modal">Accept</button>
                                             <button type="button" class="button_cancel_modal" data-dismiss="modal">Cancel</button>
                                         </div>
                                     </div>
