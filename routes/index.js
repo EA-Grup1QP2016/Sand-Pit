@@ -10,7 +10,7 @@ module.exports = function (app) {
     // CRUD Users
     app.post('/api/user', userCtrl.createUser);
     app.get('/api/user', userCtrl.listUsers);
-    app.put('/api/user/:user_id', isLoggedIn, userCtrl.updateUser);
+    app.put('/api/user/:user_id', userCtrl.updateUser);
     app.delete('/api/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/api/login", userCtrl.loginUser);
     app.get("/api/logout", function(req){
@@ -21,6 +21,7 @@ module.exports = function (app) {
     //CRUD de parques
     app.post('/api/sandpit', isLoggedIn, sandpitCtrl.createSandpits);
     app.get('/api/sandpit', sandpitCtrl.listSandpits);
+    app.put('/api/sandpit/:sandpit_id', sandpitCtrl.updateSandpit);
     app.delete('/api/sandpit/:sandpit_id', isLoggedIn, sandpitCtrl.removeSandpit);
       ///////////////////////////////////////////////////////////////////////////////////////////////////
     app.post('/api/home', function(req, res){

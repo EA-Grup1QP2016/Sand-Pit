@@ -72,6 +72,7 @@ angular.module('gservice', [])
                     '<p><b>Nombre</b>: ' + sandpit.name +
                     '<br><b>Precio</b>: ' + sandpit.price +
                     '<br><b>Descripcion</b>: ' + sandpit.description +
+                    '<br><b>Instalaciones</b>: ' + sandpit.facilities +
                     '</p>';
 
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
