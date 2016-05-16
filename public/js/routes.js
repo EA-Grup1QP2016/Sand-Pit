@@ -497,6 +497,25 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     $scope.edit = true;
     $scope.UserTaket = {};
 
+    // Función para registrar un user
+    $scope.createUser = function () {
+        $http.post('/api/user', $scope.newUser)
+            .success(function (data) {
+                var email = $scope.newUser.email;
+                var pwd = $scope.newUser.password;
+                var credentials = {
+                    email: email,
+                    password: pwd
+                };
+                $scope.newUser = {}; // Borramos los datos del formulario
+                $scope.users = data;
+                $scope.pass2 = {};
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
     // Obtenemos todos los datos de la base de datos
     $http.get('/api/user').success(function (data) {
         $scope.users = data;
@@ -595,6 +614,7 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
     $scope.error = false;
     $scope.incomplete = false;
     $scope.edit = true;
+    $scope.sandpitTaket = {};
 
     // Obtenemos todos los datos de la base de datos
     $http.get('/api/sandpit').success(function (data) {
@@ -604,9 +624,20 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
             console.log('Error: ' + data);
         });
 
-    // Función que borra un objeto conocido su id
-    $scope.deleteSandpit = function (id) {
-        $http.delete('/api/sandpit/' + id)
+    // Función para coger el sandpit antes de ejecutar el Mensaje de advertencia modal para eliminarlo
+    $scope.takeSandpit = function (sandpit) {
+        $scope.sandpitTaket = sandpit;
+        $scope.selected = true;
+        $scope.header = "Editar usuario";
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.sandpitTaket, $scope.selected);
+    };
+
+    // Función que borra un objeto conocido su id. Utilizo la id del sandpit seleccionado con sandpitTaket(sandpit)
+    $scope.deleteSandpit = function () {
+        $http.delete('/api/sandpit/' + $scope.sandpitTaket._id)
             .success(function (data) {
                 $scope.sandpits = data;
             })
