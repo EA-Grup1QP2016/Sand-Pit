@@ -3702,3 +3702,7 @@ td.visible-print {
   width:69%;
   text-align: center;
 }
+
+.modal-content.modal-lg {
+  left: -120%;
+}
