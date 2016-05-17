@@ -85,13 +85,17 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
 
     try {
         try {
+            var userlogged = window.sessionStorage.getItem("user");
+            $scope.usuariologeado = JSON.parse(userlogged);
             $scope.welcome = false; //Mostramos botón
             $scope.logOut = false; //Mostramos botón
             $scope.eventsmenu = false;
             $scope.sandpitsmenu = false;
-            $scope.gestionmenu = false;
-            var userlogged = window.sessionStorage.getItem("user");
-            $scope.usuariologeado = JSON.parse(userlogged);
+            if (!$scope.usuariologeado.role) {
+                $scope.gestionmenu = true;
+            }else{
+                $scope.gestionmenu = false;
+            }
             console.log("Bienvenido", $scope.usuariologeado.fullName);
 
         } catch (e) {
@@ -102,6 +106,7 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
             $scope.singup2 = false;
             $scope.eventsmenu = true;
             $scope.sandpitsmenu = true;
+            $scope.gestionmenu = true;
             $scope.gestionmenu = true;
             console.log("No estás logeado!", e);
             throw e;
@@ -436,7 +441,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
 });
 
 angularRoutingApp.controller('eventosController', function ($scope) {
