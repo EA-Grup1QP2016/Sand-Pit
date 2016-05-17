@@ -20,6 +20,28 @@ function createSandpits(req, res) {
     });
 }
 
+//////////////////////////////////////////////////////////////editar usuario by Marc
+var Sandpit= require("../../schemas/sandpit.js");
+exports.updateSandpit = function(req,res){
+    Sandpit.update({_id : req.params.sandpit_id}, {$set:{name: req.body.name,description: req.body.description,facilities: req.body.facilities, price: req.body.price}}, function (err,sandpit){
+            if (err){
+                res.send(err);
+            }
+            //Obtengo y devuelvo todos los usuarios tras borrar uno de ellos
+            Sandpit.find(function(err,sandpit){
+                if(err){
+                    res.send(err)
+                }
+                res.json(sandpit)
+            });
+        }
+
+    );
+}
+///////////////////////////////////////////////////////////////
+
+// Update desabilitado por Marc
+/*
 function updateSandpit(req, res){
     console.log(LOG_TAG, "Update Sandpit");
     var id = req.params.sandpit_id;
@@ -30,6 +52,8 @@ function updateSandpit(req, res){
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
+*/
+
 
 function removeSandpit(req, res){
     console.log(LOG_TAG, "Remove Sandpit");
@@ -41,7 +65,7 @@ function removeSandpit(req, res){
 
 module.exports.listSandpits = listSandpits;
 module.exports.createSandpits = createSandpits;
-module.exports.updateSandpit = updateSandpit;
+//module.exports.updateSandpit = updateSandpit;
 module.exports.removeSandpit = removeSandpit;
 
 

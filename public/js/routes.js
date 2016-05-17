@@ -566,7 +566,6 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     // Función para editar los datos de una persona
     $scope.editUser = function () {
         $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
-            console.log("Aquí llego routes.js");
             $scope.newUser = {}; // Borramos los datos del formulario
             $scope.users = data;
             $scope.selected = false;
@@ -659,9 +658,11 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
     };
 
     // Función para editar los datos de una persona
-    $scope.editUser = function () {
-        $http.put('/api/sandpit/' + $scope.newSandpit._id, $scope.newSandpit)
+    $scope.editSandpit = function () {
+        $http.put('/api/sandpit/' + $scope.sandpitTaket._id, $scope.sandpitTaket)
             .success(function (data) {
+                console.log("HOLAAAAAAAAAAAAAAAAA")
+                console.log($scope.sandpitTaket);
                 $scope.newSandpit = {}; // Borramos los datos del formulario
                 $scope.sandpits = data;
                 $scope.selected = false;
@@ -670,9 +671,6 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
                 $scope.create = false;
             })
             .error(function (data) {
-                $scope.header = "Crear Sandpit";
-                $scope.update = true;
-                $scope.create = false;
                 console.log('Error: ' + data);
             });
     };
