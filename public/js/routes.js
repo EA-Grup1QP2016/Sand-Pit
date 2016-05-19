@@ -93,7 +93,7 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
             $scope.sandpitsmenu = false;
             if (!$scope.usuariologeado.role) {
                 $scope.gestionmenu = true;
-            }else{
+            } else {
                 $scope.gestionmenu = false;
             }
             console.log("Bienvenido", $scope.usuariologeado.fullName);
@@ -130,21 +130,34 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
         $scope.header = "Editar usuario";
         $scope.update = false;
         $scope.create = true;
-        console.log($scope.UserTaket, $scope.selected);
     };
 
     //Función para editar los datos del usuario
     $scope.editUser = function () {
-        $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
-            console.log("Aquí llego routes.js");
-            $scope.newUser = {}; // Borramos los datos del formulario
-            $scope.users = data;
-            $scope.selected = false;
-        })
-            .error(function (data) {
-                console.log('Error: ' + data);
-                console.log($scope.newUser);
-            });
+        if ($scope.UserTaket.newPwd1 === $scope.UserTaket.newPwd2) {
+            var newData = {
+                name: $scope.UserTaket.newName,
+                email: $scope.UserTaket.email,
+                oldPwd: $scope.UserTaket.oldPwd,
+                newPwd: $scope.UserTaket.newPwd1
+            }
+            if (!newData.name) {
+                newData.name = (JSON.parse(window.sessionStorage.getItem("user"))).fullName;
+            }
+            $http.put('/api/user/' + $scope.UserTaket._id, newData)
+                .success(function (data) {
+                    $scope.newUser = {}; // Borramos los datos del formulario
+                    $scope.users = data;
+                    $scope.selected = false;
+                    console.log(data);
+                })
+                .error(function (data) {
+                    console.log('Error: ' + data);
+                    console.log($scope.newUser);
+                });
+        } else {
+            alert("New password doesn't match");
+        }
     };
 });
 
@@ -564,8 +577,6 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
         $scope.header = "Editar usuario";
         $scope.update = false;
         $scope.create = true;
-
-        console.log($scope.newUser, $scope.selected);
     };
 
     // Función para editar los datos de una persona

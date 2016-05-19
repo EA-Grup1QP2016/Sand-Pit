@@ -5,6 +5,7 @@ var LOG_TAG = "database.js -->    ";
 var User = require("../../schemas/user.js");
 var Sandpit = require("../../schemas/sandpit.js");
 var Event = require("../../schemas/event.js");
+var Hashes = require('jshashes');
 
 /**
  * Here goes all the methods related CRUD users
@@ -18,7 +19,7 @@ function createUserDB(data, callback) {
         password: data.password,
         role: data.role
     });
-    User.findOne({"email": data.email}, function (err, object) {
+    User.findOne({ "email": data.email }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -43,7 +44,7 @@ function createUserDB(data, callback) {
 }
 
 function loginDB(email, pwd, callback) {
-    User.findOne({$and: [{email: email}, {password: pwd}]}, function (err, object) {
+    User.findOne({ $and: [{ email: email }, { password: pwd }] }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -73,7 +74,7 @@ function listUsersDB(callback) {
 }
 
 function removeUserDB(id, callback) {
-    User.remove({_id: id}, function (err, object) {
+    User.remove({ _id: id }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -86,18 +87,48 @@ function removeUserDB(id, callback) {
     });
 }
 
-function updateUserDB(id, fullName, location, password, callback) {
-    User.update({fullName: fullName}, {location: location}, {password: password}, function (err, object) {
-        if (err) {
-            console.log(LOG_TAG, err);
-            callback(false, err);
-        } else {
-            listUsersDB(function (state, details) {
-                console.log(LOG_TAG, "User updated in database");
-                callback(true, details);
+function updateUserDB(email, fullName, oldPwd, newPwd, callback) {
+    oldPwd = new Hashes.SHA256(oldPwd).hex(oldPwd);
+    if (newPwd){
+        User.update({ $and: [{ email: email }, { password: oldPwd }] },
+            {$set: {
+                    fullName: fullName,
+                    password: new Hashes.SHA256(newPwd).hex(newPwd)
+                }
+            }, function (err, user) {
+                if (err) {
+                    console.log(LOG_TAG, err);
+                    callback(false, err);
+                } else if (user === null){
+                    console.log(LOG_TAG, "Wrong password");
+                    callback(false, "Wrong password");
+                } else {
+                    listUsersDB(function (state, details) {
+                        console.log(LOG_TAG, "User updated in database");
+                        callback(true, details);
+                    });
+                }
             });
-        }
-    });
+    }else{
+        User.update({ $and: [{ email: email }, { password: oldPwd }] },
+        {$set: {
+                fullName: fullName
+            }
+        }, function (err, user) {
+            if (err) {
+                console.log(LOG_TAG, err);
+                callback(false, err);
+            } else if (user === null){
+                    console.log(LOG_TAG, "Wrong password");
+                    callback(false, "Wrong password");
+            } else {
+                listUsersDB(function (state, details) {
+                    console.log(LOG_TAG, "User updated in database");
+                    callback(true, details);
+                });
+            }
+        });
+    }
 }
 
 /**
@@ -124,7 +155,7 @@ function createSandpitsDB(data, callback) {
     var newSandpit = new Sandpit(data);
     console.log(data.location[0]);
     var test = data.location[0];
-    Sandpit.findOne({$and: [{"location[0]": newSandpit.location[0]}, {"location[1]": newSandpit.location[1]}]}, function (err, object) {
+    Sandpit.findOne({ $and: [{ "location[0]": newSandpit.location[0] }, { "location[1]": newSandpit.location[1] }] }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -147,7 +178,7 @@ function createSandpitsDB(data, callback) {
 }
 
 function updateSandpitDB(id, name, description, price, callback) {
-    Sandpit.update({name: name}, {description: description}, {price: price}, function (err, object) {
+    Sandpit.update({ name: name }, { description: description }, { price: price }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -162,7 +193,7 @@ function updateSandpitDB(id, name, description, price, callback) {
 
 
 function removeSandpitDB(id, callback) {
-    Sandpit.remove({_id: id}, function (err, object) {
+    Sandpit.remove({ _id: id }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -190,7 +221,7 @@ function createEventDB(data, callback) {
         creator: req.body.creator,
         location: req.body.location
     });
-    Event.findOne({"name": data.name}, function (err, object) {
+    Event.findOne({ "name": data.name }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
@@ -228,7 +259,7 @@ function listEventsDB(callback) {
 }
 
 function removeEventDB(name, callback) {
-    Event.remove({name: name}, function (err, object) {
+    Event.remove({ name: name }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);

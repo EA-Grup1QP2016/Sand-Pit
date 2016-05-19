@@ -63,9 +63,12 @@ function removeUser(req, res){
 
 
 //////////////////////////////////////////////////////////////editar usuario by Marc
-var User = require("../../schemas/user.js");
+/*var User = require("../../schemas/user.js");
 exports.updateUser = function(req,res){
-    User.update({_id : req.params.user_id}, {$set:{fullName: req.body.fullName,email: req.body.email,password: req.body.password}}, function (err,user){
+    User.update({email : req.body.email}, 
+    {$set:{
+        fullName: req.body.name,
+        password: new Hashes.SHA256(req.body.newPwd).hex(req.body.newPwd)}}, function (err,user){
         if (err){
             res.send(err);
         }
@@ -79,24 +82,22 @@ exports.updateUser = function(req,res){
     }
 
     );
-}
-///////////////////////////////////////////////////////////////
-//editar usuario antiguo
-/*function updateUser(req, res){
+}*/
+function updateUser(req, res){
     console.log("aquí llego user/user.js")
     console.log(LOG_TAG, "Update User");
-    var id = req.params.user_id;
-    var fullName = req.body.fullName;
     var email = req.body.email;
-    var password = req.body.password;
-    db.updateUserDB(id, fullName, email, password, function(state, details) {
+    var fullName = req.body.name;
+    var oldPwd = req.body.oldPwd;
+    var newPwd = req.body.newPwd;
+    db.updateUserDB(email, fullName, oldPwd, newPwd, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
-*/
+
 
 module.exports.createUser = createUser;
 module.exports.loginUser = loginUser;
 module.exports.listUsers = listUsers;
 module.exports.removeUser = removeUser;
-//module.exports.updateUser = updateUser;
+module.exports.updateUser = updateUser;
