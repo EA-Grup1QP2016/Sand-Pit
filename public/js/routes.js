@@ -282,7 +282,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.usuariologeado = {};
 
     $scope.loginFacebook = function () {
-        $http.get('/auth/facebook/callback')
+        $http.get('/auth/facebook')
             .success(function (data) {
                 console.log('information data', data);
                 $rootScope.authenticated = true;

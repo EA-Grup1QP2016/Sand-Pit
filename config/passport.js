@@ -28,51 +28,16 @@ module.exports = function (passport) {
         // pull in our app id and secret from our auth.js file
         clientID: configAuth.facebookAuth.clientID,
         clientSecret: configAuth.facebookAuth.clientSecret,
-        callbackURL: configAuth.facebookAuth.callbackURL
+        callbackURL: configAuth.facebookAuth.callbackURL,
+        profileFields: configAuth.facebookAuth.profileFields
 
     },
-
-        // facebook will send back the token and profile
-        function (token, refreshToken, profile, done) {
-            console.log("FacebookStrategy", profile);
-            // asynchronous
-            process.nextTick(function () {
-
-                // find the user in the database based on their facebook id
-                User.findOne({ 'email': profile.email }, function (err, user) {
-
-                    // if there is an error, stop everything and return that
-                    // ie an error connecting to the database
-                    if (err) {
-                        return done(err);
-                    }
-                    // if the user is found, then log them in
-                    if (user) {
-                        return done(null, user); // user found, return that user
-                    } else {
-                        // if there is no user found with that facebook id, create them
-                        var newUser = new User();
-                        newUser.fullName = profile.displayName;
-                        newUser.email = profile.emails[0].value;
-                        newUser.role = false; //set it to true if you want to create an admin user
-                        // save our user to the database
-                        newUser.save(function (err) {
-                            if (err)
-                                throw err;
-
-                            // if successful, return the new user
-                            return done(null, newUser);
-                        });
-                    }
-
-                });
-            });
-
-        }));
+    myFacebookStrategy)
+    );
 };
 
-//TODO: Remove old Facebook
-/*function myFacebookStrategy(token, refreshToken, profile, done) {
+//T0D0: Remove old Facebook
+function myFacebookStrategy(token, refreshToken, profile, done) {
     process.nextTick(function () {
         console.log("facebook")
         User.findOne({ provider_id: profile.id }, function (err, user) {
@@ -112,4 +77,4 @@ module.exports = function (passport) {
         //jump back to passport.authenticate()
         return done(null, newUser);
     });
-}*/
+}
