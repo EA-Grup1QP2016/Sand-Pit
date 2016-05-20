@@ -1,24 +1,23 @@
 /*
  * Define passport strategies, i.e. what to do with the credentials
- * p y rovided by the OAuth provider
+ * provided by the OAuth provider
  */
 var User = require('../schemas/user.js');
 var service = require('./service');
 
 var FacebookStrategy = require('passport-facebook').Strategy;
-var TwitterStrategy = require('passport-twitter').Strategy;
 
 // load our auth.js config parameters
 var configAuth = require('./auth');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
 
-// used to serialize the user for the session
+    // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
         done(null, user);
     });
 
-// used to deserialize the user
+    // used to deserialize the user
     passport.deserializeUser(function (obj, done) {
         done(null, obj);
     });
@@ -26,57 +25,63 @@ module.exports = function(passport) {
     //FACEBOOK STRATEGY
     passport.use(new FacebookStrategy({
 
-//config parameters from our auth.js file
-            clientID: configAuth.facebookAuth.clientID,
-            clientSecret: configAuth.facebookAuth.clientSecret,
-            callbackURL: configAuth.facebookAuth.callbackURL,
-            profileFields: configAuth.facebookAuth.profileFields
-        },
-//facebook will send back the token and profile to this
-//callback function
-        myFacebookStrategy)
-    );
+        // pull in our app id and secret from our auth.js file
+        clientID: configAuth.facebookAuth.clientID,
+        clientSecret: configAuth.facebookAuth.clientSecret,
+        callbackURL: configAuth.facebookAuth.callbackURL
 
-    //Twitter STRATEGY
-    passport.use(new TwitterStrategy({
+    },
 
-//config parameters from our auth.js file
-            consumerKey: configAuth.twitterAuth.consumerKey,
-            consumerSecret: configAuth.twitterAuth.consumerSecret,
-            callbackURL: configAuth.twitterAuth.callbackURL,
-            //profileFields: configAuth.twitterAuth.profileFields
-        },function(accessToken, refreshToken, profile, done) {
-        User.findOne({provider_id: profile.id}, function(err, user) {
-            if(err) throw(err);
-            if(!err && user!= null) return done(null, user);
+        // facebook will send back the token and profile
+        function (token, refreshToken, profile, done) {
+            console.log("FacebookStrategy", profile);
+            // asynchronous
+            process.nextTick(function () {
 
-            var user = new User({
-                provider_id: profile.id,
-                provider: profile.provider,
-                name: profile.displayName,
-                photo: profile.photos[0].value
+                // find the user in the database based on their facebook id
+                User.findOne({ 'email': profile.email }, function (err, user) {
+
+                    // if there is an error, stop everything and return that
+                    // ie an error connecting to the database
+                    if (err) {
+                        return done(err);
+                    }
+                    // if the user is found, then log them in
+                    if (user) {
+                        return done(null, user); // user found, return that user
+                    } else {
+                        // if there is no user found with that facebook id, create them
+                        var newUser = new User();
+                        newUser.fullName = profile.displayName;
+                        newUser.email = profile.emails[0].value;
+                        newUser.role = false; //set it to true if you want to create an admin user
+                        // save our user to the database
+                        newUser.save(function (err) {
+                            if (err)
+                                throw err;
+
+                            // if successful, return the new user
+                            return done(null, newUser);
+                        });
+                    }
+
+                });
             });
-            user.save(function(err) {
-                if(err) throw err;
-                done(null, user);
-            });
-        });
-    }));
-//twitter will send back the token and profile to this
-//callback function
-//        myTwitterStrategy)
-  //  );
 
-}; //end of module.exports = function(passport){
+        }));
+};
 
-
-function myFacebookStrategy(token, refreshToken, profile, done) {
-    // asynchronous
+//TODO: Remove old Facebook
+/*function myFacebookStrategy(token, refreshToken, profile, done) {
     process.nextTick(function () {
-
-        User.findOne({provider_id: profile.id}, function (err, user) {
-            if (err) throw(err);
-            if (!err && user != null) return done(null, user);
+        console.log("facebook")
+        User.findOne({ provider_id: profile.id }, function (err, user) {
+            if (err) {
+                return done(null, err)
+            }
+            if (!err && user != null) {
+                return done(null, user);
+            }
 
             console.log('profile data', profile);
             console.log(profile);
@@ -95,64 +100,16 @@ function myFacebookStrategy(token, refreshToken, profile, done) {
                 done(null, user);
             });
         });
-//Save profile info into newUser object
+        //Save profile info into newUser object
         var newUser = Object();
-        newUser.id = profile.id;
         newUser.name = profile.displayName;
-        newUser.email = profile.emails[0].value; //multiple emails provided
-        newUser.pic = profile.photos[0].value; //url of the profile picture
-        newUser.provider = profile.provider;
-//Save the token for later actions with facebook (real actions
-//will require using facebook API or Node SDK (authorized by this token)
-//will require using facebook API or Node SDK (authorized by this token)
-        newUser.token = token;
-//Assume the user is authenticated
-//newUser is made accessible through the session (req.user)
-//jump back to passport.authenticate()
+        newUser.email = profile.emails[0].value;
+        newUser.role = false;
+        //Save the token for later actions with facebook (real actions
+        //will require using facebook API or Node SDK (authorized by this token)
+        //Assume the user is authenticated
+        //newUser is made accessible through the session (req.user)
+        //jump back to passport.authenticate()
         return done(null, newUser);
     });
-}
-
-
-    function myTwitterStrategy(token, refreshToken, profile, done) {
-        // asynchronous
-        process.nextTick(function() {
-
-            User.findOne({provider_id: profile.id}, function(err, user) {
-                if(err) throw(err);
-                if(!err && user!= null) return done(null, user);
-
-                console.log('profile data', profile);
-                console.log(profile);
-
-                // Al igual que antes, si el usuario ya existe lo devuelve
-                // y si no, lo crea y salva en la base de datos
-                var user = new User({
-                    fullName		: profile.displayName,
-                    email           : profile.emails[0].value,
-                    role			: false //set it to true if you want to create an admin user
-                });
-
-                console.log('user info', user)
-                user.save(function(err) {
-                    if(err) throw err;
-                    done(null, user);
-                });
-            });
-//Save profile info into newUser object
-            var newUser = Object();
-            newUser.id = profile.id;
-            newUser.name = profile.displayName;
-            newUser.email = profile.emails[0].value; //multiple emails provided
-            newUser.pic = profile.photos[0].value; //url of the profile picture
-            newUser.provider = profile.provider;
-//Save the token for later actions with facebook (real actions
-//will require using facebook API or Node SDK (authorized by this token)
-//will require using facebook API or Node SDK (authorized by this token)
-            newUser.token = token;
-//Assume the user is authenticated
-//newUser is made accessible through the session (req.user)
-//jump back to passport.authenticate()
-            return done(null, newUser);
-        });
-    }
+}*/

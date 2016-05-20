@@ -166,7 +166,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
     $scope.usuariologeado = {};
 
     $scope.loginFacebook = function () {
-        $http.get('/api/auth/facebook/callback').success(function (data) {
+        $http.get('/auth/facebook/callback').success(function (data) {
             console.log('information data', data);
             $rootScope.authenticated = true;
             $location.path('/');
@@ -282,11 +282,12 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.usuariologeado = {};
 
     $scope.loginFacebook = function () {
-        $http.get('/api/auth/facebook/callback').success(function (data) {
-            console.log('information data', data);
-            $rootScope.authenticated = true;
-            $location.path('/');
-        })
+        $http.get('/auth/facebook/callback')
+            .success(function (data) {
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('/');
+            })
             .error(function (data) {
                 console.log('Error: ' + data);
             });

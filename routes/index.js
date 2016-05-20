@@ -13,7 +13,7 @@ module.exports = function (app) {
     app.put('/api/user/:user_id', userCtrl.updateUser);
     app.delete('/api/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/api/login", userCtrl.loginUser);
-    app.get("/api/logout", function(req){
+    app.get("/api/logout", function (req) {
         req.logout();
         req.session.destroy();
     });
@@ -23,42 +23,44 @@ module.exports = function (app) {
     app.get('/api/sandpit', sandpitCtrl.listSandpits);
     app.put('/api/sandpit/:sandpit_id', sandpitCtrl.updateSandpit);
     app.delete('/api/sandpit/:sandpit_id', isLoggedIn, sandpitCtrl.removeSandpit);
-      ///////////////////////////////////////////////////////////////////////////////////////////////////
-    app.post('/api/home', function(req, res){
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    app.post('/api/home', function (req, res) {
 
-    // Grab all of the query parameters from the body.
-    var lat             = req.body.latitude;
-    var long            = req.body.longitude;
-    var distance        = req.body.distance;
+        // Grab all of the query parameters from the body.
+        var lat = req.body.latitude;
+        var long = req.body.longitude;
+        var distance = req.body.distance;
 
-    // Opens a generic Mongoose Query. Depending on the post body we will...
-    var query = sandschema.find({});
+        // Opens a generic Mongoose Query. Depending on the post body we will...
+        var query = sandschema.find({});
 
-    // ...include filter by Max Distance (converting miles to meters)
-    if(distance){
+        // ...include filter by Max Distance (converting miles to meters)
+        if (distance) {
 
-        // Using MongoDB's geospatial querying features. (Note how coordinates are set [long, lat]
-        query = query.where('location').near({ center: {type: 'Point', coordinates: [long, lat]},
+            // Using MongoDB's geospatial querying features. (Note how coordinates are set [long, lat]
+            query = query.where('location').near({
+                center: { type: 'Point', coordinates: [long, lat] },
 
-            // Converting meters to miles. Specifying spherical geometry (for globe)
-            maxDistance: distance * 1609.34, spherical: true});
-    }
-    
-    // ... Other queries will go here ... 
+                // Converting meters to miles. Specifying spherical geometry (for globe)
+                maxDistance: distance * 1609.34, spherical: true
+            });
+        }
 
-    // Execute Query and Return the Query Results
-    query.exec(function(err, sandpits){
-        if(err)
-            res.send(err);
+        // ... Other queries will go here ... 
 
-        // If no errors, respond with a JSON of all sandpits that meet the criteria
-        res.json(sandpits);
+        // Execute Query and Return the Query Results
+        query.exec(function (err, sandpits) {
+            if (err)
+                res.send(err);
+
+            // If no errors, respond with a JSON of all sandpits that meet the criteria
+            res.json(sandpits);
+        });
     });
-});
-    
-    
- ////////////////////////////////////////////////////////////////////////////////////////////// 
-    
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////// 
+
     var router = express.Router();
 
     /* GET home page. */
@@ -79,39 +81,36 @@ module.exports = function (app) {
         res.redirect('/login');
     });
 
-    //route for facebook authentication and login. See the list of permissions
-    //(scopes): http://developers.facebook.com/docs/reference/login/
-    router.get('/auth/facebook', passport.authenticate('facebook', {
-        scope: ['public_profile', 'email']
+    //////////FACEBOOK OAUTH//////////
+    //router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] }));
+    /*router.get('/auth/facebook', passport.authenticate('facebook', function(err, user){
+        console.log(user);
     }));
-    router.get('/api/auth/twitter', passport.authenticate('twitter', {
-        scope: ['public_profile', 'email']
-    }));
-
-
-    //handle the callback after facebook has authenticated the user
-    router.get('/auth/facebook/callback', passport.authenticate('facebook', function(err, user){
+    router.get('/auth/facebook/callback', passport.authenticate('facebook', function (err, user) {
         console.log('datos user', user);
-        if (err){
+        if (err) {
             res.send(err);
             return;
         }
-        req.login(user, function(error){
-            if (error){
+        req.login(user, function (error) {
+            if (error) {
                 res.send(error);
                 return;
             }
             res.send(null, user);
         })
-    })
-    );
-    //(req, res)
-    router.get('/api/auth/twitter/callback', passport.authenticate('twitter', {
-        successRedirect: '/api/',
-        failureRedirect: '/api/registro'
-    }));
+    }));*/
 
-    app.get('/*', function(req, res){
+    app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
+
+    // handle the callback after facebook has authenticated the user
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect: '/profile',
+            failureRedirect: '/'
+        }));
+
+    app.get('/*', function (req, res) {
         console.log("********************** API URL ");
         res.redirect("/");
     });
