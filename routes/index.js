@@ -72,7 +72,7 @@ module.exports = function (app) {
     router.get('/api/profile', isLoggedIn, function (req, res, next) {
         console.log('user information profile', req);
         res.send(req.user);
-        //res.render('profile', {title: 'Your profile page', user: req.user});
+        res.render('/home.html', {user: req.user});
     });
 
     //route for logging out
@@ -80,26 +80,6 @@ module.exports = function (app) {
         req.logout();
         res.redirect('/login');
     });
-
-    //////////FACEBOOK OAUTH//////////
-    //router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] }));
-    /*router.get('/auth/facebook', passport.authenticate('facebook', function(err, user){
-        console.log(user);
-    }));
-    router.get('/auth/facebook/callback', passport.authenticate('facebook', function (err, user) {
-        console.log('datos user', user);
-        if (err) {
-            res.send(err);
-            return;
-        }
-        req.login(user, function (error) {
-            if (error) {
-                res.send(error);
-                return;
-            }
-            res.send(null, user);
-        })
-    }));*/
 
     app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
 

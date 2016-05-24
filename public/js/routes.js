@@ -286,19 +286,9 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             .success(function (data) {
                 console.log('information data', data);
                 $rootScope.authenticated = true;
-                $location.path('/');
+                window.sessionStorage.setItem("user", JSON.stringify(data));
+                $scope.usuariologeado = data;
             })
-            .error(function (data) {
-                console.log('Error: ' + data);
-            });
-    };
-
-    $scope.loginTwitter = function () {
-        $http.get('/api/profile').success(function (data) {
-            console.log('information data', data);
-            $rootScope.authenticated = true;
-            $location.path('#gestion-users');
-        })
             .error(function (data) {
                 console.log('Error: ' + data);
             });

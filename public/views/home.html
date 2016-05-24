@@ -5,9 +5,9 @@
 
     <form name="buscador">
         <div>
-            <input type="number" class="form-control sandpit_search" style="width:70%" placeholder="Busca parques en un ratio a tu alrededor (Kilometros)" id="distance" ng-model="formData.distance"
-                required>
-            <button type="submit" class="btn sandpit_search_btn "  ng-click="querySandpits()">Busca parques</button>
+            <input type="number" class="form-control sandpit_search" style="width:70%" placeholder="Busca parques en un ratio a tu alrededor (Kilometros)"
+                id="distance" ng-model="formData.distance" required>
+            <button type="submit" class="btn sandpit_search_btn " ng-click="querySandpits()">Busca parques</button>
         </div>
     </form>
     <div ng-show="queryCount>0" class="panel-footer">
@@ -90,9 +90,8 @@
             <div class="modal-footer">
                 <p style="margin-bottom: 0px">Alternative login</p>
                 <h1 style="margin-top: 0px;">
-                <a class="icon-fdc-facebook" href="auth/facebook"  target="_blank" data-clicktrack="true" ng-click="loginFacebook()" ></a>
-                <a class="icon-fdc-twitter" href="auth/twitter" target="_blank" data-clicktrack="true" ng-click="loginTwitter()"></a>
-                <a class="icon-fdc-google" href="https://plus.google.com/" target="_blank" data-clicktrack="true"></a>
+                <a class="icon-fdc-facebook" href="auth/facebook" data-clicktrack="true" ng-click="loginFacebook()" ></a>
+                <a class="icon-fdc-google" href="https://plus.google.com/" data-clicktrack="true"></a>
                 </h1>
                 <p style="margin-bottom: 0px">Not a member? <a type="submit" data-dismiss="modal" data-toggle="modal" data-target="#myModalRegister"> Sign Up</a></p>
             </div>

@@ -36,45 +36,29 @@ module.exports = function (passport) {
     );
 };
 
-//T0D0: Remove old Facebook
 function myFacebookStrategy(token, refreshToken, profile, done) {
     process.nextTick(function () {
         console.log("facebook")
-        User.findOne({ provider_id: profile.id }, function (err, user) {
+        User.findOne({ email: profile.emails[0].value }, function (err, user) {
             if (err) {
-                return done(null, err)
+                return done(err)
+            } else if (user != null) {
+                console.log("User already exists in database, proceed to login");
+                return done(false, user);
             }
-            if (!err && user != null) {
-                return done(null, user);
-            }
-
-            console.log('profile data', profile);
-            console.log(profile);
-
-            // Al igual que antes, si el usuario ya existe lo devuelve
-            // y si no, lo crea y salva en la base de datos
+            console.log("User doesn't exists, proceed to save");
             var user = new User({
                 fullName: profile.displayName,
                 email: profile.emails[0].value,
                 role: false //set it to true if you want to create an admin user
             });
 
-            console.log('user info', user)
             user.save(function (err) {
-                if (err) throw err;
-                done(null, user);
+                if (err){
+                    return done (err);
+                }
+                done(false, user);
             });
         });
-        //Save profile info into newUser object
-        var newUser = Object();
-        newUser.name = profile.displayName;
-        newUser.email = profile.emails[0].value;
-        newUser.role = false;
-        //Save the token for later actions with facebook (real actions
-        //will require using facebook API or Node SDK (authorized by this token)
-        //Assume the user is authenticated
-        //newUser is made accessible through the session (req.user)
-        //jump back to passport.authenticate()
-        return done(null, newUser);
     });
 }
