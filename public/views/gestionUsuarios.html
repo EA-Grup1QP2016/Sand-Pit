@@ -53,12 +53,16 @@
             <div class="panel-footer">
                 <table style="width:100%">
                     <tr>
-                        <th type="text">Edit</th>
-                        <th type="text">Name</th>
-                        <th type="text">Email</th>
-                        <th type="text">Delete</th>
+                        <th type="text"></th>
+                        <th type="text" style="text-align: center">Name<br>
+                            <input ng-model="search.fullName" placeholder="Filter by name">
+                        </th>
+                        <th type="text" style="text-align: center">Email<br>
+                            <input ng-model="search.email" placeholder="Filter by email">
+                        </th>
+                        <th type="text"></th>
                     </tr>
-                    <tr ng-repeat="user in users">
+                    <tr ng-repeat="user in users | filter:search:strict">
 
                         <td>
                             <button type="button" ng-click="takeUser(user)" class="button_warning_modal" data-toggle="modal" data-target="#myModalEdit"><span class="glyphicon glyphicon-pencil"></span></button>
