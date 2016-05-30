@@ -11,17 +11,24 @@
             <div class="panel-footer">
                 <table style="width:100%">
                     <tr> 
-                        <th type="text">Edit</th> 
-                        <th type="text">Name</th> 
-                        <th type="text">Description</th> 
-                        <th type="text">Equipments</th> 
-                        <th type="text">Location</th> 
-                        <th type="text">Price</th> 
-                        <th type="text">Registation date</th> 
-                        <th type="text">Creator</th> 
-                        <th type="text">Delete</th> 
+                        <th type="text"></th> 
+                        <th type="text">Name<br>
+                            <input ng-model="search.name" placeholder="Filter by name"></th> 
+                        <th type="text">Description<br>
+                            <input ng-model="search.description" placeholder="Filter by description"></th> </th> 
+                        <th type="text">Equipments<br>
+                            <input ng-model="search.facilities" placeholder="Filter by equipments"></th> </th> 
+                        <th type="text">Location<br>
+                            <input ng-model="search.location" placeholder="Filter by location"></th> </th> 
+                        <th type="text">Price<br>
+                            <input ng-model="search.price" placeholder="Filter by price"></th> </th> 
+                        <th type="text">Registation date<br>
+                            <input ng-model="search.created_at" placeholder="Filter by  registation date"></th> </th> 
+                        <th type="text">Creator<br>
+                            <input ng-model="search.creator" placeholder="Filter by creator"></th> </th> 
+                        <th type="text"></th> 
                     </tr>  
-                    <tr ng-repeat="sandpit in sandpits"> 
+                    <tr ng-repeat="sandpit in sandpits | filter:search:strict" > 
                         <td> 
                             <button type="button" ng-click="takeSandpit(sandpit)" class="button_warning_modal" data-toggle="modal" data-target="#myModalEdit"><span class="glyphicon glyphicon-pencil"></span></button>
 
