@@ -59,7 +59,7 @@ angularRoutingApp.run(function ($rootScope, $location, $window) {
     });
 });
 
-angularRoutingApp.controller('mainController', function ($scope, $http) {
+angularRoutingApp.controller('mainController', function ($scope, $http, $location) {
     $scope.message = 'Hola, Mundooooo!';
     $scope.welcome = true; //Escondemos el botón
     $scope.singup = true; //Escondemos el botón
@@ -81,38 +81,41 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
     $scope.edit = true;
     $scope.UserTaket = {};
 
+
+
     ////Muestra nombre del usuario logeado y muestra-esconde botones///////////
-
-    try {
+    $scope.setUser = function () {
         try {
-            var userlogged = window.sessionStorage.getItem("user");
-            $scope.usuariologeado = JSON.parse(userlogged);
-            $scope.welcome = false; //Mostramos botón
-            $scope.logOut = false; //Mostramos botón
-            $scope.eventsmenu = false;
-            $scope.sandpitsmenu = false;
-            if (!$scope.usuariologeado.role) {
-                $scope.gestionmenu = true;
-            } else {
-                $scope.gestionmenu = false;
-            }
-            console.log("Bienvenido", $scope.usuariologeado.fullName);
+            try {
+                var userlogged = window.sessionStorage.getItem("user");
+                $scope.usuariologeado = JSON.parse(userlogged);
+                $scope.welcome = false; //Mostramos botón
+                $scope.logOut = false; //Mostramos botón
+                $scope.eventsmenu = false;
+                $scope.sandpitsmenu = false;
+                if (!$scope.usuariologeado.role) {
+                    $scope.gestionmenu = true;
+                } else {
+                    $scope.gestionmenu = false;
+                }
+                console.log("Bienvenido", $scope.usuariologeado.fullName);
 
+            } catch (e) {
+                $scope.welcome = true;
+                $scope.logOut = true;
+                $scope.singin = false;
+                $scope.singup = false;
+                $scope.singup2 = false;
+                $scope.eventsmenu = true;
+                $scope.sandpitsmenu = true;
+                $scope.gestionmenu = true;
+                $scope.gestionmenu = true;
+                console.log("No estás logeado!", e);
+                throw e;
+            }
         } catch (e) {
-            $scope.welcome = true;
-            $scope.logOut = true;
-            $scope.singin = false;
-            $scope.singup = false;
-            $scope.singup2 = false;
-            $scope.eventsmenu = true;
-            $scope.sandpitsmenu = true;
-            $scope.gestionmenu = true;
-            $scope.gestionmenu = true;
-            console.log("No estás logeado!", e);
-            throw e;
         }
-    } catch (e) {
-    }
+    };
     /////////////////////////////////////////////////
     $scope.logout = function () {
         window.sessionStorage.removeItem("user");
@@ -122,6 +125,42 @@ angularRoutingApp.controller('mainController', function ($scope, $http) {
         window.location.reload();
         $location.path('/');
     };
+
+
+    function checkIfUserLoggedInBackEnd() {
+        $http.get("/api/getUser")
+            .success(function (data) {
+                var tmp = window.sessionStorage.getItem("user");
+                if (data) {
+                    if (!tmp) {
+                        window.sessionStorage.setItem("user", JSON.stringify(data));
+                        $scope.usuariologeado = data;
+                        $scope.singin = true;
+                        $scope.singup = true;
+                        $scope.singup2 = true;
+                        $scope.welcome = false; //Mostramos botón
+                        $scope.logOut = false; //Mostramos botón
+                        $scope.eventsmenu = false;
+                        $scope.sandpitsmenu = false;
+                        if (!data.role) {
+                            $scope.gestionmenu = true;
+                        } else {
+                            $scope.gestionmenu = false;
+                        }
+                    }
+                    return;
+                }
+                window.sessionStorage.removeItem("user");
+                console.log("No user logged.");
+            })
+            .error(function (data) {
+                console.log("No user logged.");
+                window.sessionStorage.removeItem("user");
+            })
+    };
+
+    $scope.setUser();
+    checkIfUserLoggedInBackEnd();
 
     // Función para coger el usuario logueado y ponerlo en la ventana modal de edición de usuario
     $scope.takeUser = function () {
@@ -207,7 +246,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
                 console.log(data);
             })
     }
-});//TODO: Remove this maybe?
+});
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal

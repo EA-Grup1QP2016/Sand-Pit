@@ -17,6 +17,11 @@ module.exports = function (app) {
         req.logout();
         req.session.destroy();
     });
+    
+    app.get("/api/getUser", function(req, res){
+        console.log(req.user);
+        return res.send(req.user);
+    })
 
     //CRUD de parques
     app.post('/api/sandpit', isLoggedIn, sandpitCtrl.createSandpits);
