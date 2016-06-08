@@ -1,0 +1,97 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SandPit",
+		"_postman_id": "0fd64133-bdc0-52cd-9f1d-1db1b1494174",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "events",
+			"description": "",
+			"item": [
+				{
+					"name": "create event",
+					"request": {
+						"url": "localhost:5000/api/event",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\" : \"testEvent\",\n    \"date\": {{$timestamp}},\n    \"description\": \"partidillo de futbol\",\n    \"duration\": \"3h premoh\",\n    \"creator\": \"El Cabana\",\n    \"location\": \"pos en el campo\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "event subscription",
+					"request": {
+						"url": "localhost:5000/api/eventSubscription",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"email@mail.com\",\n    \"event\":\"testEvent\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "List Events",
+					"request": {
+						"url": "localhost:5000/api/event",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"email\":\"email@email.com\",\n\"password\":\"secret\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remove event",
+					"request": {
+						"url": "localhost:5000/api/removeEvent",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\":\"testEvent\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

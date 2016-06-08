@@ -220,8 +220,8 @@ function createEventDB(data, callback) {
         date: data.date,
         description: data.description,
         duration: data.duration,
-        creator: req.body.creator,
-        location: req.body.location
+        creator: data.creator,
+        location: data.location
     });
     Event.findOne({ "name": data.name }, function (err, object) {
         if (err) {
@@ -277,10 +277,11 @@ function eventSubscriptionDB(data, callback) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
-        } else if (object === null) {
+        } else if (event === null) {
             console.log(LOG_TAG, "This event doesn't not exist");
             callback(false, "This event doesn't not exist");
         } else {
+            console.log(data.user);
             Event.update({ "name": data.event },
                 {
                     $push:
