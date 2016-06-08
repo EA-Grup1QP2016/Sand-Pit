@@ -260,6 +260,21 @@ function listEventsDB(callback) {
     });
 }
 
+function listEventsBySandPitDB(sandpit, callback) {
+    Event.find({location: sandpit}, function (err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "This parc doesn't exists");
+            callback(false, "This parc doesn't exists");
+        } else {
+            console.log(LOG_TAG, "SandPit event list");
+            callback(true, object);
+        }
+    });
+}
+
 function removeEventDB(name, callback) {
     Event.remove({ name: name }, function (err, object) {
         if (err) {
@@ -336,3 +351,4 @@ module.exports.createEventDB = createEventDB;
 module.exports.listEventsDB = listEventsDB;
 module.exports.removeEventDB = removeEventDB;
 module.exports.eventSubscriptionDB = eventSubscriptionDB;
+module.exports.listEventsBySandPitDB = listEventsBySandPitDB;
