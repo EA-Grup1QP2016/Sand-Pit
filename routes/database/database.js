@@ -281,7 +281,16 @@ function eventSubscriptionDB(data, callback) {
             console.log(LOG_TAG, "This event doesn't not exist");
             callback(false, "This event doesn't not exist");
         } else {
-            console.log(data.user);
+            console.log(event.users.length);
+            var i = 0;
+            while (i < event.users.length){
+                if (event.users[i] === data.user){
+                    console.log("This users is alredy registered in this event");
+                    return callback(false, "This users is alredy registered in this event");
+                }
+                i++;
+            }
+            
             Event.update({ "name": data.event },
                 {
                     $push:
