@@ -10,13 +10,18 @@ module.exports = function (app) {
     // CRUD Users
     app.post('/api/user', userCtrl.createUser);
     app.get('/api/user', userCtrl.listUsers);
-    app.put('/api/user/:user_id', userCtrl.updateUser);
+    app.put('/api/user/:user_id', isLoggedIn, userCtrl.updateUser);
     app.delete('/api/user/:user_id', isLoggedIn, userCtrl.removeUser);
     app.post("/api/login", userCtrl.loginUser);
     app.get("/api/logout", function (req) {
         req.logout();
         req.session.destroy();
     });
+    
+    app.post('/api/event', isLoggedIn, eventCtrl.createEvent);
+    app.post("/api/eventList", isLoggedIn, eventCtrl.listEvents);
+    app.post("/api/removeEvent", isLoggedIn, eventCtrl.removeEvent);
+    app.post("/api/eventSubscription", isLoggedIn, eventCtrl.eventSubscription)
     
     app.get("/api/getUser", function(req, res){
         console.log(req.user);
