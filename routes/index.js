@@ -18,10 +18,11 @@ module.exports = function (app) {
         req.session.destroy();
     });
     
-    app.post('/api/event', eventCtrl.createEvent);
-    app.get("/api/event", eventCtrl.listEvents);
-    app.post("/api/removeEvent", eventCtrl.removeEvent);
-    app.post("/api/eventSubscription", eventCtrl.eventSubscription)
+    app.post('/api/event', isLoggedIn, eventCtrl.createEvent);
+    app.get("/api/event", isLoggedIn, eventCtrl.listEvents);
+    app.post("/api/removeEvent", isLoggedIn, eventCtrl.removeEvent);
+    app.post("/api/eventSubscription", isLoggedIn, eventCtrl.eventSubscription);
+    app.post("/api/eventListBySandPit", isLoggedIn, eventCtrl.listEventsBySandPit);
     
     app.get("/api/getUser", function(req, res){
         console.log(req.user);
