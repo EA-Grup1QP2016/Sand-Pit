@@ -456,6 +456,14 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
     };
 
+///////////////////////////////Events//////////////////////////////////////////////////////////////////////
+    $http.get('/api/event').success(function (data) {
+            $scope.events = data;
+        })
+        .error(function (data) {
+            console.log('Error: ' + data);
+        });
+
     $scope.createEvent = function (req) {
         // Grabs all of the text box fields
         var user = JSON.parse(window.sessionStorage.getItem("user"));
