@@ -89,9 +89,10 @@ function removeUserDB(id, callback) {
 
 function updateUserDB(email, fullName, oldPwd, newPwd, callback) {
     oldPwd = new Hashes.SHA256(oldPwd).hex(oldPwd);
-    if (newPwd){
+    if (newPwd) {
         User.update({ $and: [{ email: email }, { password: oldPwd }] },
-            {$set: {
+            {
+                $set: {
                     fullName: fullName,
                     password: new Hashes.SHA256(newPwd).hex(newPwd)
                 }
@@ -99,7 +100,7 @@ function updateUserDB(email, fullName, oldPwd, newPwd, callback) {
                 if (err) {
                     console.log(LOG_TAG, err);
                     callback(false, err);
-                } else if (user === null){
+                } else if (user === null) {
                     console.log(LOG_TAG, "Wrong password");
                     callback(false, "Wrong password");
                 } else {
@@ -109,25 +110,26 @@ function updateUserDB(email, fullName, oldPwd, newPwd, callback) {
                     });
                 }
             });
-    }else{
+    } else {
         User.update({ $and: [{ email: email }, { password: oldPwd }] },
-        {$set: {
-                fullName: fullName
-            }
-        }, function (err, user) {
-            if (err) {
-                console.log(LOG_TAG, err);
-                callback(false, err);
-            } else if (user === null){
+            {
+                $set: {
+                    fullName: fullName
+                }
+            }, function (err, user) {
+                if (err) {
+                    console.log(LOG_TAG, err);
+                    callback(false, err);
+                } else if (user === null) {
                     console.log(LOG_TAG, "Wrong password");
                     callback(false, "Wrong password");
-            } else {
-                listUsersDB(function (state, details) {
-                    console.log(LOG_TAG, "User updated in database");
-                    callback(true, details);
-                });
-            }
-        });
+                } else {
+                    listUsersDB(function (state, details) {
+                        console.log(LOG_TAG, "User updated in database");
+                        callback(true, details);
+                    });
+                }
+            });
     }
 }
 
@@ -270,6 +272,31 @@ function removeEventDB(name, callback) {
     });
 }
 
+function eventSubscriptionDB(data, callback) {
+    Event.findOne({ name: data.event }, function (err, event) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "This event doesn't not exist");
+            callback(false, "This event doesn't not exist");
+        } else {
+            Event.update({ "name": data.event },
+                {
+                    $push:
+                    { "users": data.user }
+                },
+                function (err, event) {
+                    if (err) {
+                        callback(false, error);
+                    } else {
+                        callback(true, event);
+                    }
+                })
+        }
+    });
+}
+
 
 /**
  * Here goes all modules related to users
@@ -298,3 +325,4 @@ module.exports.createSandpitsDB = createSandpitsDB;
 module.exports.createEventDB = createEventDB;
 module.exports.listEventsDB = listEventsDB;
 module.exports.removeEventDB = removeEventDB;
+module.exports.eventSubscriptionDB = eventSubscriptionDB;

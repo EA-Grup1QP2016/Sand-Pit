@@ -21,6 +21,17 @@ function createEvent(req, res) {
     });
 }
 
+function eventSubscription(req, res){
+    console.log(LOG_TAG, "Event Subscription");
+    var data = {
+        "user" : req.body.email,
+        "event" : req.body.event
+    };
+    db.eventSubscriptionDB(data, function (state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    })
+}
+
 function listEvents(req, res) {
     console.log(LOG_TAG, "List events.");
     db.listEventsDB(function(state, details) {
@@ -39,3 +50,4 @@ function removeEvent(req, res){
 module.exports.createEvent = createEvent;
 module.exports.listEvents = listEvents;
 module.exports.removeEvent = removeEvent;
+module.exports.eventSubscription = eventSubscription;
