@@ -19,6 +19,11 @@ angularRoutingApp.config(function ($routeProvider) {
             controller: 'parquesController',
             access: { requiredAuthentication: true }
         })
+        .when('/eventosparque', {
+            templateUrl: '../views/eventosparque.html',
+            controller: 'mapCtrl',
+            access: { requiredAuthentication: true }
+        })
         .when('/registro', {
             templateUrl: '../views/registro.html',
             controller: 'registerController',
@@ -206,10 +211,10 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 
     $scope.loginFacebook = function () {
         $http.get('/auth/facebook/callback').success(function (data) {
-            console.log('information data', data);
-            $rootScope.authenticated = true;
-            $location.path('/');
-        })
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('/');
+            })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
@@ -217,10 +222,10 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 
     $scope.loginTwitter = function () {
         $http.get('/api/profile').success(function (data) {
-            console.log('information data', data);
-            $rootScope.authenticated = true;
-            $location.path('#gestion-users');
-        })
+                console.log('information data', data);
+                $rootScope.authenticated = true;
+                $location.path('#gestion-users');
+            })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
@@ -451,6 +456,35 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
     };
 
+    $scope.createEvent = function (req) {
+        // Grabs all of the text box fields
+        var user = JSON.parse(window.sessionStorage.getItem("user"));
+        var eventData = {
+            name: $scope.formData.name,
+            description: $scope.formData.description,
+            price: $scope.formData.price,
+            sandpit: $scope.sandpit.name,
+            creator: user.email
+        };
+        console.log(eventData);
+        // Saves the user data to the db
+        $http.post('/api/sandpit', eventData)
+            .success(function (data) {
+
+                // Once complete, clear the form (except location)
+                $scope.eventData.name = "";
+                $scope.eventData.description = "";
+                $scope.eventData.price = "";
+
+
+
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //Search based on parameters
     var queryBody = {};
@@ -566,8 +600,8 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
 
     // Obtenemos todos los datos de la base de datos
     $http.get('/api/user').success(function (data) {
-        $scope.users = data;
-    })
+            $scope.users = data;
+        })
         .error(function (data) {
             console.log('Error: ' + data);
         });
@@ -612,11 +646,11 @@ angularRoutingApp.controller('usersController', function ($scope, $http) {
     // Función para editar los datos de una persona
     $scope.editUser = function () {
         $http.put('/api/user/' + $scope.UserTaket._id, $scope.UserTaket).success(function (data) {
-            $scope.newUser = {}; // Borramos los datos del formulario
-            $scope.users = data;
-            $scope.selected = false;
-            console.log(data);
-        })
+                $scope.newUser = {}; // Borramos los datos del formulario
+                $scope.users = data;
+                $scope.selected = false;
+                console.log(data);
+            })
             .error(function (data) {
                 console.log('Error: ' + data);
                 console.log($scope.newUser);
@@ -663,8 +697,8 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
     // Obtenemos todos los datos de la base de datos
     $http.get('/api/sandpit').success(function (data) {
-        $scope.sandpits = data;
-    })
+            $scope.sandpits = data;
+        })
         .error(function (data) {
             console.log('Error: ' + data);
         });
