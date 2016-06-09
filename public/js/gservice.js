@@ -85,7 +85,7 @@ angular.module('gservice', [])
                     '<br><b>Precio</b>: ' + sandpit.price +
                     '<br><b>Descripcion</b>: ' + sandpit.description +
                     '<br><b>Instalaciones</b>: ' + sandpit.facilities +
-                    '<br><a href="#/eventosparque/'+sandpit.name+'"  style="color: #00A000">Eventos</a> '  +
+                    '<br><a href="#/eventosparque"  style="color: #00A000">Eventos</a> '  +
                     '</p>';
 
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
@@ -144,6 +144,7 @@ angular.module('gservice', [])
                     // When clicked, open the selected marker's message
                     currentSelectedMarker = n;
 
+                    $window.sessionStorage.setItem("selected", JSON.stringify(n.name));
                     n.message.open(map, marker);
 
                 });
