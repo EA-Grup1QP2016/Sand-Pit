@@ -254,9 +254,12 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
 });
 
 angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geolocation, gservice) {
+
+
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////Register Modal
 
-    $scope.message = 'View de registro';
+    $scope.message = "View de registro";
     $scope.newUser = {}; //Limpiamos formulario de registro
     $scope.users = {}; //Limpiamos tabla de usuarios
     $scope.selected = false;
@@ -266,6 +269,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.error = false;
     $scope.incomplete = false;
     $scope.edit = true;
+    $scope.selectedsandpit ={};
 
     // Función para registrar un user
     $scope.createUser = function () {
@@ -457,7 +461,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
 ///////////////////////////////Events//////////////////////////////////////////////////////////////////////
-    $http.get('/api/event').success(function (data) {
+    $http.post('/api/eventListBySandPit',$scope.sandpit).success(function (data) {
             $scope.events = data;
         })
         .error(function (data) {
@@ -504,7 +508,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         queryBody = {
             longitude: parseFloat($scope.formData.longitude),
             latitude: parseFloat($scope.formData.latitude),
-            distance: parseFloat($scope.formData.distance),
+            distance: parseFloat($scope.formData.distance)
 
         };
 
@@ -525,7 +529,10 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             })
     };
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 });
 

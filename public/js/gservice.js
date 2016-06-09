@@ -1,6 +1,6 @@
 // Creates the gservice factory. This will be the primary means by which we interact with Google Maps
 angular.module('gservice', [])
-    .factory('gservice', function($rootScope, $http){
+    .factory('gservice', function($rootScope, $http , $window){
 
         // Initialize Variables
         // -------------------------------------------------------------
@@ -19,8 +19,17 @@ angular.module('gservice', [])
 
 
         // Functions
+
+
+       /* $rootScope.liada = function(selected){
+            console.log("mal rotllo");
+            $window.sessionStorage.setItem("selected", JSON.stringify(selected));
+        };
+*/
         // --------------------------------------------------------------
         // Refresh the Map with new data. Function will take new latitude and longitude coordinates.
+
+
         googleMapService.refresh = function(latitude, longitude, filteredResults){
 
             // Clears the holding array of locations
@@ -48,12 +57,14 @@ angular.module('gservice', [])
 
                     // Then convert the results into map points
                     locations = convertToMapPoints(response);
-
+                    console.log("Puntos de los parques:", locations);
                     // Then initialize the map -- noting that no filter was used.
                     initialize(latitude, longitude, false);
                 }).error(function(){});
             }
         };
+
+
 
         // Private Inner Functions
         // --------------------------------------------------------------
@@ -62,6 +73,7 @@ angular.module('gservice', [])
 
             // Clear the locations holder
             var locations = [];
+
 
             // Loop through all of the JSON entries provided in the response
             for(var i= 0; i < response.length; i++) {
@@ -73,7 +85,7 @@ angular.module('gservice', [])
                     '<br><b>Precio</b>: ' + sandpit.price +
                     '<br><b>Descripcion</b>: ' + sandpit.description +
                     '<br><b>Instalaciones</b>: ' + sandpit.facilities +
-                    '<br><a href="#/eventosparque" style="color: #00A000">Eventos</a> '  +
+                    '<br><a href="#/eventosparque/'+sandpit.name+'"  style="color: #00A000">Eventos</a> '  +
                     '</p>';
 
                 // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
@@ -119,6 +131,7 @@ angular.module('gservice', [])
             // Loop through each location in the array and place a marker
             locations.forEach(function(n, i){
                 var marker = new google.maps.Marker({
+
                     position: n.latlon,
                     map: map,
                     title: "Big Map",
@@ -130,7 +143,9 @@ angular.module('gservice', [])
 
                     // When clicked, open the selected marker's message
                     currentSelectedMarker = n;
+
                     n.message.open(map, marker);
+
                 });
             });
 
@@ -177,4 +192,7 @@ angular.module('gservice', [])
             googleMapService.refresh(selectedLat, selectedLong));
 
         return googleMapService;
+
+
+
     });
