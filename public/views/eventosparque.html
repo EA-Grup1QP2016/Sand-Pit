@@ -9,9 +9,7 @@
             <tr ng-repeat="x in events">
                 <td>{{ x.name }}</td>
                 <td>{{ x.creator }}</td>
-                <td>{{ x.description }}</td>
-                <td>{{ x.date }}</td>
-                <td>{{ x.duration }}</td>
+
             </tr>
         </table>
 
@@ -38,6 +36,8 @@
 
         <br>
         <button type="submit" class="btn btn-danger btn-block" ng-click="createEvent()" ng-disabled="addEvent.$invalid">Enviar</button>
+        <button type="submit" class="btn btn-danger btn-block" ng-click="showEvents()">Ver eventos</button>
+
     </form>
 </div>
 </div>

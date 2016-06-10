@@ -468,15 +468,28 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
     };
 
+    var eventSandpit = JSON.parse(window.sessionStorage.getItem("selected"));
+
 ///////////////////////////////Events//////////////////////////////////////////////////////////////////////
 ///////////////////////////////Get Events de parque//////////////////////////////////////////////////////////////////////
-    $http.post('/api/eventListBySandPit',$scope.selected).success(function (data) {
-        $scope.events = data;
-        console.log("Lista de eventos del parque", $scope.events);
-        })
-        .error(function (data) {
-            console.log('Error: ' + data);
-        });
+    var init = function () {
+        // Grabs all of the text box fields
+        var eventData = {
+            sandpit: $scope.selected,
+        };
+        console.log(eventData);
+        // Saves the user data to the db
+        $http.post('/api/eventListBySandPit', eventData)
+            .success(function (data) {
+                $scope.events = data;
+                Console.log("Eventos del parque", $scope.events)
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    init();
 ///////////////////////////////Post Event a parque//////////////////////////////////////////////////////////////////////
 
     $scope.createEvent = function (req) {
