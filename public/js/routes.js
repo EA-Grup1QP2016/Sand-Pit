@@ -469,6 +469,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
 ///////////////////////////////Events//////////////////////////////////////////////////////////////////////
+///////////////////////////////Get Events de parque//////////////////////////////////////////////////////////////////////
     $http.post('/api/eventListBySandPit',$scope.selected).success(function (data) {
         $scope.events = data;
         console.log("Lista de eventos del parque", $scope.events);
@@ -476,6 +477,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         .error(function (data) {
             console.log('Error: ' + data);
         });
+///////////////////////////////Post Event a parque//////////////////////////////////////////////////////////////////////
 
     $scope.createEvent = function (req) {
         // Grabs all of the text box fields
@@ -494,9 +496,6 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 // Once complete, clear the form (except location)
                 $scope.eventData.name = "";
                 $scope.eventData.description = "";
-
-
-
 
             })
             .error(function (data) {

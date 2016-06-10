@@ -17,17 +17,18 @@ module.exports = function (app) {
         req.logout();
         req.session.destroy();
     });
-    
-    app.post('/api/event', isLoggedIn, eventCtrl.createEvent);
-    app.get("/api/event", isLoggedIn, eventCtrl.listEvents);
-    app.post("/api/removeEvent", isLoggedIn, eventCtrl.removeEvent);
-    app.post("/api/eventSubscription", isLoggedIn, eventCtrl.eventSubscription);
-    app.post("/api/eventListBySandPit", isLoggedIn, eventCtrl.listEventsBySandPit);
+
+    //CRUD de events
+    app.post('/api/event', eventCtrl.createEvent);
+    app.get("/api/event", eventCtrl.listEvents);
+    app.post("/api/removeEvent", eventCtrl.removeEvent);
+    app.post("/api/eventSubscription", eventCtrl.eventSubscription);
+    app.post("/api/eventListBySandPit", eventCtrl.listEventsBySandPit);
     
     app.get("/api/getUser", function(req, res){
         console.log(req.user);
         return res.send(req.user);
-    })
+    });
 
     //CRUD de parques
     app.post('/api/sandpit', isLoggedIn, sandpitCtrl.createSandpits);

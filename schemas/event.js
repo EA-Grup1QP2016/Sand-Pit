@@ -12,7 +12,7 @@ var eventSchema = new Schema({
     duration:  	    { type: String, required: false },
     creator:        { type: String},
     location:       { type: String},
-    users:       [{ type: String}]
+    users:       [{type: String}]
 });
 
 

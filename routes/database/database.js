@@ -213,7 +213,7 @@ function removeSandpitDB(id, callback) {
 
 function createEventDB(data, callback) {
     if (data.date <= Date()) {
-        callback(false, "You can't create a event in the past, at least if you don't have a deLorean");
+        callback(false, "You can't create a event in the past");
     }
     var newEvent = Event({
         name: data.name,
@@ -237,8 +237,10 @@ function createEventDB(data, callback) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
                 } else {
-                    console.log(LOG_TAG, "Event saved in the database");
-                    callback(true)
+                    listEventsDB(function (state, details) {
+                        console.log(LOG_TAG, "Event saved in database");
+                        callback(true, details);
+                    });
                 }
             });
         }
@@ -261,13 +263,13 @@ function listEventsDB(callback) {
 }
 
 function listEventsBySandPitDB(sandpit, callback) {
-    Event.find({location: sandpit}, function (err, object) {
+    Event.find({ location: sandpit}, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else if (object === null) {
-            console.log(LOG_TAG, "This parc doesn't exists");
-            callback(false, "This parc doesn't exists");
+            console.log(LOG_TAG, "This park doesn't exist");
+            callback(false, "This park doesn't exist");
         } else {
             console.log(LOG_TAG, "SandPit event list");
             callback(true, object);
@@ -281,8 +283,10 @@ function removeEventDB(name, callback) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            console.log(LOG_TAG, "Event removed successfully");
-            callback(true);
+            listEventsDB(function (state, details) {
+                console.log(LOG_TAG, "Event removed successfully");
+                callback(true, details);
+            });
         }
     });
 }
