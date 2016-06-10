@@ -7,9 +7,9 @@ var User = mongoose.model('User');
 
 var eventSchema = new Schema({
     name: 		    { type: String, required: true, unique: true },
-    date: 		    { type: Date, required: true },
+    date: 		    { type: Date, required: false },
     description:    { type: String },
-    duration:  	    { type: String, required: true },
+    duration:  	    { type: String, required: false },
     creator:        { type: String},
     location:       { type: String},
     users:       [{ type: String}]

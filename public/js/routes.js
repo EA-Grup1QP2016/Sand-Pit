@@ -270,6 +270,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.incomplete = false;
     $scope.edit = true;
     $scope.selectedsandpit ={};
+    $scope.selected = JSON.parse(window.sessionStorage.getItem("selected"));
 
     // Función para registrar un user
     $scope.createUser = function () {
@@ -468,8 +469,9 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
 ///////////////////////////////Events//////////////////////////////////////////////////////////////////////
-    $http.post('/api/eventListBySandPit',$scope.sandpit).success(function (data) {
-            $scope.events = data;
+    $http.post('/api/eventListBySandPit',$scope.selected).success(function (data) {
+        $scope.events = data;
+        console.log("Lista de eventos del parque", $scope.events);
         })
         .error(function (data) {
             console.log('Error: ' + data);
@@ -479,21 +481,20 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Grabs all of the text box fields
         var user = JSON.parse(window.sessionStorage.getItem("user"));
         var eventData = {
-            name: $scope.formData.name,
-            description: $scope.formData.description,
-            price: $scope.formData.price,
-            sandpit: $scope.sandpit.name,
+            name: $scope.eventData.name,
+            description: $scope.eventData.description ,
+            location: $scope.selected,
             creator: user.email
         };
         console.log(eventData);
         // Saves the user data to the db
-        $http.post('/api/sandpit', eventData)
+        $http.post('/api/event', eventData)
             .success(function (data) {
 
                 // Once complete, clear the form (except location)
                 $scope.eventData.name = "";
                 $scope.eventData.description = "";
-                $scope.eventData.price = "";
+
 
 
 
