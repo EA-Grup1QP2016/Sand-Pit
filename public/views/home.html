@@ -35,18 +35,20 @@
                 <form name="myFormRegister" role="form">
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-user"></span> Name</label>
-                        <input type="text" class="form-control" name="nombre" ng-model="newUser.fullName" placeholder="Enter your name" required>
+                        <input type="text" class="form-control" name="name" ng-model="newUser.fullName" placeholder="Enter your name" required>
+                        <span style="color:red" ng-show="myFormRegister.name.$touched && myFormRegister.name.$invalid">Name is required.</span>
                     </div>
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-envelope"></span> Email</label>
-                        <input type="email" class="form-control" name="usuario" ng-model="newUser.email" placeholder="Enter email" required>
-                    </div>
+                        <input type="email" class="form-control" name="email" ng-model="newUser.email" placeholder="Enter email" required>
+                        </div>
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-eye-open"></span> Password</label>
                         <input type="password" class="form-control" name="password" ng-model="newUser.password" placeholder="Enter password" required>
                         <input type="password" class="form-control" name="password" ng-model="pass2" placeholder="Repeat password" required>
+                        <span style="color:red" class="error" ng-show="errorRegister">{{errorRegister}}</span>
                     </div>
-                    <button type="submit" ng-click="createUser()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
+                    <button type="submit" ng-click="createUser()" class="button_accept_modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
                     <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                 </form>
             </div>
@@ -72,19 +74,23 @@
             </div>
             <div class="modal-body">
                 <br>
-                <form role="form">
+                <form name="formLogin" role="form">
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-user"></span> Username</label>
-                        <input type="email" class="form-control" name="usuario" ng-model="login.email" placeholder="Enter email" required>
+                        <input type="email" class="form-control" name="email" ng-model="login.email" placeholder="Enter email" required>
+                        <span style="color:red" ng-show="formLogin.email.$touched && formLogin.email.$invalid">The format of the email is wrong.</span>
+
 
                     </div>
                     <div class="form-group" style="text-align: left">
                         <label><span class="glyphicon glyphicon-eye-open"></span> Password</label>
                         <input type="password" class="form-control" name="password" ng-model="login.pwd" placeholder="Enter password" required>
+                        <span style="color:red" class="error" ng-show="errorLogin">{{errorLogin}}</span>
 
                     </div>
                     <button type="submit" ng-click="localLogin()" class="button_accept_modal"><span class="glyphicon glyphicon-log-in"></span> Login</button>
                     <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+
                 </form>
             </div>
             <div class="modal-footer">

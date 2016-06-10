@@ -273,6 +273,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
     // Función para registrar un user
     $scope.createUser = function () {
+        if($scope.newUser.password == $scope.pass2){
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
                 var email = $scope.newUser.email;
@@ -288,7 +289,11 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             })
             .error(function (data) {
                 console.log('Error: ' + data);
+                $scope.errorRegister = 'Data error';
             });
+        }
+        else
+            $scope.errorRegister = 'Different passwords';
     };
 
     function loginAfterRegister(credentials) {
@@ -302,6 +307,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             })
             .error(function (data) {
                 console.log(data);
+                $scope.errorRegister = 'Register error';
             })
     }
 
@@ -314,7 +320,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.$watch('pass2', function () { $scope.test(); });
     $scope.$watch('fullName', function () { $scope.test(); });
 
-    $scope.test = function () {
+    $scope.test = function() {
         if ($scope.newUser.password !== $scope.pass2) {
             $scope.error = true;
         } else {
@@ -359,6 +365,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             })
             .error(function (data) {
                 console.log(data);
+                $scope.errorLogin = 'The user does not exist';
             })
     };//TODO: Remove this maybe?
     ////////////////////////////////////////////////////////////////////////////////////////Fin login modal
