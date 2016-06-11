@@ -10,6 +10,8 @@
                 <td> <b>Nombre  </b>{{ x.name }}</td>
                 <td><b>Creador  </b>{{ x.creator }}</td>
                 <td><b>Descripción  </b>{{ x.description }}</td>
+                <td><button ng-click="signupEvent(x.name);">Registrarse a evento</button></td>
+                <td><button ng-click="unsignupEvent(x.name);">Desregistrarse de este evento</button></td>
 
             </tr>
         </table>
