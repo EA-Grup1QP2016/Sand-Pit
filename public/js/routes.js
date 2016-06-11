@@ -513,6 +513,18 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log('Error: ' + data);
             });
 
+        var eventData3 = {
+            user: $scope.selectedmail,
+        };
+        $http.post('/api/listUserEvents', eventData3)
+            .success(function (data) {
+                $scope.events3 = data;
+                console.log("Eventos donde estoy suscrito", $scope.events3)
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+
     };
 
     init();
@@ -547,6 +559,31 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
     };
 
+
+
+
+ ///////////////////////////////////////////Delete an event////////////////////////////////////////////////////////////
+
+    $scope.deleteEvent = function (req) {
+        // Grabs all of the text box fields
+
+        var eventData = {
+            name: req
+
+        };
+        console.log(eventData);
+        // Saves the user data to the db
+        $http.post('/api/removeEvent', eventData)
+            .success(function (data) {
+
+                // Once complete, clear the form (except location)
+
+
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
 ///////////////////////////////Sign up  Event //////////////////////////////////////////////////////////////////////
 
 

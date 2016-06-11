@@ -8,14 +8,24 @@
         <table>
             <tr ng-repeat="x in events2">
                 <td> <b>Nombre  </b>{{ x.name }}</td>
-
                 <td><b>Descripción  </b>{{ x.description }}</td>
-
+                <td><button ng-click="deleteEvent(x.name);">Eliminar evento</button></td>
             </tr>
         </table>
 
     </div>
+    <div class="col-md-7">
+        <h2 style="color:white">Lista de donde estoy registrado</h2>
 
+        <table>
+            <tr ng-repeat="x in events3">
+                <td> <b>Nombre  </b>{{ x.name }}</td>
+                <td><b>Descripción  </b>{{ x.description }}</td>
+                <td><button ng-click="unsignupEvent(x.name);">Desregistrarse de este evento</button></td>
+            </tr>
+        </table>
+
+    </div>
 
 
 
