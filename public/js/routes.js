@@ -16,7 +16,7 @@ angularRoutingApp.config(function ($routeProvider) {
         })
         .when('/eventos', {
             templateUrl: '../views/eventos.html',
-            controller: 'parquesController',
+            controller: 'mapCtrl',
             access: { requiredAuthentication: true }
         })
         .when('/eventosparque', {
@@ -239,6 +239,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
             email: email,
             password: pwd
         };
+
         $http.post('/api/login', credentials)
             .success(function (data) {
                 console.log("User Logged", data);
@@ -250,6 +251,7 @@ angularRoutingApp.controller('loginController', function ($scope, $http, $locati
             .error(function (data) {
                 console.log(data);
             })
+
     }
 });
 
@@ -269,8 +271,11 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     $scope.error = false;
     $scope.incomplete = false;
     $scope.edit = true;
-    $scope.selectedsandpit ={};
-    $scope.selected = JSON.parse(window.sessionStorage.getItem("selected"));
+
+    $scope.selectedsandpit = JSON.parse(window.sessionStorage.getItem("selected"));
+    $scope.selectedmail =  JSON.parse(window.sessionStorage.getItem("selectedmail"));
+
+
 
     // Función para registrar un user
     $scope.createUser = function () {
@@ -342,6 +347,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log('information data', data);
                 $rootScope.authenticated = true;
                 window.sessionStorage.setItem("user", JSON.stringify(data));
+                window.sessionStorage.setItem("selectedmail", JSON.stringify(data.email));
                 $scope.usuariologeado = data;
             })
             .error(function (data) {
@@ -360,6 +366,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             .success(function (data) {
                 console.log("User Logged", data);
                 window.sessionStorage.setItem("user", JSON.stringify(data));
+                window.sessionStorage.setItem("selectedmail", JSON.stringify(data.email));
                 $scope.usuariologeado = data;
                 window.location.reload();
                 $location.path("/")
@@ -472,24 +479,48 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
 ///////////////////////////////Events//////////////////////////////////////////////////////////////////////
 ///////////////////////////////Get Events de parque//////////////////////////////////////////////////////////////////////
+
+
+
     var init = function () {
         // Grabs all of the text box fields
         var eventData = {
-            sandpit: $scope.selected,
+            sandpit: $scope.selectedsandpit,
         };
         console.log(eventData);
         // Saves the user data to the db
         $http.post('/api/eventListBySandPit', eventData)
             .success(function (data) {
                 $scope.events = data;
-                Console.log("Eventos del parque", $scope.events)
+                console.log("Eventos del parque", $scope.events)
+                console.log("Used mail", $scope.selectedmail)
+
+
             })
             .error(function (data) {
                 console.log('Error: ' + data);
             });
+
+        var eventData2 = {
+            creator: $scope.selectedmail,
+        };
+        $http.post('/api/eventListByCreator', eventData2)
+            .success(function (data) {
+                $scope.events2 = data;
+                console.log("Eventos del creador", $scope.events2)
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+
     };
 
     init();
+
+
+
+
+
 ///////////////////////////////Post Event a parque//////////////////////////////////////////////////////////////////////
 
     $scope.createEvent = function (req) {
@@ -498,7 +529,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         var eventData = {
             name: $scope.eventData.name,
             description: $scope.eventData.description ,
-            location: $scope.selected,
+            location: $scope.selectedsandpit,
             creator: user.email
         };
         console.log(eventData);

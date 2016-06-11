@@ -46,6 +46,13 @@ function listEventsBySandPit(req, res) {
     });
 }
 
+function listEventsByCreator(req, res) {
+    console.log(LOG_TAG, "List events.");
+    db.listEventsByCreatorDB(req.body.creator, function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
 function removeEvent(req, res){
     console.log(LOG_TAG, "Remove Event");
     var name = req.body.name;
@@ -59,3 +66,4 @@ module.exports.listEvents = listEvents;
 module.exports.removeEvent = removeEvent;
 module.exports.eventSubscription = eventSubscription;
 module.exports.listEventsBySandPit = listEventsBySandPit;
+module.exports.listEventsByCreator = listEventsByCreator;
