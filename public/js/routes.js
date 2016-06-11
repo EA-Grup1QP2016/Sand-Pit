@@ -1,5 +1,5 @@
 // Creación del módulo
-var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'mapCtrl', 'geolocation', 'gservice', 'kendo.directives']);
+var angularRoutingApp = angular.module('angularRoutingApp', ['ngRoute', 'mapCtrl', 'geolocation', 'gservice', 'kendo.directives','mp.datePicker']);
 var mapCtrl = angular.module('mapCtrl', ['geolocation', 'gservice']);
 // Configuración de las rutas
 angularRoutingApp.config(function ($routeProvider) {
@@ -541,6 +541,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         var eventData = {
             name: $scope.eventData.name,
             description: $scope.eventData.description ,
+            duration: $scope.eventData.duration ,
             location: $scope.selectedsandpit,
             creator: user.email
         };
