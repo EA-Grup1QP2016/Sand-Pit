@@ -547,7 +547,56 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
     };
 
+///////////////////////////////Sign up  Event //////////////////////////////////////////////////////////////////////
 
+
+
+    $scope.signupEvent = function (req) {
+        // Grabs all of the text box fields
+
+        console.log(req);
+        var eventData = {
+
+            event: req,
+            email: $scope.selectedmail
+        };
+        console.log(eventData);
+        // Saves the user data to the db
+        $http.post('/api/eventSubscription', eventData)
+            .success(function (data) {
+
+                // Once complete, clear the form (except location)
+        ;
+
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+////////////////////////////////Unsignup event///////////////////////////////////////////////////////////////////////
+    $scope.unsignupEvent = function (req) {
+        // Grabs all of the text box fields
+
+        console.log(req);
+        var eventData = {
+
+            event: req,
+            email: $scope.selectedmail
+        };
+        console.log(eventData);
+        // Saves the user data to the db
+        $http.post('/api/eventUnsubscription', eventData)
+            .success(function (data) {
+
+                // Once complete, clear the form (except location)
+                ;
+
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //Search based on parameters
     var queryBody = {};
