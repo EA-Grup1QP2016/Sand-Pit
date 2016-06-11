@@ -376,6 +376,21 @@ function eventUnsubscriptionDB(data, callback) {
     });
 }
 
+function listUserEventsDB(user, callback){
+    Event.find({users: user}, function(err, object){
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object.length === 0) {
+            console.log(LOG_TAG, "This user isn't subscribed to any event");
+            callback(false, "This user isn't subscribed to any event");
+        } else {
+            console.log(LOG_TAG, "Event List");
+            callback(true, object);
+        }
+    })
+}
+
 
 /**
  * Here goes all modules related to users
@@ -408,3 +423,4 @@ module.exports.eventSubscriptionDB = eventSubscriptionDB;
 module.exports.eventUnsubscriptionDB = eventUnsubscriptionDB;
 module.exports.listEventsBySandPitDB = listEventsBySandPitDB;
 module.exports.listEventsByCreatorDB = listEventsByCreatorDB;
+module.exports.listUserEventsDB = listUserEventsDB;

@@ -26,6 +26,7 @@ module.exports = function (app) {
     app.post("/api/eventUnsubscription", eventCtrl.eventUnsubscription);
     app.post("/api/eventListBySandPit", eventCtrl.listEventsBySandPit);
     app.post("/api/eventListByCreator", eventCtrl.listEventsByCreator);
+    app.post("/api/listUserEvents", eventCtrl.listUserEvents);
     
     app.get("/api/getUser", function(req, res){
         console.log(req.user);

@@ -72,6 +72,14 @@ function removeEvent(req, res){
     });
 }
 
+function listUserEvents(req, res) {
+    console.log(LOG_TAG, "listUserEvents");
+    var user = req.body.user;
+    db.listUserEventsDB(user, function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
 module.exports.createEvent = createEvent;
 module.exports.listEvents = listEvents;
 module.exports.removeEvent = removeEvent;
@@ -79,3 +87,4 @@ module.exports.eventSubscription = eventSubscription;
 module.exports.eventUnsubscription = eventUnsubscription;
 module.exports.listEventsBySandPit = listEventsBySandPit;
 module.exports.listEventsByCreator = listEventsByCreator;
+module.exports.listUserEvents = listUserEvents;
