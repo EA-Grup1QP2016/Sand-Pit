@@ -341,6 +341,41 @@ function eventSubscriptionDB(data, callback) {
     });
 }
 
+function eventUnsubscriptionDB(data, callback) {
+    Event.findOne({ name: data.event }, function (err, event) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (event === null) {
+            console.log(LOG_TAG, "This event doesn't not exist");
+            callback(false, "This event doesn't not exist");
+        } else {
+            console.log(event.users.length);
+            var i = 0;
+            while (i < event.users.length){
+                if (event.users[i] === data.user){
+                    Event.update({ "name": data.event },
+                    {
+                        $pull:
+                        { "users": data.user }
+                    },
+                    function (err, event) {
+                        if (err) {
+                            callback(false, error);
+                        } else {
+                            callback(true, event);
+                        }
+                    })
+                    return;
+                }
+                i++;
+            }
+            console.log("This user isn't registered in this event");
+            callback(false, "This user isn't registered in this event");
+        }
+    });
+}
+
 
 /**
  * Here goes all modules related to users
@@ -370,5 +405,6 @@ module.exports.createEventDB = createEventDB;
 module.exports.listEventsDB = listEventsDB;
 module.exports.removeEventDB = removeEventDB;
 module.exports.eventSubscriptionDB = eventSubscriptionDB;
+module.exports.eventUnsubscriptionDB = eventUnsubscriptionDB;
 module.exports.listEventsBySandPitDB = listEventsBySandPitDB;
 module.exports.listEventsByCreatorDB = listEventsByCreatorDB;

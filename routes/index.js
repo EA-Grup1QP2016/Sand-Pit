@@ -23,6 +23,7 @@ module.exports = function (app) {
     app.get("/api/event", eventCtrl.listEvents);
     app.post("/api/removeEvent", eventCtrl.removeEvent);
     app.post("/api/eventSubscription", eventCtrl.eventSubscription);
+    app.post("/api/eventUnsubscription", eventCtrl.eventUnsubscription);
     app.post("/api/eventListBySandPit", eventCtrl.listEventsBySandPit);
     app.post("/api/eventListByCreator", eventCtrl.listEventsByCreator);
     

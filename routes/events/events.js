@@ -32,6 +32,17 @@ function eventSubscription(req, res){
     })
 }
 
+function eventUnsubscription(req, res){
+    console.log(LOG_TAG, "Event Unsubscription");
+    var data = {
+        "user" : req.body.email,
+        "event" : req.body.event
+    };
+    db.eventUnsubscriptionDB(data, function (state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    })
+}
+
 function listEvents(req, res) {
     console.log(LOG_TAG, "List events.");
     db.listEventsDB(function(state, details) {
@@ -65,5 +76,6 @@ module.exports.createEvent = createEvent;
 module.exports.listEvents = listEvents;
 module.exports.removeEvent = removeEvent;
 module.exports.eventSubscription = eventSubscription;
+module.exports.eventUnsubscription = eventUnsubscription;
 module.exports.listEventsBySandPit = listEventsBySandPit;
 module.exports.listEventsByCreator = listEventsByCreator;
