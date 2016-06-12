@@ -21,6 +21,7 @@ module.exports = function (app) {
     //CRUD de events
     app.post('/api/event', eventCtrl.createEvent);
     app.get("/api/event", eventCtrl.listEvents);
+    app.put('/api/event/:event_id', eventCtrl.updateEvent);
     app.post("/api/removeEvent", eventCtrl.removeEvent);
     app.post("/api/eventSubscription", eventCtrl.eventSubscription);
     app.post("/api/eventUnsubscription", eventCtrl.eventUnsubscription);

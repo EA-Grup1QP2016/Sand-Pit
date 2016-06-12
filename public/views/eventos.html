@@ -12,24 +12,78 @@
         <div class="panel-footer">
             <table style="width:100%">
                 <tr>
-                    <th type="text" style="text-align: center">Name<br>
+                    <th type="text" style="text-align: center">Editar<br>
                     </th>
-                    <th type="text" style="text-align: center">Description<br>
+                    <th type="text" style="text-align: center">Nombre<br>
                     </th>
-                    <th type="text" style="text-align: center">Date<br>
+                    <th type="text" style="text-align: center">Descripción<br>
                     </th>
-                    <th type="text" style="text-align: center">Duration<br>
+                    <th type="text" style="text-align: center">Fecha<br>
                     </th>
-                    <th type="text" style="text-align: center">Location<br>
+                    <th type="text" style="text-align: center">Duración<br>
                     </th>
-                    <th type="text"> Delete</th>
+                    <th type="text" style="text-align: center">Parque<br>
+                    </th>
+                    <th type="text" style="text-align: center">Participantes<br>
+                    </th>
+                    <th type="text"> Eliminar</th>
                 </tr>
                 <tr ng-repeat="x in events2">
+
+                    <!-- Vista Modal -->
+                    <td> 
+                        <button type="button" ng-click="takeEvent(x)" class="button_warning_modal" data-toggle="modal" data-target="#myModalEdit"><span class="glyphicon glyphicon-pencil"></span></button>
+
+                        <!-- Modal button edit-->
+                        <div class="modal fade" id="myModalEdit" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <div class="modal-header" style="background: gray; color: white; padding: 2%">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4><span class="glyphicon glyphicon-pencil"></span> Edit Event</h4>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body">
+                                        <br>
+                                        <form name="myFormRegister" role="form">
+                                            <div class="form-group" style="text-align: left">
+                                                <label><span class="glyphicon glyphicon-tree-conifer"></span> Name</label>
+                                                <input type="text" class="form-control" ng-model="eventTaket.name" placeholder="Name" required>
+                                            </div>
+                                            <div class="form-group" style="text-align: left">
+                                                <label><span class="glyphicon glyphicon-info-sign"></span> Description</label>
+                                                <input type="text" class="form-control" ng-model="eventTaket.description" placeholder="Description" required>
+                                            </div>
+                                            <div class="form-group" style="text-align: left">
+                                                <label><span class="glyphicon glyphicon-list"></span> Date</label>
+                                                <input  type="text" class="form-control" ng-model="eventTaket.date" placeholder="Date" required>
+                                            </div>
+                                            <div class="form-group" style="text-align: left">
+                                                <label><span class="glyphicon glyphicon-circle-arrow-down"></span> Schedule</label>
+                                                <input  type="text" class="form-control" ng-model="eventTaket.duration" placeholder="Duration" required>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button disable type="submit" ng-click="editEvent()" class="button_accept_modal" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Done</button>
+                                        <button type="submit" class="button_cancel_modal" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td> 
+                    <!-- Fin Vista Modal -->
+
                     <td type="text">{{ x.name }}</td>
                     <td type="text">{{ x.description }}</td>
                     <td type="text">{{ x.date }}</td>
                     <td type="text">{{ x.duration }}</td>
                     <td type="text">{{ x.location }}</td>
+                    <td type="text">{{ x.users }}</td>
                     <td>
                         <button type="button" ng-click="deleteEvent(x.name);" class="button_cancel_modal">&#10008</button>
                     </td>
@@ -49,17 +103,19 @@
         <div class="panel-footer">
             <table style="width:100%">
                 <tr>
-                    <th type="text" style="text-align: center">Name<br>
+                    <th type="text" style="text-align: center">Nombre<br>
                     </th>
-                    <th type="text" style="text-align: center">Description<br>
+                    <th type="text" style="text-align: center">Descripción<br>
                     </th>
-                    <th type="text" style="text-align: center">Date<br>
+                    <th type="text" style="text-align: center">Fecha<br>
                     </th>
-                    <th type="text" style="text-align: center">Duration<br>
+                    <th type="text" style="text-align: center">Duración<br>
                     </th>
-                    <th type="text" style="text-align: center">Location<br>
+                    <th type="text" style="text-align: center">Parque<br>
                     </th>
-                    <th type="text">Unsuscribe</th>
+                    <th type="text" style="text-align: center">Participantes<br>
+                    </th>
+                    <th type="text">Desuscribirse</th>
                 </tr>
                 <tr ng-repeat="x in events3">
                     <td type="text">{{ x.name }}</td>
@@ -67,6 +123,7 @@
                     <td type="text">{{ x.date }}</td>
                     <td type="text">{{ x.duration }}</td>
                     <td type="text">{{ x.location }}</td>
+                    <td type="text">{{ x.users }}</td>
                     <td>
                         <button type="button" ng-click="unsignupEvent(x.name);" class="button_cancel_modal"><span class="glyphicon glyphicon-log-out"></span></button>
                     </td>
