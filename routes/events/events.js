@@ -75,7 +75,11 @@ function listEventsByCreator(req, res) {
 
 function removeEvent(req, res){
     console.log(LOG_TAG, "Remove Event");
-    var name = req.body.name;
+    var name = {
+        "name": req.body.name,
+        "user": req.body.user
+    };
+
     db.removeEventDB(name, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
@@ -83,6 +87,7 @@ function removeEvent(req, res){
 
 function listUserEvents(req, res) {
     console.log(LOG_TAG, "listUserEvents");
+
     var user = req.body.user;
     db.listUserEventsDB(user, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);

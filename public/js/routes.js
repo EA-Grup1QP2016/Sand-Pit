@@ -555,7 +555,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/event', eventData)
             .success(function (data) {
-                //$scope.eventsx = data;
+                $scope.eventsx = data;
                 // Once complete, clear the form (except location)
                 $scope.reloadRoute = function() {
                     $state.reload();
@@ -573,20 +573,17 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
 
     $scope.deleteEvent = function (req) {
         // Grabs all of the text box fields
-
+        var user = JSON.parse(window.sessionStorage.getItem("user"));
         var eventData = {
-            name: req
-
+            name: req,
+            user : user.email
         };
         console.log(eventData);
         // Saves the user data to the db
         $http.post('/api/removeEvent', eventData)
             .success(function (data) {
-                $scope.events = data;
+                $scope.events2 = data;
                 // Once complete, clear the form (except location)
-
-
-
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -632,7 +629,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/eventUnsubscription', eventData)
             .success(function (data) {
-                $scope.events = data;
+                $scope.events3 = data;
             })
             .error(function (data) {
                 console.log('Error: ' + data);

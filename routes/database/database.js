@@ -306,13 +306,13 @@ function listEventsByCreatorDB(creator, callback) {
 }
 
 function removeEventDB(name, callback) {
-    Event.remove({ name: name }, function (err, object) {
+    Event.remove({ name: name.name }, function (err, object) {
         if (err) {
             console.log(LOG_TAG, err);
             callback(false, err);
         } else {
-            listEventsDB(function (state, details) {
-                console.log(LOG_TAG, "Event removed successfully");
+            listEventsByCreatorDB(name.user, function (state, details) {
+                console.log(LOG_TAG, "Event deleted in database");
                 callback(true, details);
             });
         }
@@ -348,6 +348,13 @@ function eventSubscriptionDB(data, callback) {
                         callback(false, error);
                     } else {
                         callback(true, event);
+
+
+
+
+
+
+
                     }
                 })
         }
@@ -376,7 +383,12 @@ function eventUnsubscriptionDB(data, callback) {
                         if (err) {
                             callback(false, error);
                         } else {
-                            callback(true, event);
+
+
+                            listUserEventsDB(data.user, function (state, details) {
+                                console.log(LOG_TAG, "Event unsuscribed");
+                                callback(true, details);
+                            })
                         }
                     })
                     return;
