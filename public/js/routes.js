@@ -132,6 +132,8 @@ angularRoutingApp.controller('mainController', function ($scope, $http, $locatio
         $scope.userlogged = null;
         $http.get("/api/logout");
         console.log("Ha salido correctamente.");
+        delete sessionStorage.selectedmail;
+
         window.location.reload();
         $location.path('/');
     };
@@ -287,6 +289,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         if($scope.newUser.password == $scope.pass2){
         $http.post('/api/user', $scope.newUser)
             .success(function (data) {
+
                 var email = $scope.newUser.email;
                 var pwd = $scope.newUser.password;
                 var credentials = {
@@ -312,6 +315,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             .success(function (data) {
                 console.log("User Logged", data);
                 window.sessionStorage.setItem("user", JSON.stringify(data));
+                window.sessionStorage.setItem("selectedmail", JSON.stringify(data.email));
                 $scope.usuariologeado = data;
                 window.location.reload();
                 $location.path("/")
