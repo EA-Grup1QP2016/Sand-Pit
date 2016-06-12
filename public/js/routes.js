@@ -44,6 +44,11 @@ angularRoutingApp.config(function ($routeProvider) {
             controller: 'parksController',
             access: { requiredAuthentication: "admin" }
         })
+        .when('/gestion-eventos', {
+            templateUrl: '../views/gestionEventos.html',
+            controller: 'eventsController',
+            access: { requiredAuthentication: "admin" }
+        })
         .otherwise({
             redirectTo: '/'
         });
@@ -873,6 +878,99 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
         $http.delete('/api/sandpit/' + $scope.sandpitTaket._id)
             .success(function (data) {
                 $scope.sandpits = data;
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+
+    // Función para coger el objeto seleccionado en la tabla antes de editarlo
+    $scope.selectSandpit = function (sandpit) {
+        $scope.newSandpit = user;
+        $scope.selected = true;
+        $scope.header = "Editar Sandpit";
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.newSandpit, $scope.selected);
+    };
+
+    // Función para editar los datos de una persona
+    $scope.editSandpit = function () {
+        $http.put('/api/sandpit/' + $scope.sandpitTaket._id, $scope.sandpitTaket)
+            .success(function (data) {
+                console.log("HOLAAAAAAAAAAAAAAAAA")
+                console.log($scope.sandpitTaket);
+                $scope.newSandpit = {}; // Borramos los datos del formulario
+                $scope.sandpits = data;
+                $scope.selected = false;
+                $scope.header = "Crear Sandpit";
+                $scope.update = true;
+                $scope.create = false;
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+
+    $scope.edit = true;
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.hideform = true;
+
+    $scope.$watch('newSandpit.password', function () { $scope.test(); });
+    $scope.$watch('pass2', function () { $scope.test(); });
+    $scope.$watch('fullName', function () { $scope.test(); });
+
+
+
+    $scope.test = function () {
+        $scope.incomplete = false;
+        if ($scope.edit && (!$scope.newSandpit.name.length ||
+            !$scope.newSandpit.description.length || !$scope.price.length)) {
+            $scope.incomplete = true;
+        }
+    };
+});
+
+angularRoutingApp.controller('eventsController', function ($scope, $http) {
+    $scope.message = 'Gestión de Eventos';
+    $scope.newSandpit = {}; //Limpiamos formulario de registro
+    $scope.events = {};
+    $scope.selected = false;
+    $scope.header = "Crear usuario"; //Mostramos "Crear usuario" en el panel derecho
+    $scope.update = true; //Escondemos el botón update
+    $scope.create = false; //Mostramos botñon create
+    $scope.error = false;
+    $scope.incomplete = false;
+    $scope.edit = true;
+    $scope.eventTaket = {};
+
+    // Obtenemos todos los datos de la base de datos
+    $http.get('/api/event').success(function (data) {
+            $scope.events = data;
+        })
+        .error(function (data) {
+            console.log('Error: ' + data);
+        });
+
+    // Función para coger el sandpit antes de ejecutar el Mensaje de advertencia modal para eliminarlo
+    $scope.takeEvent = function (event) {
+        $scope.eventTaket = event;
+        $scope.selected = true;
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.sandpitTaket, $scope.selected);
+    };
+
+    // Función que borra un objeto conocido su id. Utilizo la id del sandpit seleccionado con sandpitTaket(sandpit)
+    $scope.deleteEvent = function () {
+        var eventname = { name: $scope.eventTaket.name };
+        $http.post('/api/removeEvent', eventname)
+            .success(function (data) {
+                $scope.events = data;
             })
             .error(function (data) {
                 console.log('Error: ' + data);
