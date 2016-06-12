@@ -80,6 +80,24 @@ function listUserEvents(req, res) {
     });
 }
 
+var Event= require("../../schemas/event.js");
+exports.updateEvent = function(req,res){
+    Event.update({_id : req.params.event_id}, {$set:{name: req.body.name, description: req.body.description, date: req.body.date, duration: req.body.duration}}, function (err,event){
+            if (err){
+                res.send(err);
+            }
+            //Obtengo y devuelvo todos los Eventos tras borrar uno de ellos
+            Event.find(function(err,event){
+                if(err){
+                    res.send(err)
+                }
+                res.json(event)
+            });
+        }
+
+    );
+};
+
 module.exports.createEvent = createEvent;
 module.exports.listEvents = listEvents;
 module.exports.removeEvent = removeEvent;

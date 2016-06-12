@@ -191,7 +191,7 @@ angularRoutingApp.controller('mainController', function ($scope, $http, $locatio
                 email: $scope.UserTaket.email,
                 oldPwd: $scope.UserTaket.oldPwd,
                 newPwd: $scope.UserTaket.newPwd1
-            }
+            };
             if (!newData.name) {
                 newData.name = (JSON.parse(window.sessionStorage.getItem("user"))).fullName;
             }
@@ -511,7 +511,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
 
         var eventData2 = {
-            creator: $scope.selectedmail,
+            creator: $scope.selectedmail
         };
         $http.post('/api/eventListByCreator', eventData2)
             .success(function (data) {
@@ -523,7 +523,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             });
 
         var eventData3 = {
-            user: $scope.selectedmail,
+            user: $scope.selectedmail
         };
         $http.post('/api/listUserEvents', eventData3)
             .success(function (data) {
@@ -537,10 +537,6 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
     init();
-
-
-
-
 
 ///////////////////////////////Post Event a parque//////////////////////////////////////////////////////////////////////
 
@@ -559,7 +555,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/event', eventData)
             .success(function (data) {
-
+                $scope.events = data;
                 // Once complete, clear the form (except location)
                 $scope.eventData.name = "";
                 $scope.eventData.description = "";
@@ -569,8 +565,6 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 console.log('Error: ' + data);
             });
     };
-
-
 
 
  ///////////////////////////////////////////Delete an event////////////////////////////////////////////////////////////
@@ -586,7 +580,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/removeEvent', eventData)
             .success(function (data) {
-
+                $scope.events = data;
                 // Once complete, clear the form (except location)
 
 
@@ -612,10 +606,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/eventSubscription', eventData)
             .success(function (data) {
-
-                // Once complete, clear the form (except location)
-        ;
-
+                $scope.events = data;
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -636,10 +627,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/eventUnsubscription', eventData)
             .success(function (data) {
-
-                // Once complete, clear the form (except location)
-                ;
-
+                $scope.events = data;
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -677,7 +665,36 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
             })
     };
 
+    // Función para editar evento
+    $scope.incomplete = false;
+    $scope.edit = true;
+    $scope.eventTaket = {};
 
+    $scope.takeEvent = function (event) {
+        $scope.eventTaket = event;
+        $scope.selected = true;
+        $scope.update = false;
+        $scope.create = true;
+
+        console.log($scope.sandpitTaket, $scope.selected);
+    };
+
+    $scope.editEvent = function () {
+        $http.put('/api/event/' + $scope.eventTaket._id, $scope.eventTaket)
+            .success(function (data) {
+                console.log($scope.eventTaket);
+                $scope.events = data;
+                $scope.selected = false;
+                $scope.header = "Crear Event";
+                $scope.update = true;
+                $scope.create = false;
+            })
+            .error(function (data) {
+                console.log('Error: ' + data);
+            });
+    };
+    $scope.incomplete = false;
+    //Fin edición de evento
 
 
 
@@ -940,12 +957,9 @@ angularRoutingApp.controller('parksController', function ($scope, $http) {
 
 angularRoutingApp.controller('eventsController', function ($scope, $http) {
     $scope.message = 'Gestión de Eventos';
-    $scope.newSandpit = {}; //Limpiamos formulario de registro
     $scope.events = {};
     $scope.selected = false;
-    $scope.header = "Crear usuario"; //Mostramos "Crear usuario" en el panel derecho
-    $scope.update = true; //Escondemos el botón update
-    $scope.create = false; //Mostramos botñon create
+    $scope.create = false; //Mostramos botón create
     $scope.error = false;
     $scope.incomplete = false;
     $scope.edit = true;
@@ -983,26 +997,21 @@ angularRoutingApp.controller('eventsController', function ($scope, $http) {
 
 
     // Función para coger el objeto seleccionado en la tabla antes de editarlo
-    $scope.selectSandpit = function (sandpit) {
-        $scope.newSandpit = user;
+    $scope.selectEvent = function (event) {
         $scope.selected = true;
-        $scope.header = "Editar Sandpit";
+        $scope.header = "Editar Event";
         $scope.update = false;
         $scope.create = true;
-
-        console.log($scope.newSandpit, $scope.selected);
     };
 
-    // Función para editar los datos de una persona
-    $scope.editSandpit = function () {
-        $http.put('/api/sandpit/' + $scope.sandpitTaket._id, $scope.sandpitTaket)
+    // Función para editar evento
+    $scope.editEvent = function () {
+        $http.put('/api/event/' + $scope.eventTaket._id, $scope.eventTaket)
             .success(function (data) {
-                console.log("HOLAAAAAAAAAAAAAAAAA")
-                console.log($scope.sandpitTaket);
-                $scope.newSandpit = {}; // Borramos los datos del formulario
-                $scope.sandpits = data;
+                console.log($scope.eventTaket);
+                $scope.events = data;
                 $scope.selected = false;
-                $scope.header = "Crear Sandpit";
+                $scope.header = "Crear Event";
                 $scope.update = true;
                 $scope.create = false;
             })
@@ -1016,17 +1025,4 @@ angularRoutingApp.controller('eventsController', function ($scope, $http) {
     $scope.incomplete = false;
     $scope.hideform = true;
 
-    $scope.$watch('newSandpit.password', function () { $scope.test(); });
-    $scope.$watch('pass2', function () { $scope.test(); });
-    $scope.$watch('fullName', function () { $scope.test(); });
-
-
-
-    $scope.test = function () {
-        $scope.incomplete = false;
-        if ($scope.edit && (!$scope.newSandpit.name.length ||
-            !$scope.newSandpit.description.length || !$scope.price.length)) {
-            $scope.incomplete = true;
-        }
-    };
 });

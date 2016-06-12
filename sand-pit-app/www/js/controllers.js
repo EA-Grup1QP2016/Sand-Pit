@@ -1,5 +1,5 @@
-var BASE_URL = "http://localhost:5000";
-
+//var BASE_URL = "http://localhost:5000";
+var BASE_URL = "http://192.168.1.163:5000";
 //var BASE_URL = "http://147.83.7.155:5000";
 
 
@@ -30,7 +30,7 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('LoginCtrl', function($scope,$state, $ionicPopup, AuthService, $http, $rootScope) {
+  .controller('LoginCtrl', function($scope, $state, $ionicPopup, AuthService, $http, $rootScope) {
     $scope.data = {};
     $scope.usuariologeado = {};
     $scope.base_url = BASE_URL + "/auth/facebook";
@@ -160,7 +160,7 @@ angular.module('starter.controllers', [])
     }
   })
 
-.controller('MapaCtrl', function($scope, $ionicLoading, $ionicPopup, $compile, $state, $http) {
+.controller('MapaCtrl', function($scope, $ionicLoading, $ionicPopup, $compile, $state, $http, $timeout) {
   function initialize() {
 
     $ionicLoading.show({
@@ -209,34 +209,40 @@ angular.module('starter.controllers', [])
 
       $http.get(BASE_URL + '/api/sandpit').success(function(response) {
 
+        console.log('sandpits',response);
+
         // Loop through all of the JSON entries provided in the response
         for (var i = 0; i < response.length; i++) {
           var sandpit = response[i];
 
+          console.log('sandpit object', sandpit);
           // Create popup windows for each record
           var contentString =
             '<p><b>Nombre</b>: ' + sandpit.name +
             '<br><b>Precio</b>: ' + sandpit.price +
             '<br><b>Descripcion</b>: ' + sandpit.description +
             '<br><b>Instalaciones</b>: ' + sandpit.facilities +
-            '</p>';
+            '<br><a class="button icon ion-clipboard" href="#/sandpit/{{sandpit._id}}">Events</a></p>';
 
-          var sandpitlatlong = new google.maps.LatLng(sandpit.location[0], sandpit.location[1]);
-          // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
-          var sandpitMarker = new google.maps.Marker({
-            map: $scope.map,
-            animation: google.maps.Animation.DROP,
-            position: sandpitlatlong
+          var sandpitlatlong = new google.maps.LatLng(sandpit.location[1], sandpit.location[0]);
+
+          locations.push({
+              sandpitMarker : new google.maps.Marker({
+                map: $scope.map,
+                animation: google.maps.Animation.DROP,
+                position: sandpitlatlong
+              }),
+              message : new google.maps.InfoWindow({
+              content: contentString
+            })
           });
 
-          var infoSandpit = new google.maps.InfoWindow({
-            content: contentString
-          });
-
-          google.maps.event.addListener(sandpitMarker, 'click', function () {
-            infoSandpit.open($scope.map, sandpitMarker);
-          });
         }
+        locations.forEach(function(n, i){
+          google.maps.event.addListener(n.sandpitMarker, 'click', function () {
+            n.message.open($scope.map, n.sandpitMarker);
+          });
+        });
       }).error(function(){});
       $ionicLoading.hide();
     }, function (error) {
@@ -246,6 +252,10 @@ angular.module('starter.controllers', [])
 
   google.maps.event.addDomListener(window, 'load', initialize);
   ionic.Platform.ready(initialize);
+
+  $scope.sandpitEvents = function(sandpit){
+    $state.go('tab.chats',{"sandpit":sandpit});
+  }
 
   function CenterControl(controlDiv, map) {
 
@@ -334,32 +344,54 @@ angular.module('starter.controllers', [])
             text: '<b>Add</b>',
             type: 'button-positive',
             onTap: function () {
-              navigator.geolocation.getCurrentPosition(function (pos) {
-                var sandpitData = {
-                  name: $scope.newSandpit.name,
-                  description: $scope.newSandpit.description,
-                  price: $scope.newSandpit.price,
-                  location: [pos.coords.latitude, pos.coords.longitude],
-                  creator: user.email
-                };
+              try{
+                var price = parseInt($scope.newSandpit.price);
+                if (price >= 0){
+                  navigator.geolocation.getCurrentPosition(function (pos) {
+                    var sandpitData = {
+                      name: $scope.newSandpit.name,
+                      description: $scope.newSandpit.description,
+                      price: $scope.newSandpit.price,
+                      location: [pos.coords.longitude, pos.coords.latitude],
+                      creator: user.email
+                    };
 
-                $http.post(BASE_URL + '/api/sandpit', sandpitData)
-                  .success(function (data) {
-                    $scope.newUser = data;
-                    console.log('Sandpit has added correctly');
-                  })
-                  .error(function (data) {
-                    console.log('Error: ' + data);
-                    var alertPopup = $ionicPopup.alert({
-                      title: 'This email is already in used!'
-                    });
-                    $timeout(function () {
-                      alertPopup.close(); //close the popup after 3 seconds for some reason
-                    }, 3000);
+                    $http.post(BASE_URL + '/api/sandpit', sandpitData)
+                      .success(function (data) {
+                        $scope.newUser = data;
+                        console.log('Sandpit has added correctly');
+                        $state.go($state.current, {}, {reload: true});
+                        initialize();
+                      })
+                      .error(function (data) {
+                        console.log('Error: ' + data);
+                        var alertPopup = $ionicPopup.alert({
+                          title: 'This sandpit exist!'
+                        });
+                        $timeout(function () {
+                          alertPopup.close(); //close the popup after 3 seconds for some reason
+                        }, 3000);
+                      });
+                  }, function (error) {
+                    alert('Unable to get location: ' + error.message);
                   });
-              }, function (error) {
-                alert('Unable to get location: ' + error.message);
-              });
+                }else{
+                  var negativePrice = $ionicPopup.alert({
+                    title: 'Error to insert price must be a positive number'
+                  });
+                  $timeout(function () {
+                    negativePrice.close(); //close the popup after 3 seconds for some reason
+                  }, 3000);
+                }
+              }catch (e){
+                var alertPopup = $ionicPopup.alert({
+                  title: 'Error to insert price must be a positive number'
+                });
+                $timeout(function () {
+                  alertPopup.close(); //close the popup after 3 seconds for some reason
+                }, 3000);
+              }
+
             }
           }
         ]
@@ -368,23 +400,32 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('MyEventsCtrl', function($scope, $http, $state, $window) {
+  var user = JSON.parse(window.sessionStorage.getItem("user"));
+  console.log(user.email);
+  $scope.myevents = {};
+  $http.post(BASE_URL + '/api/eventListByCreator', user.email)
+    .success(function (data) {
+      $scope.myevents = data;
+      console.log("Eventos del creador", $scope.myevents)
+    })
+    .error(function (data) {
+      console.log('Error: ' + data);
+    });
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.detailEvent = function(event){
+    $state.go('tab.event-detail', {eventInfo : event})
+  }
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('EventDetailCtrl', function($scope, $http, $state, $window){
+  var event = $state.params.eventInfo;
+  console.log('info evento',event);
+})
+
+.controller('SandpitDetailCtrl', function($scope, $stateParams) {
+  console.log(sandpitId)
+
 })
 
 .controller('AccountCtrl', function($scope) {

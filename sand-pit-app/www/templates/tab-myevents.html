@@ -1,0 +1,40 @@
+<ion-view view-title="My Events">
+  <ion-content>
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios-minus-outline"
+                ng-click="data.showDelete = !data.showDelete"></button>
+      </div>
+      <h1 class="title">My events</h1>
+    </ion-header-bar>
+    <ion-list show-delete="data.showDelete">
+
+      <ion-item ng-repeat="myevent in myevents"
+                myevent="myevent"
+                href="#/item/{{item.id}}" class="item-remove-animate">
+        Event: {{ item.name }}
+        <ion-delete-button class="ion-minus-circled" ng-click="eventDelete(myevent)">
+        </ion-delete-button>
+        <ion-option-button class="button-assertive icon ion-chevron-right" ng-click="detailEvent(myevent)">
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+    <br><br>
+    <a class="button button-positive button-full">
+      <Strong>Events where I'm subscribed</Strong>
+    </a>
+    <ion-list show-delete="data.showDelete">
+
+      <ion-item ng-repeat="item in items"
+                item="item"
+                href="#/item/{{item.id}}" class="item-remove-animate">
+        Item {{ item.id }}
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
+        </ion-delete-button>
+        <ion-option-button class="button-assertive" ng-click="edit(item)">
+          Edit
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
