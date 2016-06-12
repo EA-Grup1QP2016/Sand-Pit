@@ -227,9 +227,7 @@ function removeSandpitDB(id, callback) {
  */
 
 function createEventDB(data, callback) {
-    if (data.date <= Date()) {
-        callback(false, "You can't create a event in the past");
-    }
+
     var newEvent = Event({
         name: data.name,
         date: data.date,
