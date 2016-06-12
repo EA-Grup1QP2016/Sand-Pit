@@ -77,12 +77,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     .state('tab.event-detail', {
       url: '/event-detail',
       views: {
-        'tab-chats': {
+        'tab-myevents': {
           templateUrl: 'templates/event-detail.html',
           controller: 'EventDetailCtrl'
-        },
-      params: {
-          eventInfo : null
         }
       }
     })

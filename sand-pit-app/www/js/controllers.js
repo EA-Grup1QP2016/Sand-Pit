@@ -1,5 +1,5 @@
-//var BASE_URL = "http://localhost:5000";
-var BASE_URL = "http://192.168.1.163:5000";
+var BASE_URL = "http://localhost:5000";
+//var BASE_URL = "http://192.168.1.163:5000";
 //var BASE_URL = "http://147.83.7.155:5000";
 
 
@@ -91,7 +91,7 @@ angular.module('starter.controllers', [])
     $scope.signUp = function () {
       $scope.newUser = {};
       var addPopup = $ionicPopup.confirm({
-        title: 'Create new student',
+        title: 'Create new user',
         template: '<input type="text" placeholder="Username" ng-model="newUser.fullName"> <br> <input type="text" placeholder="Email" ng-model="newUser.email"> <br> <input type="password" placeholder="Password" ng-model="newUser.pass"> <br> <input type="password" placeholder="Repyte password" ng-model="newUser.pass2">',
         scope: $scope,
         buttons: [
@@ -402,9 +402,9 @@ angular.module('starter.controllers', [])
 
 .controller('MyEventsCtrl', function($scope, $http, $state, $window) {
   var user = JSON.parse(window.sessionStorage.getItem("user"));
-  console.log(user.email);
+  var creator = { creator: user.email };
   $scope.myevents = {};
-  $http.post(BASE_URL + '/api/eventListByCreator', user.email)
+  $http.post(BASE_URL + '/api/eventListByCreator', creator)
     .success(function (data) {
       $scope.myevents = data;
       console.log("Eventos del creador", $scope.myevents)
@@ -414,13 +414,16 @@ angular.module('starter.controllers', [])
     });
 
   $scope.detailEvent = function(event){
-    $state.go('tab.event-detail', {eventInfo : event})
+    console.log(event);
+    $state.go('tab.event-detail', {eventInfo : event}, {reload: true})
+
   }
 })
 
-.controller('EventDetailCtrl', function($scope, $http, $state, $window){
+.controller('EventDetailCtrl', function($scope, $http, $stateParams, $state, $window){
   var event = $state.params.eventInfo;
-  console.log('info evento',event);
+  $scope.info = event;
+  console.log('info evento',$stateParams);
 })
 
 .controller('SandpitDetailCtrl', function($scope, $stateParams) {
