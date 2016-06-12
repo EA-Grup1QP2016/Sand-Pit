@@ -1,37 +1,77 @@
-<div class="jumbotron text-center">
-    <h1 style="color:white">Eventos</h1>
-    <p style="color:white">{{ message }}</p>
+<br><br><br>
 
-    <div class="col-md-7 col-lg-offset-0">
-        <h2 style="color:white">Lista de eventos creados por mi </h2>
 
-        <table>
-            <tr ng-repeat="x in events2">
-                <td> <b>Nombre  </b>{{ x.name }}</td>
-                <td><b>Descripción  </b>{{ x.description }}</td>
-                <td><b>Fecha  </b>{{ x.date }}</td>
-                <td><b>Duración  </b>{{ x.duration }}</td>
-                <td><b>Lugar </b>{{ x.location }}</td>
-                <td><button ng-click="deleteEvent(x.name);">Eliminar evento</button></td>
-            </tr>
-        </table>
+<div class="col-md-14 col-md-offset-7" style="
+    margin-left: 0px;">
+    <div class="chat-panel panel panel-default">
+        <div class="panel-heading">
+            <h3 style="text-align: center; background: gray; color: white; padding: 2%;margin-top: 0px;margin-bottom: 0px;">Lista de eventos creados por mi
+            </h3>
 
+        </div>
+        <div class="panel-footer">
+            <table style="width:100%">
+                <tr>
+                    <th type="text" style="text-align: center">Name<br>
+                    </th>
+                    <th type="text" style="text-align: center">Description<br>
+                    </th>
+                    <th type="text" style="text-align: center">Date<br>
+                    </th>
+                    <th type="text" style="text-align: center">Duration<br>
+                    </th>
+                    <th type="text" style="text-align: center">Location<br>
+                    </th>
+                    <th type="text"></th>
+                </tr>
+                <tr ng-repeat="x in events2">
+                    <td type="text">{{ x.name }}</td>
+                    <td type="text">{{ x.description }}</td>
+                    <td type="text">{{ x.date }}</td>
+                    <td type="text">{{ x.duration }}</td>
+                    <td type="text">{{ x.location }}</td>
+                    <td>
+                        <button type="button" ng-click="deleteEvent(x.name);" class="button_cancel_modal">&#10008</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="col-md-7 col-lg-offset-7">
-        <h2 style="color:white">Lista de donde estoy registrado</h2>
+</div>
+    <div class="col-md-14 col-md-offset-0">
+    <div class="chat-panel panel panel-default">
+        <div class="panel-heading">
 
-        <table>
-            <tr ng-repeat="x in events3">
-                <td> <b>Nombre  </b>{{ x.name }}</td>
-                <td><b>Descripción  </b>{{ x.description }}</td>
-                <td><b>Fecha  </b>{{ x.date }}</td>
-                <td><b>Duración  </b>{{ x.duration }}</td>
-                <td><b>Lugar </b>{{ x.location }}</td>
-                <td><button ng-click="unsignupEvent(x.name);">Desregistrarse de este evento</button></td>
-            </tr>
-        </table>
+            <h3 style="text-align: center; background: gray; color: white; padding: 2%;margin-top: 0px;margin-bottom: 0px;">Eventos a los que estoy suscrito
+            </h3>
 
+        </div>
+        <div class="panel-footer">
+            <table style="width:100%">
+                <tr>
+                    <th type="text" style="text-align: center">Name<br>
+                    </th>
+                    <th type="text" style="text-align: center">Description<br>
+                    </th>
+                    <th type="text" style="text-align: center">Date<br>
+                    </th>
+                    <th type="text" style="text-align: center">Duration<br>
+                    </th>
+                    <th type="text" style="text-align: center">Location<br>
+                    </th>
+                    <th type="text"></th>
+                </tr>
+                <tr ng-repeat="x in events3">
+                    <td type="text">{{ x.name }}</td>
+                    <td type="text">{{ x.description }}</td>
+                    <td type="text">{{ x.date }}</td>
+                    <td type="text">{{ x.duration }}</td>
+                    <td type="text">{{ x.location }}</td>
+                    <td>
+                        <button type="button" ng-click="unsignupEvent(x.name);" class="button_cancel_modal"><span class="glyphicon glyphicon-log-out"></span></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-
-
-
+</div>
