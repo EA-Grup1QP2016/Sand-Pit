@@ -27,6 +27,7 @@
                         </div>
                         <div class="modal-body">
                             <br>
+
                             <form name="myFormRegister" role="form">
                                 <div class="form-group col-md-12 col-md-offset-1" style="text-align: left">
                                     <label><span class="glyphicon glyphicon-map-marker"></span> Name of the event</label>
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div class="panel-footer">
-                <table style="width:100%">
+                <table  style="width:100%">
                     <tr>
                         <th type="text" style="text-align: center">Name<br>
                         </th>
@@ -74,7 +75,7 @@
                         </th>
                         <th type="text">Suscribe</th>
                     </tr>
-                    <tr ng-repeat="x in events">
+                    <tr ng-repeat="x in eventsx">
                         <td type="text">{{ x.name }}</td>
                         <td type="text">{{ x.description }}</td>
                         <td type="text">{{ x.date }}</td>

@@ -500,8 +500,8 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/eventListBySandPit', eventData)
             .success(function (data) {
-                $scope.events = data;
-                console.log("Eventos del parque", $scope.events)
+                $scope.eventsx = data;
+                console.log("Eventos del parque", $scope.eventsx)
                 console.log("Used mail", $scope.selectedmail)
 
 
@@ -555,10 +555,12 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/event', eventData)
             .success(function (data) {
-                $scope.events = data;
+                //$scope.eventsx = data;
                 // Once complete, clear the form (except location)
-                $scope.eventData.name = "";
-                $scope.eventData.description = "";
+                $scope.reloadRoute = function() {
+                    $state.reload();
+                };
+
 
             })
             .error(function (data) {
@@ -584,6 +586,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
                 // Once complete, clear the form (except location)
 
 
+
             })
             .error(function (data) {
                 console.log('Error: ' + data);
@@ -606,7 +609,9 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         // Saves the user data to the db
         $http.post('/api/eventSubscription', eventData)
             .success(function (data) {
-                $scope.events = data;
+
+                //$scope.events = data;
+
             })
             .error(function (data) {
                 console.log('Error: ' + data);

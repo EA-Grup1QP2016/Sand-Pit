@@ -227,7 +227,7 @@ function removeSandpitDB(id, callback) {
  */
 
 function createEventDB(data, callback) {
-
+   
     var newEvent = Event({
         name: data.name,
         date: data.date,
