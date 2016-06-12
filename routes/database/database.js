@@ -337,7 +337,7 @@ function eventSubscriptionDB(data, callback) {
                 }
                 i++;
             }
-            
+
             Event.update({ "name": data.event },
                 {
                     $push:
@@ -404,6 +404,20 @@ function listUserEventsDB(user, callback){
     })
 }
 
+function getEventByNameDB(id, callback) {
+    Event.findOne({ name: id }, function (err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "This sandpit doesn't exist");
+            callback(false, "This sandpit doesn't exist");
+        } else {
+            console.log(LOG_TAG, "SandPit by id");
+            callback(true, object);
+        }
+    });
+}
 
 /**
  * Here goes all modules related to users
@@ -438,3 +452,4 @@ module.exports.eventUnsubscriptionDB = eventUnsubscriptionDB;
 module.exports.listEventsBySandPitDB = listEventsBySandPitDB;
 module.exports.listEventsByCreatorDB = listEventsByCreatorDB;
 module.exports.listUserEventsDB = listUserEventsDB;
+module.exports.getEventByNameDB = getEventByNameDB;

@@ -66,24 +66,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
     .state('tab.sandpit-detail', {
-      url: '/sandpit/:sandpitId',
+      url: '/sandpit/:name',
       views: {
-        'tab-sandpit': {
+        'tab-myevents': {
           templateUrl: 'templates/sandpit-detail.html',
           controller: 'SandpitDetailCtrl'
         }
       }
     })
     .state('tab.event-detail', {
-      url: '/event-detail',
+      url: '/event-detail/:idevent',
       views: {
         'tab-myevents': {
           templateUrl: 'templates/event-detail.html',
           controller: 'EventDetailCtrl'
-        }
+        },
+        params: {'detail': { dynamic: true }}
       }
     })
-
   .state('tab.account', {
     url: '/account',
     views: {

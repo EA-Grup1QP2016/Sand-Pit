@@ -21,6 +21,15 @@ function createEvent(req, res) {
     });
 }
 
+function getEvent(req,res){
+    console.log(LOG_TAG, "Get event by name");
+    var name = req.params.event_id;
+    console.log(LOG_TAG, "Get Sandpit by id.");
+    db.getEventByNameDB(name, function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
 function eventSubscription(req, res){
     console.log(LOG_TAG, "Event Subscription");
     var data = {
@@ -106,3 +115,4 @@ module.exports.eventUnsubscription = eventUnsubscription;
 module.exports.listEventsBySandPit = listEventsBySandPit;
 module.exports.listEventsByCreator = listEventsByCreator;
 module.exports.listUserEvents = listUserEvents;
+module.exports.getEvent = getEvent;

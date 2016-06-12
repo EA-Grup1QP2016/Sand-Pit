@@ -222,7 +222,7 @@ angular.module('starter.controllers', [])
             '<br><b>Precio</b>: ' + sandpit.price +
             '<br><b>Descripcion</b>: ' + sandpit.description +
             '<br><b>Instalaciones</b>: ' + sandpit.facilities +
-            '<br><a class="button icon ion-clipboard" href="#/sandpit/{{sandpit._id}}">Events</a></p>';
+            '<br><a class="button icon ion-clipboard" href="#tab/sandpit/{{sandpit.name}}">Events</a></p>';
 
           var sandpitlatlong = new google.maps.LatLng(sandpit.location[1], sandpit.location[0]);
 
@@ -415,20 +415,30 @@ angular.module('starter.controllers', [])
 
   $scope.detailEvent = function(event){
     console.log(event);
-    $state.go('tab.event-detail', {eventInfo : event}, {reload: true})
-
+    $state.go('tab.event-detail', {idevent : event.name});
   }
 })
 
 .controller('EventDetailCtrl', function($scope, $http, $stateParams, $state, $window){
-  var event = $state.params.eventInfo;
-  $scope.info = event;
-  console.log('info evento',$stateParams);
+  console.log('info evento',$state.params.idevent);
+  $scope.event = {};
+  $http.get(BASE_URL + '/api/event/'+ $state.params.idevent).success(function(data){
+    $scope.event = data;
+    console.log('información evento', data);
+  }).error(function (data) {
+    console.log('Error: ' + data);
+  });
 })
 
-.controller('SandpitDetailCtrl', function($scope, $stateParams) {
-  console.log(sandpitId)
-
+.controller('SandpitDetailCtrl', function($scope, $state, $stateParams) {
+  var name = $state.params.name;
+  console.log('name sandpit', name);
+  $scope.events = {};
+  $http.post(BASE_URL+'/api/eventListBySandPit', name).success(function(data){
+    $scope.events = data;
+  }).error(function (data) {
+    console.log('Error: ' + data);
+  });
 })
 
 .controller('AccountCtrl', function($scope) {

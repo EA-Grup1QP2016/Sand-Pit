@@ -22,6 +22,7 @@ module.exports = function (app) {
     app.post('/api/event', eventCtrl.createEvent);
     app.get("/api/event", eventCtrl.listEvents);
     app.put('/api/event/:event_id', eventCtrl.updateEvent);
+    app.get('/api/event/:event_id', eventCtrl.getEvent);
     app.post("/api/removeEvent", eventCtrl.removeEvent);
     app.post("/api/eventSubscription", eventCtrl.eventSubscription);
     app.post("/api/eventUnsubscription", eventCtrl.eventUnsubscription);
