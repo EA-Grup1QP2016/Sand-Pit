@@ -541,6 +541,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
         var eventData = {
             name: $scope.eventData.name,
             description: $scope.eventData.description ,
+            date: $scope.eventData.date ,
             duration: $scope.eventData.duration ,
             location: $scope.selectedsandpit,
             creator: user.email

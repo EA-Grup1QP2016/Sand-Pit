@@ -10,6 +10,7 @@
                 <td> <b>Nombre  </b>{{ x.name }}</td>
                 <td><b>Creador  </b>{{ x.creator }}</td>
                 <td><b>Descripción  </b>{{ x.description }}</td>
+                <td><b>Fecha  </b>{{ x.date }}</td>
                 <td><b>Duración  </b>{{ x.duration }}</td>
                 <td><button ng-click="signupEvent(x.name);">Registrarse a evento</button></td>
                 <td><button ng-click="unsignupEvent(x.name);">Desregistrarse de este evento</button></td>
@@ -42,11 +43,12 @@
             <input type="text" class="form-control" id="duration" placeholder="Duración..." ng-model="eventData.duration" required>
         </div>
 
-        <date-picker ng-model="date">
-        </date-picker>
-
-        <input type="text" ng-model="date">
-
+        <div class="form-group">
+        <date-picker ng-model="eventData.date">
+        </date-picker><br>
+            <label for="date">Fecha</label>
+        <input type="text" id="date" ng-model="eventData.date" required>
+        </div>
 
 
         <br>
