@@ -38,6 +38,7 @@ module.exports = function (app) {
     app.get('/api/sandpit', sandpitCtrl.listSandpits);
     app.put('/api/sandpit/:sandpit_id', sandpitCtrl.updateSandpit);
     app.delete('/api/sandpit/:sandpit_id', isLoggedIn, sandpitCtrl.removeSandpit);
+    app.post("/api/sandpit/getSandpitByID", sandpitCtrl.getSandpitByID);
     ///////////////////////////////////////////////////////////////////////////////////////////////////
     app.post('/api/home', function (req, res) {
 

@@ -7,8 +7,15 @@ var db = require("../database/database.js");
 var utils = require("../utils/utils.js");
 
 function listSandpits(req, res) {
-    console.log(LOG_TAG, "List users.");
+    console.log(LOG_TAG, "List sandpits.");
     db.listSandpitsDB(function(state, details) {
+        utils.sendResponse(LOG_TAG, state, details, res);
+    });
+}
+
+function getSandpitByID(req, res) {
+    console.log(LOG_TAG, "Get Sandpit by id.");
+    db.getSandpitByIDDB(req.body._id, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);
     });
 }
@@ -20,7 +27,7 @@ function createSandpits(req, res) {
     });
 }
 
-//////////////////////////////////////////////////////////////editar usuario by Marc
+//////////////////////////////////////////////////////////////editar sandpit by Marc
 var Sandpit= require("../../schemas/sandpit.js");
 exports.updateSandpit = function(req,res){
     Sandpit.update({_id : req.params.sandpit_id}, {$set:{name: req.body.name,description: req.body.description,facilities: req.body.facilities, price: req.body.price}}, function (err,sandpit){
@@ -67,5 +74,4 @@ module.exports.listSandpits = listSandpits;
 module.exports.createSandpits = createSandpits;
 //module.exports.updateSandpit = updateSandpit;
 module.exports.removeSandpit = removeSandpit;
-
-
+module.exports.getSandpitByID = getSandpitByID;

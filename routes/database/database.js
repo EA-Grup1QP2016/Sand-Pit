@@ -153,6 +153,21 @@ function listSandpitsDB(callback) {
     });
 }
 
+function getSandpitByIDDB(id, callback) {
+    Sandpit.findOne({ _id: id}, function (err, object) {
+        if (err) {
+            console.log(LOG_TAG, err);
+            callback(false, err);
+        } else if (object === null) {
+            console.log(LOG_TAG, "This sandpit doesn't exist");
+            callback(false, "This sandpit doesn't exist");
+        } else {
+            console.log(LOG_TAG, "SandPit by id");
+            callback(true, object);
+        }
+    });
+}
+
 function createSandpitsDB(data, callback) {
     var newSandpit = new Sandpit(data);
     console.log(data.location[0]);
@@ -411,6 +426,7 @@ module.exports.listSandpitsDB = listSandpitsDB;
 module.exports.removeSandpitDB = removeSandpitDB;
 module.exports.updateSandpitDB = updateSandpitDB;
 module.exports.createSandpitsDB = createSandpitsDB;
+module.exports.getSandpitByIDDB = getSandpitByIDDB;
 
 /**
  * Here goes all the modules related to events
