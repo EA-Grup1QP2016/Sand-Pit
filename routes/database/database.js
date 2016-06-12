@@ -250,7 +250,7 @@ function createEventDB(data, callback) {
                     console.log(LOG_TAG, error);
                     callback(false, error);
                 } else {
-                    listEventsDB(function (state, details) {
+                    listEventsBySandPitDB(data.location, function (state, details) {
                         console.log(LOG_TAG, "Event saved in database");
                         callback(true, details);
                     });
