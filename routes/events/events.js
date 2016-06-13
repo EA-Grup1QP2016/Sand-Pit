@@ -60,6 +60,7 @@ function listEvents(req, res) {
 }
 
 function listEventsBySandPit(req, res) {
+    console.log('name sandpit', req);
     console.log(LOG_TAG, "List events.");
     db.listEventsBySandPitDB(req.body.sandpit, function(state, details) {
         utils.sendResponse(LOG_TAG, state, details, res);

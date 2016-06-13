@@ -616,7 +616,7 @@ angularRoutingApp.controller('mapCtrl', function ($scope, $http, $rootScope, geo
     };
 
 ////////////////////////////////Unsignup event///////////////////////////////////////////////////////////////////////
-    $scope.unsignupEvent = function (req) {
+        $scope.unsignupEvent = function (req) {
         // Grabs all of the text box fields
 
         console.log(req);

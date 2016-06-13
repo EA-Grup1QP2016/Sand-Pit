@@ -222,7 +222,7 @@ angular.module('starter.controllers', [])
             '<br><b>Precio</b>: ' + sandpit.price +
             '<br><b>Descripcion</b>: ' + sandpit.description +
             '<br><b>Instalaciones</b>: ' + sandpit.facilities +
-            '<br><a class="button icon ion-clipboard" href="#tab/sandpit/{{sandpit.name}}">Events</a></p>';
+            '<br><a class="button icon ion-clipboard" href="#/tab/sandpit/'+sandpit.name+'">Events</a></p>';
 
           var sandpitlatlong = new google.maps.LatLng(sandpit.location[1], sandpit.location[0]);
 
@@ -403,11 +403,22 @@ angular.module('starter.controllers', [])
 .controller('MyEventsCtrl', function($scope, $http, $state, $window) {
   var user = JSON.parse(window.sessionStorage.getItem("user"));
   var creator = { creator: user.email };
+  var name = { name: user.name };
   $scope.myevents = {};
   $http.post(BASE_URL + '/api/eventListByCreator', creator)
     .success(function (data) {
       $scope.myevents = data;
       console.log("Eventos del creador", $scope.myevents)
+    })
+    .error(function (data) {
+      console.log('Error: ' + data);
+    });
+
+  $scope.enventSubs = {};
+  $http.post(BASE_URL + '/api/listUserEvents', creator)
+    .success(function (data) {
+      $scope.enventSubs = data;
+      console.log("Eventos suscrito", $scope.enventSubs)
     })
     .error(function (data) {
       console.log('Error: ' + data);
@@ -428,10 +439,50 @@ angular.module('starter.controllers', [])
   }).error(function (data) {
     console.log('Error: ' + data);
   });
+
+  var user = JSON.parse(window.sessionStorage.getItem("user"));
+  var creator = { creator: user.email };
+  $scope.subscribe = function(event){
+    var eventData = {
+
+      event: event,
+      email: creator
+    };
+    console.log(eventData);
+    // Saves the user data to the db
+    $http.post(BASE_URL + '/api/eventSubscription', eventData)
+      .success(function (data) {
+
+        //$scope.events = data;
+
+      })
+      .error(function (data) {
+        console.log('Error: ' + data);
+      });
+  }
+
+  $scope.unsubscribe = function(event){
+    var eventData = {
+
+      event: event,
+      email: creator
+    };
+    console.log(eventData);
+    // Saves the user data to the db
+    $http.post(BASE_URL + '/api/eventSubscription', eventData)
+      .success(function (data) {
+
+        //$scope.events = data;
+
+      })
+      .error(function (data) {
+        console.log('Error: ' + data);
+      });
+  }
 })
 
-.controller('SandpitDetailCtrl', function($scope, $state, $stateParams) {
-  var name = $state.params.name;
+.controller('SandpitDetailCtrl', function($scope, $http, $state, $stateParams) {
+  var name = { sandpit: $state.params.name};
   console.log('name sandpit', name);
   $scope.events = {};
   $http.post(BASE_URL+'/api/eventListBySandPit', name).success(function(data){
@@ -439,10 +490,21 @@ angular.module('starter.controllers', [])
   }).error(function (data) {
     console.log('Error: ' + data);
   });
+
+  $scope.detailEvent = function(event){
+    console.log(event);
+    $state.go('tab.event-detail', {idevent : event.name});
+  }
+
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('AccountCtrl', function($scope, $http, $state) {
+  $scope.logout = function () {
+    window.sessionStorage.removeItem("user");
+    $scope.userlogged = null;
+    $http.get(BASE_URL + "/api/logout");
+    console.log("Ha salido correctamente.");
+
+    $state.go('login', {}, {reload: true});
   };
 });
