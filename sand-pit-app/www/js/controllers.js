@@ -1,6 +1,6 @@
-var BASE_URL = "http://localhost:5000";
+//var BASE_URL = "http://localhost:5000";
 //var BASE_URL = "http://192.168.1.163:5000";
-//var BASE_URL = "http://147.83.7.155:5000";
+var BASE_URL = "http://147.83.7.155:5000";
 
 
 angular.module('starter.controllers', [])
